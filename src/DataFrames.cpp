@@ -44,12 +44,15 @@ template<typename T1>
 class DataFrame{
 private:
   std::unordered_map<T1, std::vector<vTypes>> dataFrame_;
+  std::vector<std::string> columns_;
+  std::string index_;
+
 public:
   DataFrame(){
     dataFrame_ = {};
   };
 
-  DataFrame(std::vector<std::vector<vTypes>> data, std::vector<std::string> columns, std::string index){
+  DataFrame(std::vector<std::vector<vTypes>> data, std::vector<std::string> columns, std::string index): columns_(columns), index_(index){
 
     // what intermediate representation do we get this from
     // initializing with index specified and all that
