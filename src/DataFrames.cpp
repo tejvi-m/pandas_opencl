@@ -4,7 +4,7 @@
 #include <variant>
 #include <string>
 #include <algorithm>
-
+#include "Series.cpp"
 /*
 Implementation:
 the dataframe should be able to support heterogenous data:
@@ -30,6 +30,14 @@ lookup and retrieval
 
 */
 
+
+/*
+Column Major
+
+Dataframe is a vector of Seriesa
+
+*/
+
 struct print
 {
    template <class T>
@@ -40,19 +48,18 @@ struct print
 
 using vTypes = std::variant<int, std::string, char, float>;
 
-template<typename T1>
 class DataFrame{
 private:
-  std::unordered_map<T1, std::vector<vTypes>> dataFrame_;
-  std::vector<std::string> columns_;
-  std::string index_;
+    std::vector<Series<vTypes>> dataframe_;
+    std::vector<std::string> columns_;
+    std::string index_;
 
 public:
   DataFrame(){
-    dataFrame_ = {};
+    dataframe_ = {};
   };
 
-  DataFrame(std::vector<std::vector<vTypes>> data, std::vector<std::string> columns, std::string index): columns_(columns), index_(index){
+  DataFrame(std::vector<Series<vTypes>> data, std::vector<std::string> columns, std::string index): columns_(columns), index_(index){
 
     // what intermediate representation do we get this from
     // initializing with index specified and all that
@@ -60,34 +67,35 @@ public:
     auto indexIt = std::find(columns.begin(), columns.end(), index);
     int indexCol = std::distance(columns.begin(), indexIt);
 
-    for(int i = 0; i < data.size(); i++){
-
-        // dimension checking
-        // seeing if the column specified as index actually exists
-
-
-
-        // need to be more fnacy to get this to happen
-        // dataFrame_[data[i][indexCol]] = data[i];
-
-
-        // just printing, as a sanity check of sorts
-        for (const auto& nextVariant : data[i])
-            {
-                std::visit(print{}, nextVariant);
-                std::cout << " ";
-            }
-        std::cout << std::endl;
-    }
+    std::cout << "indexCol" << indexCol << std::endl;
+    // for(int i = 0; i < data.size(); i++){
+    //
+    //     // dimension checking
+    //     // seeing if the column specified as index actually exists
+    //
+    //
+    //
+    //     // need to be more fnacy to get this to happen
+    //     // dataFrame_[data[i][indexCol]] = data[i];
+    //
+    //
+    //     // just printing, as a sanity check of sorts
+    //     for (const auto& nextVariant : data[i])
+    //         {
+    //             std::visit(print{}, nextVariant);
+    //             std::cout << " ";
+    //         }
+    //     std::cout << std::endl;
+    // }
 
   };
-
-  template <typename T>
-  void drop(std::vector<T>, int axis);
-    // depending on axis and columns given, drop rows/columns
-
-  template <typename T>
-  void rename(std::vector<T>, std::vector<T>, int axis);
+  //
+  // template <typename T>
+  // void drop(std::vector<T>, int axis);
+  //   // depending on axis and columns given, drop rows/columns
+  //
+  // template <typename T>
+  // void rename(std::vector<T>, std::vector<T>, int axis);
 
 
 
@@ -96,7 +104,10 @@ public:
 
 // running small sanity checks
 int main(){
-  std::vector<std::vector<vTypes>> v{{1, 2, "a"},{2, 2, "b"}, {3, 2, "c"} };
-  DataFrame<int> df(v, {"1", "2", "3"}, "1");
+  Series<vTypes> v({1, 2, 3});
+  std::vector<Series<vTypes>> x{v};
+  std::vector<std::string> cols{"s"};
+
+  DataFrame df(x, cols, "s");
   return 0;
 }

@@ -27,7 +27,7 @@ public:
     return this -> size_;
   }
 
-  std::unordered_map<T, long int> getIndex(){
+  void getIndex(){
     for(int i = 0; i < this -> size_; i++){
       index[series_[i]] = i;
     }
@@ -42,12 +42,12 @@ public:
 
   // TODO implement views
 };
-
-int main(){
-  std::vector<int> c{1, 2, 3, 4, 5};
-  Series s(c);
-
-  s.print();
-
-  return 0;
-}
+//
+// int main(){
+//   std::vector<int> c{1, 2, 3, 4, 5};
+//   Series s(c);
+//
+//   s.print();
+//
+//   return 0;
+// }
