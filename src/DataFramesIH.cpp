@@ -26,6 +26,16 @@ public:
       return this -> dataframe_[indexCol];
   }
 
+
+  void add(Series* series, std::string name){
+    this -> dataframe_.push_back(series);
+    this -> columns_.push_back(name);
+  }
+
+  DataFrame operator[](std::vector<std::string> columns){
+
+  }
+
   void printDF(){
     for(int i = 0; i < this -> dataframe_.size(); i++){
       this-> dataframe_[i] -> show();
@@ -55,6 +65,7 @@ int main(){
 
   // x.drop("c");
 
+
   x.printDF();
 
   x.rename("a", "i");
@@ -65,5 +76,10 @@ int main(){
   std::cout  << "lookup" << std::endl;
   Series* y = x["c"];
   y -> show();
+
+  std::cout  << "--" << std::endl;
+  x.add(new SeriesInt({1, 2, 2,2,2}), "d");
+
+  x.printDF();
   return 0;
 }
