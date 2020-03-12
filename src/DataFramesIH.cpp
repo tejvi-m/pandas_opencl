@@ -12,7 +12,7 @@ private:
 public:
   DataFrame(): dataframe_({}), columns_({}), index_(""){}
 
-  DataFrame(std::vector<Series *> data): dataframe_(data){}
+  DataFrame(std::vector<Series *> data, std::vector<std::string> columns = {}, std::string index = ""): dataframe_(data), columns_(columns), index_(index){}
 
   Series* operator[](int i){
       return this -> dataframe_[i];
@@ -23,10 +23,11 @@ public:
       this-> dataframe_[i] -> show();
     }
   }
+
 };
 
 int main(){
-  DataFrame x({new SeriesInt({1, 2, 3}), new SeriesStr({"11", "22", "22"}), new SeriesInt({0, 0, 0})});
+  DataFrame x({new SeriesInt({1, 2, 3}), new SeriesStr({"11", "22", "22"}), new SeriesInt({0, 0, 0})}, {"a", "b", "c"}, "a");
   x.printDF();
 
   return 0;
