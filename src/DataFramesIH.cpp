@@ -19,6 +19,13 @@ public:
       return this -> dataframe_[i];
   }
 
+  Series* operator[](std::string column){
+      auto indexIt = std::find(this -> columns_.begin(), this -> columns_.end(), column);
+      if(indexIt == this -> columns_.end()) return new Series();
+      int indexCol = std::distance(this -> columns_.begin(), indexIt);
+      return this -> dataframe_[indexCol];
+  }
+
   void printDF(){
     for(int i = 0; i < this -> dataframe_.size(); i++){
       this-> dataframe_[i] -> show();
@@ -46,7 +53,7 @@ int main(){
   DataFrame x({new SeriesInt({1, 2, 3}), new SeriesStr({"11", "22", "22"}), new SeriesInt({0, 0, 0})}, {"a", "b", "c"}, "a");
   x.printDF();
 
-  x.drop("c");
+  // x.drop("c");
 
   x.printDF();
 
@@ -54,5 +61,9 @@ int main(){
 
   x.drop("i");
   x.printDF();
+
+  std::cout  << "lookup" << std::endl;
+  Series* y = x["c"];
+  y -> show();
   return 0;
 }
