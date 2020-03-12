@@ -44,6 +44,10 @@ struct print
    void operator()(T&& _in){std::cout << _in;}
 };
 
+template<typename T>
+void print(Series<T> data){
+  data.print();
+}
 
 
 using vTypes = std::variant<int, std::string, char, float>;
@@ -59,7 +63,7 @@ public:
     dataframe_ = {};
   };
 
-  DataFrame(std::vector<Series<vTypes>> data, std::vector<std::string> columns, std::string index): columns_(columns), index_(index){
+  DataFrame(std::vector<Series<vTypes>> data, std::vector<std::string> columns, std::string index): dataframe_(data), columns_(columns), index_(index){
 
     // what intermediate representation do we get this from
     // initializing with index specified and all that
@@ -68,6 +72,10 @@ public:
     int indexCol = std::distance(columns.begin(), indexIt);
 
     std::cout << "indexCol" << indexCol << std::endl;
+
+    auto x = dataframe_[0];
+
+    print(dataframe_[0]);
     // for(int i = 0; i < data.size(); i++){
     //
     //     // dimension checking
