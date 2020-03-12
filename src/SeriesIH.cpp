@@ -72,10 +72,10 @@ public:
     print<std::string>(this -> series_);
   }
 };
-
-int main(){
-  SeriesInt x({1, 2, 3});
-  x.show();
-  std::vector<Series*> xs({new SeriesInt({2, 3, 4}), new SeriesStr({"1m ", "2"})});
-  xs[1]->show();
-}
+// 
+// int main(){
+//   SeriesInt x({1, 2, 3});
+//   x.show();
+//   std::vector<Series*> xs({new SeriesInt({2, 3, 4}), new SeriesStr({"1m ", "2"})});
+//   xs[1]->show();
+// }
