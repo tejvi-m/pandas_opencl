@@ -33,7 +33,12 @@ public:
 
     this -> dataframe_.erase(dataframe_.begin() + indexCol);
     this -> columns_.erase(indexIt);
+  }
 
+  void rename(std::string oldName, std::string newName){
+    auto indexIt = std::find(this -> columns_.begin(), this -> columns_.end(), oldName);
+    if(indexIt == this -> columns_.end()) return;
+    *indexIt = newName;
   }
 };
 
@@ -41,8 +46,13 @@ int main(){
   DataFrame x({new SeriesInt({1, 2, 3}), new SeriesStr({"11", "22", "22"}), new SeriesInt({0, 0, 0})}, {"a", "b", "c"}, "a");
   x.printDF();
 
-  x.drop("d");
+  x.drop("c");
 
+  x.printDF();
+
+  x.rename("a", "i");
+
+  x.drop("i");
   x.printDF();
   return 0;
 }
