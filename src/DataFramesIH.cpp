@@ -33,7 +33,12 @@ public:
   }
 
   DataFrame operator[](std::vector<std::string> columns){
+    DataFrame newDF;
+    for(std::string col: columns){
+      newDF.add((*this)[col], col);
+    }
 
+    return newDF;
   }
 
   void printDF(){
@@ -81,5 +86,11 @@ int main(){
   x.add(new SeriesInt({1, 2, 2,2,2}), "d");
 
   x.printDF();
+
+
+  std::vector<std::string> colsToAdd{"b", "d"};
+  DataFrame ss = x[colsToAdd];
+  std::cout  << "--" << std::endl;
+  ss.printDF();
   return 0;
 }
