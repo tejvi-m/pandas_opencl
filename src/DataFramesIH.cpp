@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<string>
+#include<algorithm>
 #include<unordered_map>
 #include "SeriesIH.cpp"
 
@@ -24,11 +25,24 @@ public:
     }
   }
 
+  void drop(std::string column){
+    auto indexIt = std::find(this -> columns_.begin(), this -> columns_.end(), column);
+    if(indexIt == this -> columns_.end()) return;
+    // should i throw an error message
+    int indexCol = std::distance(this -> columns_.begin(), indexIt);
+
+    this -> dataframe_.erase(dataframe_.begin() + indexCol);
+    this -> columns_.erase(indexIt);
+
+  }
 };
 
 int main(){
   DataFrame x({new SeriesInt({1, 2, 3}), new SeriesStr({"11", "22", "22"}), new SeriesInt({0, 0, 0})}, {"a", "b", "c"}, "a");
   x.printDF();
 
+  x.drop("d");
+
+  x.printDF();
   return 0;
 }
