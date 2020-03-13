@@ -108,6 +108,38 @@ public:
     return this -> series_[i];
   }
 };
+
+class SeriesFloat : public Series{
+private:
+  std::vector<float> series_;
+  int size_;
+  std::unordered_map<float, int> index_;
+public:
+  SeriesFloat(): size_(0){};
+
+  SeriesFloat(std::vector<float> data): series_(data), size_(data.size()){};
+
+  virtual std::vector<float>& getVec(float){
+    return this -> series_;
+  }
+
+  virtual long int size(){
+    return this -> size_;
+  }
+
+  virtual void show(){
+    print<float>(this -> series_);
+  }
+
+  virtual void Index(){
+    make_map<float>(this -> series_, this -> index_);
+  }
+  
+  virtual vTypes operator[](int i){
+    return this -> series_[i];
+  }
+};
+
 //
 // int main(){
 //   SeriesInt x({1, 2, 3});
