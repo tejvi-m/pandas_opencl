@@ -41,6 +41,10 @@ public:
     return newDF;
   }
 
+  DataFrame row(int index){
+    // vector<std::variants
+  }
+
   void printDF(){
     for(int i = 0; i < this -> dataframe_.size(); i++){
       this-> dataframe_[i] -> show();
@@ -62,6 +66,11 @@ public:
     if(indexIt == this -> columns_.end()) return;
     *indexIt = newName;
   }
+
+  void makeIndex(std::string name){
+
+  }
+
 };
 
 int main(){
