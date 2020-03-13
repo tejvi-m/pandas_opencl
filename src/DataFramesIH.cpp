@@ -4,12 +4,33 @@
 #include<algorithm>
 #include<unordered_map>
 #include "SeriesIH.cpp"
+#include <variant>
+
+
+using Row = std::vector<std::variant<int, float, std::string>>;
+
+struct print
+{
+   template <class T>
+   void operator()(T&& _in){std::cout << _in;}
+};
+
+void printRow(Row data){
+
+  auto lambdaPrintVisitor = [](auto&& _in){std::cout << _in;};
+  for (const auto& nextVariant : data){
+          std::visit(lambdaPrintVisitor, nextVariant);
+          std::cout << " ";
+      }
+  std::cout << std::endl;
+}
 
 class DataFrame{
 private:
   std::vector<Series *> dataframe_;
   std::vector<std::string> columns_;
   std::string index_;
+
 public:
   DataFrame(): dataframe_({}), columns_({}), index_(""){}
 
@@ -41,8 +62,24 @@ public:
     return newDF;
   }
 
-  DataFrame row(int index){
-    // vector<std::variants
+  Row iloc(int index){
+    Row row;
+
+    for(int i = 0; i < this -> columns_.size(); i++){
+      std::cout << (*((*this)[i]))[index] << std::endl;
+      row.push_back((*this -> dataframe_[i])[index]);
+    }
+
+
+    return row;
+  }
+
+  template<typename T>
+  Row loc(T value){
+    // auto indexCol = std::find(columns.begin(), columns.end(), column);
+    int loc = (*this)[this -> index_] -> index(value);
+    return this -> iloc(loc);
+
   }
 
   void printDF(){
@@ -101,5 +138,9 @@ int main(){
   DataFrame ss = x[colsToAdd];
   std::cout  << "--" << std::endl;
   ss.printDF();
+
+  Row z = ss.iloc(0);
+  // std::cout << z;
+  printRow(z);
   return 0;
 }
