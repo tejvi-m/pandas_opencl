@@ -2,6 +2,9 @@
 #include<unordered_map>
 #include<vector>
 #include <string>
+#include <variant>
+
+using vTypes = std::variant<int, std::string, float>;
 
 template <typename T>
 void print(std::vector<T>& data){
@@ -31,7 +34,7 @@ public:
   virtual void Index(){}
   virtual void show(){}
 
-  virtual int operator[](int){}
+  virtual vTypes operator[](int){}
   virtual int index(int){}
 
   // virtual int
@@ -64,7 +67,7 @@ public:
     make_map<int>(this -> series_, this -> index_);
   }
 
-  virtual int operator[](int i){
+  virtual vTypes operator[](int i){
     return this -> series_[i];
   }
 
@@ -99,6 +102,10 @@ public:
 
   virtual void show(){
     print<std::string>(this -> series_);
+  }
+
+  virtual vTypes operator[](int i){
+    return this -> series_[i];
   }
 };
 //

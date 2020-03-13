@@ -7,7 +7,7 @@
 #include <variant>
 
 
-using Row = std::vector<std::variant<int, float, std::string>>;
+using Row = std::vector<std::variant<int, std::string, float>>;
 
 struct print
 {
@@ -65,11 +65,10 @@ public:
   Row iloc(int index){
     Row row;
 
-    for(int i = 0; i < this -> columns_.size(); i++){
-      std::cout << (*((*this)[i]))[index] << std::endl;
-      row.push_back((*this -> dataframe_[i])[index]);
+    for(int i = 0; i < this -> dataframe_.size(); i++){
+      // std::cout << (*(this-> dataframe_[i]))[index] << std::endl;
+      row.push_back((*(this-> dataframe_[i]))[index]);
     }
-
 
     return row;
   }
@@ -139,7 +138,7 @@ int main(){
   std::cout  << "--" << std::endl;
   ss.printDF();
 
-  Row z = ss.iloc(0);
+  Row z = ss.iloc(1);
   // std::cout << z;
   printRow(z);
   return 0;
