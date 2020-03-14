@@ -109,22 +109,54 @@ public:
   }
 };
 
-int main(){
-  SeriesInt x({1, 2, 3});
-  x.show();
-  std::vector<Series*> xs({new SeriesInt({2, 3, 4}), new SeriesStr({"1m ", "2"})});
-  xs[1]->show();
+class SeriesFloat : public Series{
+private:
+  std::vector<float> series_;
+  int size_;
+  std::unordered_map<float, int> index_;
+public:
+  SeriesFloat(): size_(0){};
 
-  x.Index();
-  int d= std::get<int>(x[1]);
+  SeriesFloat(std::vector<float> data): series_(data), size_(data.size()){};
 
-  std::cout << d << std::endl;
-  std::cout << x.index(2);
+  virtual std::vector<float>& getVec(float){
+    return this -> series_;
+  }
 
+  virtual long int size(){
+    return this -> size_;
+  }
 
-  xs[0] -> Index();
-  int ss = xs[0]->index(5);
-  std::cout << std::endl << ss;
-  std::cout << (*xs[0])[0] << std::endl;
+  virtual void show(){
+    print<float>(this -> series_);
+  }
 
-}
+  virtual void Index(){
+    make_map<float>(this -> series_, this -> index_);
+  }
+  
+  virtual vTypes operator[](int i){
+    return this -> series_[i];
+  }
+};
+
+//
+// int main(){
+//   SeriesInt x({1, 2, 3});
+//   x.show();
+//   std::vector<Series*> xs({new SeriesInt({2, 3, 4}), new SeriesStr({"1m ", "2"})});
+//   xs[1]->show();
+//
+//   x.Index();
+//   int d= x[1];
+//
+//   std::cout << d << std::endl;
+//   std::cout << x.index(2);
+//
+//
+//   xs[0] -> Index();
+//   int ss = xs[0]->index(5);
+//   std::cout << std::endl << ss;
+//   std::cout << (*xs[0])[0] << std::endl;
+//
+// }
