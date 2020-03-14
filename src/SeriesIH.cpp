@@ -108,23 +108,23 @@ public:
     return this -> series_[i];
   }
 };
-//
-// int main(){
-//   SeriesInt x({1, 2, 3});
-//   x.show();
-//   std::vector<Series*> xs({new SeriesInt({2, 3, 4}), new SeriesStr({"1m ", "2"})});
-//   xs[1]->show();
-//
-//   x.Index();
-//   int d= x[1];
-//
-//   std::cout << d << std::endl;
-//   std::cout << x.index(2);
-//
-//
-//   xs[0] -> Index();
-//   int ss = xs[0]->index(5);
-//   std::cout << std::endl << ss;
-//   std::cout << (*xs[0])[0] << std::endl;
-//
-// }
+
+int main(){
+  SeriesInt x({1, 2, 3});
+  x.show();
+  std::vector<Series*> xs({new SeriesInt({2, 3, 4}), new SeriesStr({"1m ", "2"})});
+  xs[1]->show();
+
+  x.Index();
+  int d= std::get<int>(x[1]);
+
+  std::cout << d << std::endl;
+  std::cout << x.index(2);
+
+
+  xs[0] -> Index();
+  int ss = xs[0]->index(5);
+  std::cout << std::endl << ss;
+  std::cout << (*xs[0])[0] << std::endl;
+
+}
