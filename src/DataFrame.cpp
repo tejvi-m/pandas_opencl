@@ -3,7 +3,7 @@
 #include<string>
 #include<algorithm>
 #include<unordered_map>
-#include "SeriesIH.cpp"
+#include "Series.cpp"
 #include <variant>
 
 
