@@ -7,6 +7,14 @@
 using vTypes = std::variant<int, std::string, float>;
 
 template <typename T>
+void add(std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst){
+    for(int i = 0; i < src1.size(); i++){
+      dst[i] = src1[i] + src2[i];
+      std::cout << src1[i] << src2[i] << std::endl;
+    }
+}
+
+template <typename T>
 void print(std::vector<T>& data){
   for(int i = 0; i < data.size(); i++){
     std::cout << data[i] << " ";
@@ -37,6 +45,7 @@ public:
   virtual vTypes operator[](int){}
   virtual int index(int){}
 
+  virtual Series* operator+(Series*){}
   // virtual int
   // friend functions?
 };
@@ -69,6 +78,12 @@ public:
 
   virtual vTypes operator[](int i){
     return this -> series_[i];
+  }
+
+  virtual Series* operator+(Series* src2){
+    Series* dst = new SeriesInt(std::vector<int>(src2 -> getVec(0).size()));
+    add<int>(this -> getVec(0), src2 -> getVec(0), dst -> getVec(0));
+    return dst;
   }
 
   virtual int index(int i){
@@ -134,29 +149,30 @@ public:
   virtual void Index(){
     make_map<float>(this -> series_, this -> index_);
   }
-  
+
   virtual vTypes operator[](int i){
     return this -> series_[i];
   }
 };
 
-//
-// int main(){
-//   SeriesInt x({1, 2, 3});
-//   x.show();
-//   std::vector<Series*> xs({new SeriesInt({2, 3, 4}), new SeriesStr({"1m ", "2"})});
-//   xs[1]->show();
-//
-//   x.Index();
-//   int d= x[1];
-//
-//   std::cout << d << std::endl;
-//   std::cout << x.index(2);
-//
-//
-//   xs[0] -> Index();
-//   int ss = xs[0]->index(5);
-//   std::cout << std::endl << ss;
-//   std::cout << (*xs[0])[0] << std::endl;
-//
-// }
+
+int main(){
+  SeriesInt x({1, 2, 3});
+
+  x.show();
+  std::vector<Series*> xs({new SeriesInt({2, 3, 4}),new SeriesInt({2, 3, 4}), new SeriesStr({"1m ", "2"})});
+  xs[1]->show();
+
+  Series* x8 = (*xs[0])+xs[1];
+  x8 -> show();
+  x.Index();
+  // int d= x[1];
+  //
+  // std::cout << d << std::endl;
+  std::cout << x.index(2);
+
+
+  xs[0] -> Index();
+  int ss = xs[0]->index(5);
+
+}
