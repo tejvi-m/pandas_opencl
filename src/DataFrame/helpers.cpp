@@ -1,11 +1,48 @@
 #include "helpers.h"
+#include "chlorine.hpp"
+#include "boost/compute.hpp"
+
+namespace compute = boost::compute;
 
 template <typename T>
-void add(std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst){
+void Add(std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst){
+  //
+  // compute::device gpu = compute::system::default_device();
+  //
+  //    // create a compute context and command queue
+  //    compute::context ctx(gpu);
+  //    compute::command_queue queue(ctx, gpu);
+  //
+  //    compute::vector<T> device_vector_src1(src1.size(), ctx);
+  //    compute::vector<T> device_vector_src2(src2.size(), ctx);
+  //    compute::vector<T> device_vector_dst(dst.size(), ctx);
+  //
+  //
+  //    compute::copy(
+  //       src1.begin(), src1.end(), device_vector_src1.begin(), queue
+  //   );
+  //
+  //   compute::copy(
+  //       src2.begin(), src2.end(), device_vector_src2.begin(), queue
+  //   );
+  //
+  //   BOOST_COMPUTE_FUNCTION(int, add_four, (int x, int y),
+  //     {
+  //   return x + y;
+  //     });
+  //
+  //     boost::compute::transform(device_vector_src1.begin(), device_vector_src1.end(), device_vector_src2.begin(), device_vector_src2.end(),output.begin(), add_four, queue);
+  //   compute::copy(
+  //          device_vector_dst.begin(), device_vector_dst.end(),dst.begin(), queue
+  //   );
+
+
     for(int i = 0; i < src1.size(); i++){
       dst[i] = src1[i] + src2[i];
-      std::cout << src1[i] << src2[i] << std::endl;
     }
+    // ch::Worker worker("kernel.cl");
+    // auto event = worker.call("add", src1, src2, dst, n);
+    // std::cout << "Elapsed Time: " << ch::elapsed(event) << "ns\n";
 }
 
 template <typename T>

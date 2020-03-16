@@ -46,5 +46,11 @@ int main(){
 
   Series* xaaa = x111+yp;
   xaaa -> show();
+
+  SeriesInt x111111({1, 2, 3, 4, 5, 6});
+  SeriesInt y111111({1, 2, 3, 4, 5, 6});
+
+  SeriesInt z1111111 = x111111 + y111111;
+  z1111111.show();
   return 0;
 }

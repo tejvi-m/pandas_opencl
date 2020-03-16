@@ -25,7 +25,17 @@ vTypes SeriesInt::operator[](int i){
 
 Series* SeriesInt::operator+(Series* src2){
   Series* dst = new SeriesInt(std::vector<int>(src2 -> getVec(0).size()));
-  add<int>(this -> getVec(0), src2 -> getVec(0), dst -> getVec(0));
+  Add<int>(this -> getVec(0), src2 -> getVec(0), dst -> getVec(0));
+  return dst;
+}
+
+void SeriesInt::add(Series& src2, Series& dst){
+  Add<int>(this -> getVec(0), src2.getVec(0), dst.getVec(0));
+}
+
+SeriesInt SeriesInt::operator+(Series& src2){
+  SeriesInt dst(std::vector<int>(src2.getVec(0).size()));
+  Add<int>(this -> getVec(0), src2.getVec(0), dst.getVec(0));
   return dst;
 }
 

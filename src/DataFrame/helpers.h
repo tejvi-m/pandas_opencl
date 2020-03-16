@@ -1,7 +1,7 @@
 void printRow(Row data);
 
 template <typename T>
-void add(std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst);
+void Add(std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst);
 template <typename T>
 void print(std::vector<T>& data);
 template <typename T>

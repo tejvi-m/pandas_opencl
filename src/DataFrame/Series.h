@@ -38,6 +38,8 @@ public:
   virtual void Index();
   virtual vTypes operator[](int i);
   virtual Series* operator+(Series* src2);
+  SeriesInt operator+(Series& src2);
+  void add(Series& src2, Series& dst);
   virtual int index(int i);
 };
 
