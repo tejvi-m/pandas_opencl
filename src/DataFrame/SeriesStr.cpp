@@ -26,6 +26,7 @@ Series* SeriesStr::copy(){
   Series* dst = new SeriesStr(this -> getVec(std::string()));
   return dst;
 }
+
 Series* SeriesStr::append(std::string ele){
   series_.push_back(ele);
   size_++;
