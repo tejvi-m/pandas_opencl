@@ -31,6 +31,19 @@ public:
 
   DataFrame copy();
   DataFrame copy(std::vector<std::string>);
+
+  DataFrame operator+(DataFrame& src2);
+  void add(DataFrame& src2);
+
+  // DataFrame operator-(DataFrame& src2);
+  // void sub(DataFrame& src2);
+  //
+  // DataFrame operator*(DataFrame& src2);
+  // void mul(DataFrame& src2);
+  //
+  // DataFrame operator/(DataFrame& src2);
+  // void div(DataFrame& src2);
+
   std::pair<int, int> shape();
   void printDF();
 };

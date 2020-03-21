@@ -91,3 +91,18 @@ void DataFrame::rename(std::string oldName, std::string newName){
   if(indexIt == this -> columns_.end()) return;
   *indexIt = newName;
 }
+
+DataFrame DataFrame::operator+(DataFrame& src2){
+    DataFrame newDF;
+    for(auto col: this -> columns_){
+      newDF.add((*(*this)[col]) + (*this)[col], col);
+    }
+    return newDF;
+}
+
+
+void DataFrame::add(DataFrame& src2){
+  for(auto col: this -> columns_){
+  (*(*this)[col]).add((*this)[col]);
+  }
+}
