@@ -68,4 +68,8 @@ void SeriesFloat::map(std::unordered_map<float, float> umap){
 Series* SeriesFloat::copy(){
   Series* dst = new SeriesFloat(this -> getVec(float()));
   return dst;
+Series* SeriesFloat::append(float ele){
+  series_.push_back(ele);
+  size_++;
+  return this;
 }
