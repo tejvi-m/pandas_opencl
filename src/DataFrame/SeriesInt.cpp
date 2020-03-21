@@ -80,3 +80,9 @@ int SeriesInt::index(int i){
   }
   return -1;
 }
+
+Series* SeriesInt::append(int ele){
+  series_.push_back(ele);
+  size_++;
+  return this;
+}
