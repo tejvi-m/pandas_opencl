@@ -53,6 +53,13 @@ void SeriesInt::mul(Series* src2){
   Mul<int>(this -> getVec(0), src2 -> getVec(0), this -> getVec(0));
 }
 
+void SeriesInt::div(Series* src2){
+  Div<int>(this -> getVec(0), src2 -> getVec(0), this -> getVec(0));
+}
+
+void SeriesInt::sub(Series* src2){
+  Sub<int>(this -> getVec(0), src2 -> getVec(0), this -> getVec(0));
+}
 
 int SeriesInt::index(int i){
 

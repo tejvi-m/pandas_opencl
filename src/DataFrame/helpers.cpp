@@ -53,6 +53,29 @@ void Mul(std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst){
 }
 
 
+template<typename T>
+void Div(std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst){
+  for(int i = 0; i < src1.size(); i++){
+    dst[i] = src1[i] / src2[i];
+  }
+}
+
+
+template<typename T>
+void Sub(std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst){
+  for(int i = 0; i < src1.size(); i++){
+    dst[i] = src1[i] - src2[i];
+  }
+}
+
+
+template<typename T>
+void Mod(std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst){
+  for(int i = 0; i < src1.size(); i++){
+    dst[i] = src1[i] - src2[i];
+  }
+}
+
 template <typename T>
 void print(std::vector<T>& data){
   for(int i = 0; i < data.size(); i++){

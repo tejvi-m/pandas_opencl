@@ -64,6 +64,10 @@ public:
   virtual Series* operator*(Series* src2);
   virtual void mul(Series* src2, Series* dst);
   virtual void mul(Series* src2);
+
+  virtual void div(Series*);
+
+  virtual void sub(Series*);
   
   virtual Series* operator+(Series* src2);
   SeriesInt operator+(Series& src2);

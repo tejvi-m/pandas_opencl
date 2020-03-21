@@ -58,5 +58,16 @@ int main(){
 
   SeriesInt z1111111 = x111111 + y111111;
   z1111111.show();
+
+  x111.div(yp);
+  std::cout << "++++++++++++++++++++" << std::endl;
+  x111.show();
+  std::cout << "++++++++++++++++++++" << std::endl;
+// need a function to that works on Series*, Series* - inplace update, though
+  xp.sub(yp);
+  std::cout << "++++++++++++++++++++" << std::endl;
+  x111.show();
+  std::cout << "++++++++++++++++++++" << std::endl;
+
   return 0;
 }
