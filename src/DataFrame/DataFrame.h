@@ -29,6 +29,8 @@ public:
   void drop(std::string);
   void rename(std::string, std::string);
 
+  DataFrame copy();
+  DataFrame copy(std::vector<std::string>);
   std::pair<int, int> shape();
   void printDF();
 };

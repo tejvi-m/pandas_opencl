@@ -70,6 +70,22 @@ std::pair<int, int> DataFrame::shape(){
     return std::make_pair(this -> columns_.size(), (*this)[0] -> size());
 }
 
+DataFrame DataFrame::copy(){
+  DataFrame newDF;
+  for(auto col: this -> columns_){
+    newDF.add((*this)[col] -> copy(), col);
+  }
+  return newDF;
+}
+
+DataFrame DataFrame::copy(std::vector<std::string> columns){
+  DataFrame newDF;
+  for(auto col: columns){
+    newDF.add((*this)[col] -> copy(), col);
+  }
+  return newDF;
+}
+
 void DataFrame::rename(std::string oldName, std::string newName){
   auto indexIt = std::find(this -> columns_.begin(), this -> columns_.end(), oldName);
   if(indexIt == this -> columns_.end()) return;
