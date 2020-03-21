@@ -44,6 +44,8 @@ public:
   DataFrame operator/(DataFrame& src2);
   void div(DataFrame& src2);
 
+  template<typename T>
+  void transform(T&&);
   std::pair<int, int> shape();
   void printDF();
 };

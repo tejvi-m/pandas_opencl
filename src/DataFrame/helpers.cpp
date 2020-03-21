@@ -109,3 +109,8 @@ void printRow(Row data){
       }
   std::cout << std::endl;
 }
+
+template<typename T, typename F>
+void apply(std::vector<T>& vec, F&& fn){
+  for_each(vec.begin(), vec.end(), fn);
+}

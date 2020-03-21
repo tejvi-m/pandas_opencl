@@ -54,6 +54,8 @@ public:
   virtual Series* append(int){}
   virtual Series* append(std::string){}
   virtual Series* append(float){}
+
+  virtual vTypes type(){}
 };
 
 class SeriesInt : public Series{
@@ -91,8 +93,11 @@ public:
   virtual bool isArithmetic();
 
   virtual Series* copy();
+
+  virtual vTypes type();
+
   template<typename T>
-  void apply(T&&);
+  void transform(T&&);
 };
 
 class SeriesStr : public Series{
@@ -111,6 +116,8 @@ public:
   virtual void map(std::unordered_map<std::string, std::string>);
   virtual Series* append(std::string);
   virtual bool isArithmetic();
+
+  virtual vTypes type();
 
 };
 
@@ -153,4 +160,9 @@ virtual void map(std::unordered_map<float, float>);
   virtual Series* append(float);
 
   virtual bool isArithmetic();
+
+  template<typename T>
+  void transform(T&&);
+
+  virtual vTypes type();
 };

@@ -92,6 +92,11 @@ bool SeriesInt::isArithmetic(){
 }
 
 template<typename T>
-void SeriesInt::apply(T&& Fn){
+void SeriesInt::transform(T&& Fn){
   for_each(this -> getVec(int()).begin(), this -> getVec(int()).end(), Fn);
+}
+
+
+vTypes SeriesInt::type(){
+  return int();
 }

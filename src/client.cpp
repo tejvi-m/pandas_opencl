@@ -75,7 +75,7 @@ int main(){
   xcp -> show();
 
   SeriesInt hell({1, 2, 3, 4, 5, 6});
-  hell.apply([](int& v) {v = -v;});
+  hell.transform([](int& v) {v = -v;});
   hell.show();
   return 0;
 }

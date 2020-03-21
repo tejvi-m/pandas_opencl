@@ -167,3 +167,17 @@ void DataFrame::div(DataFrame& src2){
       (*(*this)[col]).div((*this)[col]);
   }
 }
+
+template<typename F>
+void DataFrame::transform(F&& fn){
+  for(auto col: this -> columns_){
+    vTypes x = ((*this)[col]) -> type();
+    if(std::holds_alternative<int>(x)){
+      std::for_each((*this)[col] -> getVec(int()).begin(), (*this)[col] -> getVec(int()).end(), fn);
+    }
+    else if(std::holds_alternative<float>(x)){
+      std::for_each((*this)[col] -> getVec(float()).begin(), (*this)[col] -> getVec(float()).end(), fn);
+    }
+
+  }
+}

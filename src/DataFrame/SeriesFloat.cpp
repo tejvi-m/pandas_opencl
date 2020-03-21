@@ -83,3 +83,12 @@ bool SeriesFloat::isArithmetic(){
 void SeriesFloat::add(Series* src){
   Add<float>(this -> getVec(float()), src -> getVec(float()), this -> getVec(float()));
 }
+
+template<typename T>
+void SeriesFloat::transform(T&& Fn){
+  for_each(this -> getVec(float()).begin(), this -> getVec(float()).end(), Fn);
+}
+
+vTypes SeriesFloat::type(){
+  return float();
+}

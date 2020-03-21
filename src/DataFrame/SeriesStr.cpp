@@ -36,3 +36,7 @@ Series* SeriesStr::append(std::string ele){
 bool SeriesStr::isArithmetic(){
   return false;
 }
+
+vTypes SeriesStr::type(){
+  return std::string();
+}

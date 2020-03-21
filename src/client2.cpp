@@ -1,5 +1,12 @@
 #include "file.cpp"
 
+struct d{
+  template<typename T>
+  void operator()(T& x){
+    x = -x;
+  }
+};
+
 int main(){
     DataFrame x = read_csv("./src/example.csv");
     x["a"] -> show();
@@ -39,6 +46,11 @@ int main(){
     z3.div(x);
     z3.printDF();
 
+    DataFrame hell = read_csv("./src/example.csv");
+    hell.printDF();
+    std::cout <<"tan" << std::endl;
+    hell.transform(d());
+    hell.printDF();
 
     return 0;
 }
