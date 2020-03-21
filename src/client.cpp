@@ -41,6 +41,8 @@ int main(){
   SeriesFloat x111({1, 2.2, 2.3, 4});
   SeriesFloat y111({1, 2, 3, 2.4});
 
+
+  Series* xcp = (&x111)->copy();
   Series* xp = &x111;
   Series* yp = &y111;
 
@@ -68,6 +70,9 @@ int main(){
   (*xp).show();
   std::cout << "---" << std::endl;
   std::cout << "++++++++++++++++++++" << std::endl;
+
+
+  xcp -> show();
 
   return 0;
 }

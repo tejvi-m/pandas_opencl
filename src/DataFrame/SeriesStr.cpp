@@ -17,3 +17,8 @@ void SeriesStr::show(){
 vTypes SeriesStr::operator[](int i){
   return this -> series_[i];
 }
+
+Series* SeriesStr::copy(){
+  Series* dst = new SeriesStr(this -> getVec(std::string()));
+  return dst;
+}

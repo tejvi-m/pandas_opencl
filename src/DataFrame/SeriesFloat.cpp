@@ -59,3 +59,9 @@ int SeriesFloat::index(float i){
   }
   return -1;
 }
+
+
+Series* SeriesFloat::copy(){
+  Series* dst = new SeriesFloat(this -> getVec(float()));
+  return dst;
+}

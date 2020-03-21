@@ -37,6 +37,7 @@ public:
   virtual void div(Series*, Series*){}
   virtual void div(Series*){}
 
+  virtual Series* copy(){}
   // all of these are in place
   // template<typename T>
   // virtual Series* operator+(T val){}
@@ -73,6 +74,8 @@ public:
   SeriesInt operator+(Series& src2);
   void add(Series& src2, Series& dst);
   virtual int index(int i);
+
+  virtual Series* copy();
 };
 
 class SeriesStr : public Series{
@@ -87,6 +90,7 @@ public:
   virtual long int size();
   virtual void show();
   virtual vTypes operator[](int i);
+  virtual Series* copy();
 };
 
 class SeriesFloat : public Series{
@@ -119,4 +123,6 @@ public:
     // virtual Series* operator/(Series*);
     // virtual void div(Series*, Series*);
     virtual void div(Series*);
+
+    virtual Series* copy();
 };

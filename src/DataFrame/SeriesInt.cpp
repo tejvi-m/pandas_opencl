@@ -61,6 +61,12 @@ void SeriesInt::sub(Series* src2){
   Sub<int>(this -> getVec(0), src2 -> getVec(0), this -> getVec(0));
 }
 
+
+Series* SeriesInt::copy(){
+  Series* dst = new SeriesInt(std::vector<int>(this -> getVec(int())));
+  return dst;
+}
+
 int SeriesInt::index(int i){
 
   std::cout <<  "req: " << i;
