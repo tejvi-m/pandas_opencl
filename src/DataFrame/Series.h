@@ -42,6 +42,7 @@ public:
   virtual void map(std::unordered_map<int, int>){}
   virtual void map(std::unordered_map<float, float>){}
 
+  virtual bool isArithmetic(){}
   // all of these are in place
   // template<typename T>
   // virtual Series* operator+(T val){}
@@ -69,6 +70,7 @@ public:
   virtual void Index();
   virtual vTypes operator[](int i);
 
+
   virtual Series* operator*(Series* src2);
   virtual void mul(Series* src2, Series* dst);
   virtual void mul(Series* src2);
@@ -85,6 +87,8 @@ public:
   virtual void add(Series* src2);
   virtual Series* append(int ele);
   virtual int index(int i);
+
+  virtual bool isArithmetic();
 
   virtual Series* copy();
 };
@@ -104,6 +108,8 @@ public:
   virtual Series* copy();
   virtual void map(std::unordered_map<std::string, std::string>);
   virtual Series* append(std::string);
+  virtual bool isArithmetic();
+
 };
 
 class SeriesFloat : public Series{
@@ -143,4 +149,6 @@ virtual void map(std::unordered_map<float, float>);
 
     virtual Series* copy();
   virtual Series* append(float);
+
+  virtual bool isArithmetic();
 };

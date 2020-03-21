@@ -86,3 +86,7 @@ Series* SeriesInt::append(int ele){
   size_++;
   return this;
 }
+
+bool SeriesInt::isArithmetic(){
+  return true;
+}

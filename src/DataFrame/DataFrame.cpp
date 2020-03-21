@@ -95,7 +95,10 @@ void DataFrame::rename(std::string oldName, std::string newName){
 DataFrame DataFrame::operator+(DataFrame& src2){
     DataFrame newDF;
     for(auto col: this -> columns_){
-      newDF.add((*(*this)[col]) + (*this)[col], col);
+      if((*this)[col] -> isArithmetic())
+        newDF.add((*(*this)[col]) + (*this)[col], col);
+      else
+        newDF.add((*(*this)[col]).copy(), col);
     }
     return newDF;
 }
@@ -103,6 +106,7 @@ DataFrame DataFrame::operator+(DataFrame& src2){
 
 void DataFrame::add(DataFrame& src2){
   for(auto col: this -> columns_){
-  (*(*this)[col]).add((*this)[col]);
+    if((*this)[col] -> isArithmetic())
+      (*(*this)[col]).add((*this)[col]);
   }
 }

@@ -32,3 +32,7 @@ Series* SeriesStr::append(std::string ele){
   size_++;
   return this;
 }
+
+bool SeriesStr::isArithmetic(){
+  return false;
+}
