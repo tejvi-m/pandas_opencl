@@ -110,3 +110,60 @@ void DataFrame::add(DataFrame& src2){
       (*(*this)[col]).add((*this)[col]);
   }
 }
+
+DataFrame DataFrame::operator-(DataFrame& src2){
+    DataFrame newDF;
+    for(auto col: this -> columns_){
+      if((*this)[col] -> isArithmetic())
+        newDF.add((*(*this)[col]) - (*this)[col], col);
+      else
+        newDF.add((*(*this)[col]).copy(), col);
+    }
+    return newDF;
+}
+
+
+void DataFrame::sub(DataFrame& src2){
+  for(auto col: this -> columns_){
+    if((*this)[col] -> isArithmetic())
+      (*(*this)[col]).sub((*this)[col]);
+  }
+}
+
+DataFrame DataFrame::operator*(DataFrame& src2){
+    DataFrame newDF;
+    for(auto col: this -> columns_){
+      if((*this)[col] -> isArithmetic())
+        newDF.add((*(*this)[col]) * (*this)[col], col);
+      else
+        newDF.add((*(*this)[col]).copy(), col);
+    }
+    return newDF;
+}
+
+
+void DataFrame::mul(DataFrame& src2){
+  for(auto col: this -> columns_){
+    if((*this)[col] -> isArithmetic())
+      (*(*this)[col]).mul((*this)[col]);
+  }
+}
+
+DataFrame DataFrame::operator/(DataFrame& src2){
+    DataFrame newDF;
+    for(auto col: this -> columns_){
+      if((*this)[col] -> isArithmetic())
+        newDF.add((*(*this)[col]) / (*this)[col], col);
+      else
+        newDF.add((*(*this)[col]).copy(), col);
+    }
+    return newDF;
+}
+
+
+void DataFrame::div(DataFrame& src2){
+  for(auto col: this -> columns_){
+    if((*this)[col] -> isArithmetic())
+      (*(*this)[col]).div((*this)[col]);
+  }
+}
