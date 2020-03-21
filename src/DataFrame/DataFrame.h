@@ -29,5 +29,6 @@ public:
   void drop(std::string);
   void rename(std::string, std::string);
 
+  std::pair<int, int> shape();
   void printDF();
 };

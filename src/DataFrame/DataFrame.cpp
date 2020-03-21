@@ -66,6 +66,10 @@ void DataFrame::drop(std::string column){
   this -> columns_.erase(indexIt);
 }
 
+std::pair<int, int> DataFrame::shape(){
+    return std::make_pair(this -> columns_.size(), (*this)[0] -> size());
+}
+
 void DataFrame::rename(std::string oldName, std::string newName){
   auto indexIt = std::find(this -> columns_.begin(), this -> columns_.end(), oldName);
   if(indexIt == this -> columns_.end()) return;
