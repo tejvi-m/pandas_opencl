@@ -1,8 +1,8 @@
 #include "helpers.h"
-#include "chlorine.hpp"
-#include "boost/compute.hpp"
+// #include "chlorine.hpp"
+// #include "boost/compute.hpp"
 
-namespace compute = boost::compute;
+// namespace compute = boost::compute;
 
 template <typename T>
 void Add(std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst){
@@ -44,6 +44,14 @@ void Add(std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst){
     // auto event = worker.call("add", src1, src2, dst, n);
     // std::cout << "Elapsed Time: " << ch::elapsed(event) << "ns\n";
 }
+
+template<typename T>
+void Mul(std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst){
+  for(int i = 0; i < src1.size(); i++){
+    dst[i] = src1[i] * src2[i];
+  }
+}
+
 
 template <typename T>
 void print(std::vector<T>& data){

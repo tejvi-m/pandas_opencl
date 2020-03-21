@@ -47,6 +47,12 @@ int main(){
   Series* xaaa = x111+yp;
   xaaa -> show();
 
+  Series* xmaaa = x111 * yp;
+  std::cout << "++++++++++++++++++++" << std::endl;
+  xmaaa -> show();
+  std::cout << "++++++++++++++++++++" << std::endl;
+
+
   SeriesInt x111111({1, 2, 3, 4, 5, 6});
   SeriesInt y111111({1, 2, 3, 4, 5, 6});
 

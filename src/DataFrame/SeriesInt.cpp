@@ -39,6 +39,21 @@ SeriesInt SeriesInt::operator+(Series& src2){
   return dst;
 }
 
+Series* SeriesInt::operator*(Series* src2){
+  Series* dst = new SeriesInt(std::vector<int>(src2 -> getVec(0).size()));
+  Mul<int>(this -> getVec(0), src2 -> getVec(0), dst -> getVec(0));
+  return dst;
+}
+
+void SeriesInt::mul(Series* src2, Series* dst){
+  Mul<int>(this -> getVec(0), src2 -> getVec(0), dst -> getVec(0));
+}
+
+void SeriesInt::mul(Series* src2){
+  Mul<int>(this -> getVec(0), src2 -> getVec(0), this -> getVec(0));
+}
+
+
 int SeriesInt::index(int i){
 
   std::cout <<  "req: " << i;

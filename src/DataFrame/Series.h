@@ -22,6 +22,29 @@ public:
   virtual int index(int){}
 
   virtual Series* operator+(Series*){}
+  virtual void add(Series*, Series*){}
+  virtual void add(Series*){}
+
+  virtual Series* operator-(Series*){}
+  virtual void sub(Series*, Series*){}
+  virtual void sub(Series*){}
+
+  virtual Series* operator*(Series*){}
+  virtual void mul(Series*, Series*){}
+  virtual void mul(Series*){}
+
+  virtual Series* operator/(Series*){}
+  virtual void div(Series*, Series*){}
+  virtual void div(Series*){}
+
+  // all of these are in place
+  // template<typename T>
+  // virtual Series* operator+(T val){}
+  // virtual Series* operator-(T val){}
+  // virtual Series* operator*(T val){}
+  // virtual Series* operator/(T val){}
+  // virtual Series* operator%(T val){}
+
 };
 
 class SeriesInt : public Series{
@@ -37,6 +60,11 @@ public:
   virtual void show();
   virtual void Index();
   virtual vTypes operator[](int i);
+
+  virtual Series* operator*(Series* src2);
+  virtual void mul(Series* src2, Series* dst);
+  virtual void mul(Series* src2);
+  
   virtual Series* operator+(Series* src2);
   SeriesInt operator+(Series& src2);
   void add(Series& src2, Series& dst);
