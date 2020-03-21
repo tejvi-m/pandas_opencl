@@ -68,7 +68,7 @@ public:
   virtual void div(Series*);
 
   virtual void sub(Series*);
-  
+
   virtual Series* operator+(Series* src2);
   SeriesInt operator+(Series& src2);
   void add(Series& src2, Series& dst);
@@ -102,4 +102,21 @@ public:
   virtual void show();
   virtual void Index();
   virtual vTypes operator[](int i);
+  virtual int index(float i);
+
+    virtual Series* operator+(Series*);
+    // virtual void add(Series*, Series*);
+    // virtual void add(Series*);
+
+    // virtual Series* operator-(Series*);
+    // virtual void sub(Series*, Series*);
+    virtual void sub(Series*);
+
+    virtual Series* operator*(Series*);
+    virtual void mul(Series*, Series*);
+    virtual void mul(Series*);
+
+    // virtual Series* operator/(Series*);
+    // virtual void div(Series*, Series*);
+    virtual void div(Series*);
 };

@@ -38,8 +38,8 @@ int main(){
   printRow(z);
 
 
-  SeriesInt x111({1, 2, 3, 4});
-  SeriesInt y111({1, 2, 3, 4});
+  SeriesFloat x111({1, 2.2, 2.3, 4});
+  SeriesFloat y111({1, 2, 3, 2.4});
 
   Series* xp = &x111;
   Series* yp = &y111;
@@ -62,11 +62,11 @@ int main(){
   x111.div(yp);
   std::cout << "++++++++++++++++++++" << std::endl;
   x111.show();
-  std::cout << "++++++++++++++++++++" << std::endl;
+  std::cout << "-----" << std::endl;
 // need a function to that works on Series*, Series* - inplace update, though
-  xp.sub(yp);
-  std::cout << "++++++++++++++++++++" << std::endl;
-  x111.show();
+  (*xp).sub(yp);
+  (*xp).show();
+  std::cout << "---" << std::endl;
   std::cout << "++++++++++++++++++++" << std::endl;
 
   return 0;
