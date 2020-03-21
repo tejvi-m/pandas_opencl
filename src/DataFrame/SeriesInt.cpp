@@ -90,3 +90,8 @@ Series* SeriesInt::append(int ele){
 bool SeriesInt::isArithmetic(){
   return true;
 }
+
+template<typename T>
+void SeriesInt::apply(T&& Fn){
+  for_each(this -> getVec(int()).begin(), this -> getVec(int()).end(), Fn);
+}

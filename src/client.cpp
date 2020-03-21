@@ -74,5 +74,8 @@ int main(){
   (*xcp).map(std::unordered_map<float, float>({{1, 0.2}, {4, 0.1}}));
   xcp -> show();
 
+  SeriesInt hell({1, 2, 3, 4, 5, 6});
+  hell.apply([](int& v) {v = -v;});
+  hell.show();
   return 0;
 }

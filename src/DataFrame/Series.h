@@ -91,6 +91,8 @@ public:
   virtual bool isArithmetic();
 
   virtual Series* copy();
+  template<typename T>
+  void apply(T&&);
 };
 
 class SeriesStr : public Series{
