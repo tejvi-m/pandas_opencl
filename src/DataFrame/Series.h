@@ -38,6 +38,11 @@ public:
   virtual void div(Series*){}
 
   virtual Series* copy(){}
+
+  virtual void map(std::unordered_map<std::string, std::string>){}
+  virtual void map(std::unordered_map<int, int>){}
+  virtual void map(std::unordered_map<float, float>){}
+
   // all of these are in place
   // template<typename T>
   // virtual Series* operator+(T val){}
@@ -70,6 +75,8 @@ public:
 
   virtual void sub(Series*);
 
+  virtual void map(std::unordered_map<int, int>);
+
   virtual Series* operator+(Series* src2);
   SeriesInt operator+(Series& src2);
   void add(Series& src2, Series& dst);
@@ -91,6 +98,7 @@ public:
   virtual void show();
   virtual vTypes operator[](int i);
   virtual Series* copy();
+  virtual void map(std::unordered_map<std::string, std::string>);
 };
 
 class SeriesFloat : public Series{
@@ -107,6 +115,8 @@ public:
   virtual void Index();
   virtual vTypes operator[](int i);
   virtual int index(float i);
+
+virtual void map(std::unordered_map<float, float>);
 
     virtual Series* operator+(Series*);
     // virtual void add(Series*, Series*);

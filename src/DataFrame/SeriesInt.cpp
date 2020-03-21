@@ -67,6 +67,10 @@ Series* SeriesInt::copy(){
   return dst;
 }
 
+void SeriesInt::map(std::unordered_map<int, int> umap){
+  MapOp(this -> getVec(int()), umap);
+}
+
 int SeriesInt::index(int i){
 
   std::cout <<  "req: " << i;

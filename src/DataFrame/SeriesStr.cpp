@@ -18,6 +18,10 @@ vTypes SeriesStr::operator[](int i){
   return this -> series_[i];
 }
 
+void SeriesStr::map(std::unordered_map<std::string, std::string> umap){
+  MapOp(this -> getVec(std::string()), umap);
+}
+
 Series* SeriesStr::copy(){
   Series* dst = new SeriesStr(this -> getVec(std::string()));
   return dst;

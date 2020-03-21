@@ -71,7 +71,7 @@ int main(){
   std::cout << "---" << std::endl;
   std::cout << "++++++++++++++++++++" << std::endl;
 
-
+  (*xcp).map(std::unordered_map<float, float>({{1, 0.2}, {4, 0.1}}));
   xcp -> show();
 
   return 0;

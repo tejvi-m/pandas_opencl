@@ -76,6 +76,15 @@ void Mod(std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst){
   }
 }
 
+template<typename T>
+void MapOp(std::vector<T>& vec, std::unordered_map<T, T>& umap){
+  for(int i = 0; i < vec.size(); i++){
+    auto replaced = umap.find(vec[i]);
+    if(replaced != umap.end()) vec[i] = (*replaced).second;
+    // no change if no mapping found
+  }
+}
+
 template <typename T>
 void print(std::vector<T>& data){
   for(int i = 0; i < data.size(); i++){
