@@ -75,3 +75,7 @@ Series* SeriesFloat::append(float ele){
   size_++;
   return this;
 }
+
+void SeriesFloat::add(Series* src){
+  Add<float>(this -> getVec(float()), src -> getVec(float()), this -> getVec(float()));
+}

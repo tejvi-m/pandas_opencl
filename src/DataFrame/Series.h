@@ -81,7 +81,8 @@ public:
 
   virtual Series* operator+(Series* src2);
   SeriesInt operator+(Series& src2);
-  void add(Series& src2, Series& dst);
+  void add(Series& src2);
+  virtual void add(Series* src2);
   virtual Series* append(int ele);
   virtual int index(int i);
 
@@ -129,6 +130,8 @@ virtual void map(std::unordered_map<float, float>);
     // virtual Series* operator-(Series*);
     // virtual void sub(Series*, Series*);
     virtual void sub(Series*);
+
+    virtual void add(Series*);
 
     virtual Series* operator*(Series*);
     virtual void mul(Series*, Series*);

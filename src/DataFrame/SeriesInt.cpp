@@ -29,8 +29,8 @@ Series* SeriesInt::operator+(Series* src2){
   return dst;
 }
 
-void SeriesInt::add(Series& src2, Series& dst){
-  Add<int>(this -> getVec(0), src2.getVec(0), dst.getVec(0));
+void SeriesInt::add(Series* src){
+  Add<int>(this -> getVec(int()), src -> getVec(int()), this -> getVec(int()));
 }
 
 SeriesInt SeriesInt::operator+(Series& src2){
