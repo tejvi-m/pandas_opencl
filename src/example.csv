@@ -1,0 +1,5 @@
+a : INT, b : FLOAT, c : STRING
+1, 2.3443, abc
+1, 2.3434, adc
+4, 52343.4, aerfaerf
+7, 8.43445, aevgav
