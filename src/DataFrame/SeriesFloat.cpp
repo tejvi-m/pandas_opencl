@@ -21,3 +21,9 @@ void SeriesFloat::Index(){
 vTypes SeriesFloat::operator[](int i){
   return this -> series_[i];
 }
+
+Series* SeriesFloat::append(float ele){
+  series_.push_back(ele);
+  size_++;
+  return this;
+}

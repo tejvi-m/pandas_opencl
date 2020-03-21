@@ -17,3 +17,9 @@ void SeriesStr::show(){
 vTypes SeriesStr::operator[](int i){
   return this -> series_[i];
 }
+
+Series* SeriesStr::append(std::string ele){
+  series_.push_back(ele);
+  size_++;
+  return this;
+}

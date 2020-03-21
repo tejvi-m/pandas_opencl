@@ -6,7 +6,6 @@
 using Row = std::vector<std::variant<int, std::string, float>>;
 using vTypes = std::variant<int, std::string, float>;
 
-
 class Series{
 public:
   virtual ~Series(){}
@@ -22,6 +21,9 @@ public:
   virtual int index(int){}
 
   virtual Series* operator+(Series*){}
+  virtual Series* append(int){}
+  virtual Series* append(std::string){}
+  virtual Series* append(float){}
 };
 
 class SeriesInt : public Series{
@@ -38,6 +40,7 @@ public:
   virtual void Index();
   virtual vTypes operator[](int i);
   virtual Series* operator+(Series* src2);
+  virtual Series* append(int ele);
   virtual int index(int i);
 };
 
@@ -53,6 +56,7 @@ public:
   virtual long int size();
   virtual void show();
   virtual vTypes operator[](int i);
+  virtual Series* append(std::string);
 };
 
 class SeriesFloat : public Series{
@@ -68,4 +72,5 @@ public:
   virtual void show();
   virtual void Index();
   virtual vTypes operator[](int i);
+  virtual Series* append(float);
 };
