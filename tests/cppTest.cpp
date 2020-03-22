@@ -27,14 +27,14 @@ struct v{
 
 
 int main(){
-  vector<float> v1(99999999 * 2), v2(99999999 * 2);
+  vector<int> v1(99999999 * 2), v2(99999999 * 2);
   std::generate(v1.begin(), v1.end(), std::rand);
   std::generate(v2.begin(), v2.end(), std::rand);
   std::replace(v2.begin(), v2.end(), 0.0, 0.1);
 
 
-  DataFrame d1({new SeriesFloat(v1)}, {"a"});
-  DataFrame d2({new SeriesFloat(v2)}, {"a"});
+  DataFrame d1({new SeriesInt(v1)}, {"a"});
+  DataFrame d2({new SeriesInt(v2)}, {"a"});
 
   auto clock1 = clock();
   d1.div(d2);
@@ -72,6 +72,12 @@ int main(){
   d2.transform(d());
   clock2 = clock();
   cout << "transform:" << (float)(clock2 - clock1)/CLOCKS_PER_SEC << endl;
+
+
+  clock1 = clock();
+  auto d3 = d1.copy();
+  clock2 = clock();
+  cout << "copy" << (float)(clock2 - clock1)/CLOCKS_PER_SEC << endl;
 
   return 0;
 }

@@ -34,9 +34,10 @@ int main(){
     auto z = y + x;
     z.printDF();
 
+    std::cout << "addition\n";
     y.add(x);
     y.printDF();
-
+    std::cout << "done\n";
     auto z1 = y - x;
     z1.printDF();
 
