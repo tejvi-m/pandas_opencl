@@ -1,5 +1,8 @@
 #include "DataFrame.h"
 #include <iostream>
+#include <fstream>
+#include <stdexcept> 
+#include <sstream> 
 
 DataFrame::DataFrame(): dataframe_({}), columns_({}), index_(""){}
 
@@ -196,4 +199,85 @@ std::vector<std::pair<std::string, float>> DataFrame::apply(T&& Fn){
     }
   }
   return results;
+}
+
+DataFrame::DataFrame(const std::string filename)
+{
+    std::ifstream myFile(filename);
+    if(!myFile.is_open()) throw std::runtime_error("Could not open file");
+
+    std::string line, col;
+    std::string val;
+
+    /*
+    The first of line input contains the column name and type in the format:
+    Col_Name : DType, Col_Name : DType, ...
+    where DType = INT, FLOAT, STRING
+    */
+    if(myFile.good())
+    {
+        std::vector<int> dtypes;
+
+        // Extract the first line in the file
+        std::getline(myFile, line);
+        std::stringstream ss(line);
+
+        while(std::getline(ss, col, ','))
+        { 
+            std::stringstream ss1(col);
+            ss1 >> val; //Column Name
+            columns_.push_back(val);
+            ss1 >> val; // ':' character
+            ss1 >> val; //DType
+            if(!(val.compare("INT")))
+            {    
+                dataframe_.push_back(new SeriesInt());
+                dtypes.push_back(1);
+            }
+            else if(!(val.compare("FLOAT")))
+            {
+                dataframe_.push_back(new SeriesFloat());
+                dtypes.push_back(0);
+            }
+            else if(!(val.compare("STRING")))
+            {
+                dataframe_.push_back(new SeriesStr());
+                dtypes.push_back(2);
+            }
+            else 
+                throw std::runtime_error("Invalid data type");
+        }
+
+        int i;
+        int ival;
+        std::string sval;
+        float fval;
+        
+        while(std::getline(myFile, line))
+        {
+            std::stringstream ss(line);
+            i = 0;
+            while(std::getline(ss, col, ','))
+            { 
+                std::stringstream ss1(col);
+                switch (dtypes[i])
+                {
+                    case 0:
+                        ss1 >> fval;
+                        dataframe_[i]->append(fval);
+                        break;
+                    case 1:
+                        ss1 >> ival;
+                        dataframe_[i]->append(ival);
+                        break;
+                    case 2:
+                        ss1 >> sval;
+                        dataframe_[i]->append(sval);
+                        break;
+                }
+                i++;
+            }
+        }
+    }
+    myFile.close();     
 }
