@@ -111,6 +111,6 @@ void printRow(Row data){
 }
 
 template<typename T, typename F>
-void apply(std::vector<T>& vec, F&& fn){
+void Apply(std::vector<T>& vec, F&& fn){
   for_each(vec.begin(), vec.end(), fn);
 }

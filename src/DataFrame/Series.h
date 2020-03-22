@@ -98,6 +98,9 @@ public:
 
   template<typename T>
   void transform(T&&);
+
+  template<typename R = int, typename F>
+  R apply(F&&);
 };
 
 class SeriesStr : public Series{
@@ -165,4 +168,8 @@ virtual void map(std::unordered_map<float, float>);
   void transform(T&&);
 
   virtual vTypes type();
+
+
+  template<typename R = int, typename F>
+  R apply(F&&);
 };

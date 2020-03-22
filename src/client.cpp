@@ -3,6 +3,26 @@
 #include "DataFrame/SeriesInt.cpp"
 #include "DataFrame/SeriesFloat.cpp"
 #include "DataFrame/SeriesStr.cpp"
+#include <numeric>
+
+template<typename T>
+struct Sum{
+  float operator()(std::vector<T>& vec){
+    // std::cout <<"death" ;
+      T x = std::accumulate(vec.begin(), vec.end(), 0);
+      return x;
+  }
+};
+
+template<typename T>
+struct Mean{
+  float operator()(std::vector<T>& vec){
+    // std::cout <<"death" ;
+      float x = std::accumulate(vec.begin(), vec.end(), 0) / (float) vec.size();
+      return x;
+  }
+};
+
 
 int main(){
   DataFrame x({new SeriesInt({1, 2, 3}), new SeriesStr({"11", "22", "22"}), new SeriesInt({0, 0, 0})}, {"a", "b", "c"}, "a");
@@ -77,5 +97,8 @@ int main(){
   SeriesInt hell({1, 2, 3, 4, 5, 6});
   hell.transform([](int& v) {v = -v;});
   hell.show();
+
+  std::cout << hell.apply(Sum<int>()) << std::endl;
+  std::cout << hell.apply(Mean<int>());
   return 0;
 }

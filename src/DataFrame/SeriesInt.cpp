@@ -100,3 +100,8 @@ void SeriesInt::transform(T&& Fn){
 vTypes SeriesInt::type(){
   return int();
 }
+
+template<typename R = int, typename F>
+R SeriesInt::apply(F&& Fn){
+    return Fn(this -> getVec(0));
+}

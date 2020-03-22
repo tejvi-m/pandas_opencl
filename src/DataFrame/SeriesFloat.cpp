@@ -92,3 +92,8 @@ void SeriesFloat::transform(T&& Fn){
 vTypes SeriesFloat::type(){
   return float();
 }
+
+template<typename R = int, typename F>
+R SeriesFloat::apply(F&& Fn){
+    return Fn(this -> getVec(0));
+}
