@@ -46,6 +46,12 @@ public:
 
   template<typename T>
   void transform(T&&);
+
+
+  template<typename T>
+  std::vector<std::pair<std::string, float>> apply(T&&);
+
+
   std::pair<int, int> shape();
   void printDF();
 };

@@ -178,6 +178,22 @@ void DataFrame::transform(F&& fn){
     else if(std::holds_alternative<float>(x)){
       std::for_each((*this)[col] -> getVec(float()).begin(), (*this)[col] -> getVec(float()).end(), fn);
     }
-
   }
+}
+
+template<typename T>
+std::vector<std::pair<std::string, float>> DataFrame::apply(T&& Fn){
+  std::vector<std::pair<std::string, float>> results;
+  for(auto col: this -> columns_){
+    vTypes x = ((*this)[col]) -> type();
+    if(std::holds_alternative<int>(x)){
+      float res = Fn((*this)[col] -> getVec(int()));
+      results.push_back(std::make_pair(col, res));
+    }
+    else if(std::holds_alternative<float>(x)){
+      float res = Fn((*this)[col] -> getVec(float()));
+      results.push_back(std::make_pair(col, res));
+    }
+  }
+  return results;
 }

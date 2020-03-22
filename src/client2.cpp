@@ -1,9 +1,18 @@
 #include "file.cpp"
+#include <numeric>
 
 struct d{
   template<typename T>
   void operator()(T& x){
     x = -x;
+  }
+};
+
+struct v{
+  template<typename T>
+  float operator()(std::vector<T>& data){
+    float x = std::accumulate(data.begin(), data.end(), 0.0);
+    return x;
   }
 };
 
@@ -52,5 +61,10 @@ int main(){
     hell.transform(d());
     hell.printDF();
 
+    std::cout << "application\n";
+    auto res = hell.apply(v());
+    for(auto x: res){
+      std::cout << x.first << x.second << std::endl;
+    }
     return 0;
 }
