@@ -70,8 +70,8 @@ Series* SeriesFloat::copy(){
   return dst;
 }
 
-Series* SeriesFloat::append(float ele){
-  series_.push_back(ele);
+Series* SeriesFloat::append(vTypes ele){
+  series_.push_back(std::get<2>(ele));
   size_++;
   return this;
 }

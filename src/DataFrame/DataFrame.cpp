@@ -201,6 +201,12 @@ std::vector<std::pair<std::string, float>> DataFrame::apply(T&& Fn){
   return results;
 }
 
+std::stringstream& operator>>(std::stringstream& os, vTypes *v) 
+{
+  std::visit([&os](auto &e){ os >> e; }, *v);
+  return os;
+}
+
 DataFrame::DataFrame(const std::string filename)
 {
     std::ifstream myFile(filename);
@@ -217,6 +223,7 @@ DataFrame::DataFrame(const std::string filename)
     if(myFile.good())
     {
         std::vector<int> dtypes;
+        std::vector<Series *> data;
 
         // Extract the first line in the file
         std::getline(myFile, line);
@@ -229,52 +236,26 @@ DataFrame::DataFrame(const std::string filename)
             columns_.push_back(val);
             ss1 >> val; // ':' character
             ss1 >> val; //DType
-            if(!(val.compare("INT")))
-            {    
+            if(!(val.compare("INT")))  
                 dataframe_.push_back(new SeriesInt());
-                dtypes.push_back(1);
-            }
             else if(!(val.compare("FLOAT")))
-            {
                 dataframe_.push_back(new SeriesFloat());
-                dtypes.push_back(0);
-            }
             else if(!(val.compare("STRING")))
-            {
                 dataframe_.push_back(new SeriesStr());
-                dtypes.push_back(2);
-            }
             else 
                 throw std::runtime_error("Invalid data type");
         }
-
-        int i;
-        int ival;
-        std::string sval;
-        float fval;
-        
+        int i;       
         while(std::getline(myFile, line))
         {
             std::stringstream ss(line);
             i = 0;
             while(std::getline(ss, col, ','))
-            { 
+            {    
+                vTypes v = dataframe_[i]->type();
                 std::stringstream ss1(col);
-                switch (dtypes[i])
-                {
-                    case 0:
-                        ss1 >> fval;
-                        dataframe_[i]->append(fval);
-                        break;
-                    case 1:
-                        ss1 >> ival;
-                        dataframe_[i]->append(ival);
-                        break;
-                    case 2:
-                        ss1 >> sval;
-                        dataframe_[i]->append(sval);
-                        break;
-                }
+                std::visit([&ss1](auto &e){ ss1 >> e; }, v);
+                dataframe_[i]->append(v);
                 i++;
             }
         }
