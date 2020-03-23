@@ -51,9 +51,7 @@ public:
   // virtual Series* operator/(T val){}
   // virtual Series* operator%(T val){}
 
-  virtual Series* append(int){}
-  virtual Series* append(std::string){}
-  virtual Series* append(float){}
+  virtual Series* append(vTypes){}
 
   virtual vTypes type(){}
 };
@@ -87,7 +85,7 @@ public:
   SeriesInt operator+(Series& src2);
   void add(Series& src2);
   virtual void add(Series* src2);
-  virtual Series* append(int ele);
+  virtual Series* append(vTypes);
   virtual int index(int i);
 
   virtual bool isArithmetic();
@@ -117,7 +115,8 @@ public:
   virtual vTypes operator[](int i);
   virtual Series* copy();
   virtual void map(std::unordered_map<std::string, std::string>);
-  virtual Series* append(std::string);
+  virtual Series* append(vTypes);
+
   virtual bool isArithmetic();
 
   virtual vTypes type();
@@ -160,7 +159,7 @@ virtual void map(std::unordered_map<float, float>);
     virtual void div(Series*);
 
     virtual Series* copy();
-  virtual Series* append(float);
+  virtual Series* append(vTypes);
 
   virtual bool isArithmetic();
 

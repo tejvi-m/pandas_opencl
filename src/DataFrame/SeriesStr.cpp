@@ -27,8 +27,8 @@ Series* SeriesStr::copy(){
   return dst;
 }
 
-Series* SeriesStr::append(std::string ele){
-  series_.push_back(ele);
+Series* SeriesStr::append(vTypes ele){
+  series_.push_back(std::get<1>(ele));
   size_++;
   return this;
 }
