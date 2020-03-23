@@ -1,3 +1,7 @@
 *.out
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
 data/*
 src/DataFrame/*.hpp

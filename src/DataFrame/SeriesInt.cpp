@@ -490,8 +490,8 @@ int SeriesInt::index(int i){
   return -1;
 }
 
-Series* SeriesInt::append(int ele){
-  series_.push_back(ele);
+Series* SeriesInt::append(vTypes ele){
+  series_.push_back(std::get<0>(ele));
   size_++;
   return this;
 }

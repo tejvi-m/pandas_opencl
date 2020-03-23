@@ -1,5 +1,8 @@
 #include "DataFrame.h"
 #include <iostream>
+#include <fstream>
+#include <stdexcept> 
+#include <sstream> 
 
 DataFrame::DataFrame(): dataframe_({}), columns_({}), index_(""){}
 
@@ -196,4 +199,66 @@ std::vector<std::pair<std::string, float>> DataFrame::apply(T&& Fn){
     }
   }
   return results;
+}
+
+std::stringstream& operator>>(std::stringstream& os, vTypes *v) 
+{
+  std::visit([&os](auto &e){ os >> e; }, *v);
+  return os;
+}
+
+DataFrame::DataFrame(const std::string filename)
+{
+    std::ifstream myFile(filename);
+    if(!myFile.is_open()) throw std::runtime_error("Could not open file");
+
+    std::string line, col;
+    std::string val;
+
+    /*
+    The first of line input contains the column name and type in the format:
+    Col_Name : DType, Col_Name : DType, ...
+    where DType = INT, FLOAT, STRING
+    */
+    if(myFile.good())
+    {
+        std::vector<int> dtypes;
+        std::vector<Series *> data;
+
+        // Extract the first line in the file
+        std::getline(myFile, line);
+        std::stringstream ss(line);
+
+        while(std::getline(ss, col, ','))
+        { 
+            std::stringstream ss1(col);
+            ss1 >> val; //Column Name
+            columns_.push_back(val);
+            ss1 >> val; // ':' character
+            ss1 >> val; //DType
+            if(!(val.compare("INT")))  
+                dataframe_.push_back(new SeriesInt());
+            else if(!(val.compare("FLOAT")))
+                dataframe_.push_back(new SeriesFloat());
+            else if(!(val.compare("STRING")))
+                dataframe_.push_back(new SeriesStr());
+            else 
+                throw std::runtime_error("Invalid data type");
+        }
+        int i;       
+        while(std::getline(myFile, line))
+        {
+            std::stringstream ss(line);
+            i = 0;
+            while(std::getline(ss, col, ','))
+            {    
+                vTypes v = dataframe_[i]->type();
+                std::stringstream ss1(col);
+                std::visit([&ss1](auto &e){ ss1 >> e; }, v);
+                dataframe_[i]->append(v);
+                i++;
+            }
+        }
+    }
+    myFile.close();     
 }

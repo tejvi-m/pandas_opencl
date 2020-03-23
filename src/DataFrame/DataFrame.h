@@ -14,8 +14,8 @@ private:
 
 public:
   DataFrame();
-
   DataFrame(std::vector<Series *>, std::vector<std::string>, std::string);
+  DataFrame(std::string); //read csv
 
   Series* operator[](int);
   Series* operator[](std::string);
