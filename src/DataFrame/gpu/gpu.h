@@ -10,9 +10,11 @@ struct GPU{
   cl_program program;
   size_t globalSize, localSize;
   cl_int err;
+  bool use_gpu = false;
 };
 
 GPU gpu;
+
 
 void setup();
 
