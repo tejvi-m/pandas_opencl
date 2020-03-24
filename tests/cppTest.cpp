@@ -28,6 +28,7 @@ struct v{
 
 int main(int argc, char *argv[]){
   vector<int> v1(atoi(argv[1]) * 2), v2(atoi(argv[1]) * 2);
+  setup();
   std::generate(v1.begin(), v1.end(), std::rand);
   std::generate(v2.begin(), v2.end(), std::rand);
   // // std::replace(v2.begin(), v2.end(), 0.0, 0.1);

@@ -60,11 +60,11 @@ void gpuArithmetic(std::string operation, T* src1, T* src2, T* dst, int n, bool 
   cl_mem d_b;
   cl_mem d_c;
 
-  setup();
+  // setup();
 
   cl_kernel kernel;
 
-
+  std::cout << "int gpu" << std::endl;
   size_t bytes = n * sizeof(T);
   kernel = clCreateKernel(gpu.program, operation.c_str() , &gpu.err);
   gpu.globalSize = ceil(n/(float)gpu.localSize)*gpu.localSize;
