@@ -1,3 +1,5 @@
+// int model = 2;
+
 SeriesFloat::SeriesFloat(): size_(float()){};
 
 SeriesFloat::SeriesFloat(std::vector<float> data): series_(data), size_(data.size()){};
@@ -38,16 +40,25 @@ void SeriesFloat::mul(Series* src2, Series* dst){
   Mul<float>(this -> getVec(float()), src2 -> getVec(float()), dst -> getVec(float()));
 }
 
-void SeriesFloat::mul(Series* src2){
-  Mul<float>(this -> getVec(float()), src2 -> getVec(float()), this -> getVec(float()));
+void SeriesFloat::mul(Series* src){
+  if(gpu.use_gpu){
+    redirectToGPU("vecMulFloat", this -> getVec(float()), src -> getVec(float()), this -> getVec(float()), model);
+  }
+  Mul<float>(this -> getVec(float()), src -> getVec(float()), this -> getVec(float()));
 }
 
-void SeriesFloat::div(Series* src2){
-  Div<float>(this -> getVec(float()), src2 -> getVec(float()), this -> getVec(float()));
+void SeriesFloat::div(Series* src){
+  if(gpu.use_gpu){
+    redirectToGPU("vecDivFloat", this -> getVec(float()), src -> getVec(float()), this -> getVec(float()), model);
+  }
+  Div<float>(this -> getVec(float()), src -> getVec(float()), this -> getVec(float()));
 }
 
-void SeriesFloat::sub(Series* src2){
-  Sub<float>(this -> getVec(float()), src2 -> getVec(float()), this -> getVec(float()));
+void SeriesFloat::sub(Series* src){
+  if(gpu.use_gpu){
+    redirectToGPU("vecSubFloat", this -> getVec(float()), src -> getVec(float()), this -> getVec(float()), model);
+  }
+  Sub<float>(this -> getVec(float()), src -> getVec(float()), this -> getVec(float()));
 }
 
 int SeriesFloat::index(float i){
@@ -81,7 +92,11 @@ bool SeriesFloat::isArithmetic(){
 }
 
 void SeriesFloat::add(Series* src){
-  Add<float>(this -> getVec(float()), src -> getVec(float()), this -> getVec(float()));
+  if(gpu.use_gpu){
+    redirectToGPU("vecAddFloat", this -> getVec(float()), src -> getVec(float()), this -> getVec(float()), model);
+  }
+  else
+    Add<float>(this -> getVec(float()), src -> getVec(float()), this -> getVec(float()));
 }
 
 template<typename T>

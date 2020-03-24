@@ -1,8 +1,5 @@
 
-// #include "gpu/gpu.cpp"
-#include <cmath>
-
-int model = 2;
+int model = 0;
 
 SeriesInt::SeriesInt(): size_(0){};
 
@@ -71,7 +68,6 @@ void SeriesInt::mul(Series* src){
 void SeriesInt::div(Series* src){
   if(gpu.use_gpu){
     redirectToGPU("vecDivInt", this -> getVec(int()), src -> getVec(int()), this -> getVec(int()), model);
-
   }
   else
       Div<int>(this -> getVec(0), src -> getVec(0), this -> getVec(0));
