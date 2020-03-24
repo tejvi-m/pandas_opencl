@@ -74,7 +74,7 @@ void gpu_add0(int* array, int* array1,  int n){
   size_t globalSize, localSize;
   cl_int err;
 
-  std::cout << "in gpu \n";
+  // std::cout << "in gpu \n";
 
   // Number of work items in each local work group
   localSize = 512;
@@ -171,7 +171,7 @@ void gpu_add1(int* array, int* array1,  int n){
   size_t globalSize, localSize;
   cl_int err;
 
-  std::cout << "in gpu \n";
+  // std::cout << "in gpu \n";
 
   // Number of work items in each local work group
   localSize = 512;
@@ -268,7 +268,7 @@ void gpu_add2(int* array, int* array1,  int n){
   size_t globalSize, localSize;
   cl_int err;
 
-  std::cout << "in gpu \n";
+  // std::cout << "in gpu \n";
 
   // Number of work items in each local work group
   localSize = 512;
@@ -365,7 +365,7 @@ void gpu_add(int* array, int* array1,  int n){
   size_t globalSize, localSize;
   cl_int err;
 
-  std::cout << "in gpu \n";
+  // std::cout << "in gpu \n";
 
   // Number of work items in each local work group
   localSize = 512;
@@ -435,8 +435,8 @@ void gpu_add(int* array, int* array1,  int n){
 
 }
 void SeriesInt::add(Series* src){
-  if(0){
-    gpu_add0(&(this -> getVec(int())[0]), &(src -> getVec(int())[0]), this -> getVec(int()).size());
+  if(1){
+    gpu_add(&(this -> getVec(int())[0]), &(src -> getVec(int())[0]), this -> getVec(int()).size());
   }
   else
     Add<int>(this -> getVec(int()), src -> getVec(int()), this -> getVec(int()));

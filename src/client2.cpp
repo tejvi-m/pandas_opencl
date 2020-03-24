@@ -1,4 +1,8 @@
-#include "file.cpp"
+#include "DataFrame/DataFrame.cpp"
+#include "DataFrame/helpers.cpp"
+#include "DataFrame/SeriesInt.cpp"
+#include "DataFrame/SeriesFloat.cpp"
+#include "DataFrame/SeriesStr.cpp"
 #include <numeric>
 
 struct d{
@@ -17,7 +21,7 @@ struct v{
 };
 
 int main(){
-    DataFrame x = read_csv("./src/example.csv");
+    DataFrame x("./src/example.csv");
     x["a"] -> show();
 
     auto  y = x.copy();
@@ -56,7 +60,7 @@ int main(){
     z3.div(x);
     z3.printDF();
 
-    DataFrame hell = read_csv("./src/example.csv");
+    DataFrame hell("./src/example.csv");
     hell.printDF();
     std::cout <<"tan" << std::endl;
     hell.transform(d());
