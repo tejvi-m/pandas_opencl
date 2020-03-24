@@ -2,7 +2,7 @@
 // #include "gpu/gpu.cpp"
 #include <cmath>
 
-int model = 4;
+int model = 2;
 
 SeriesInt::SeriesInt(): size_(0){};
 
@@ -61,9 +61,8 @@ void SeriesInt::mul(Series* src2, Series* dst){
 
 void SeriesInt::mul(Series* src){
   if(gpu.use_gpu){
-      gpuArithmetic("vecMulInt",&(this -> getVec(int())[0]), &(src -> getVec(int())[0]), &(this -> getVec(int())[0]),
-                this -> getVec(int()).size(), true, NULL, NULL, NULL,
-                 CL_MEM_READ_ONLY,  CL_MEM_WRITE_ONLY);
+    redirectToGPU("vecMulInt", this -> getVec(int()), src -> getVec(int()), this -> getVec(int()), model);
+
   }
   else
       Mul<int>(this -> getVec(0), src -> getVec(0), this -> getVec(0));
@@ -71,9 +70,8 @@ void SeriesInt::mul(Series* src){
 
 void SeriesInt::div(Series* src){
   if(gpu.use_gpu){
-      gpuArithmetic("vecDivInt",&(this -> getVec(int())[0]), &(src -> getVec(int())[0]), &(this -> getVec(int())[0]),
-                this -> getVec(int()).size(), true, NULL, NULL, NULL,
-                 CL_MEM_READ_ONLY,  CL_MEM_WRITE_ONLY);
+    redirectToGPU("vecDivInt", this -> getVec(int()), src -> getVec(int()), this -> getVec(int()), model);
+
   }
   else
       Div<int>(this -> getVec(0), src -> getVec(0), this -> getVec(0));
@@ -81,9 +79,8 @@ void SeriesInt::div(Series* src){
 
 void SeriesInt::sub(Series* src){
   if(gpu.use_gpu){
-    gpuArithmetic("vecSubInt",&(this -> getVec(int())[0]), &(src -> getVec(int())[0]), &(this -> getVec(int())[0]),
-                this -> getVec(int()).size(), true, NULL, NULL, NULL,
-                 CL_MEM_READ_ONLY,  CL_MEM_WRITE_ONLY);
+    redirectToGPU("vecSubInt", this -> getVec(int()), src -> getVec(int()), this -> getVec(int()), model);
+
   }
   else
       Sub<int>(this -> getVec(0), src -> getVec(0), this -> getVec(0));
