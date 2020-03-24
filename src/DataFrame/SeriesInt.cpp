@@ -450,7 +450,9 @@ void gpu_add(int* array, int* array1,  int n){
 }
 void SeriesInt::add(Series* src){
   if(1){
-    gpu_add(&(this -> getVec(int())[0]), &(src -> getVec(int())[0]), this -> getVec(int()).size());
+    gpuArithmetic("vecMul",&(this -> getVec(int())[0]), &(src -> getVec(int())[0]), &(this -> getVec(int())[0]),
+                this -> getVec(int()).size(), true, NULL, NULL, NULL,
+                 CL_MEM_READ_ONLY,  CL_MEM_WRITE_ONLY);
   }
   else
     Add<int>(this -> getVec(int()), src -> getVec(int()), this -> getVec(int()));
