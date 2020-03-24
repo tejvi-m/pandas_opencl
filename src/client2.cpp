@@ -23,6 +23,7 @@ struct v{
 int main(){
     DataFrame x("./src/example.csv");
     x["a"] -> show();
+    setup();
 
     auto  y = x.copy();
     std::cout << x.shape().first;

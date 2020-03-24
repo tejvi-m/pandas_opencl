@@ -1,6 +1,9 @@
 
-#include "gpu/gpu.cpp"
+// #include "gpu/gpu.cpp"
 #include <cmath>
+
+int model = 4;
+
 SeriesInt::SeriesInt(): size_(0){};
 
 // int gpu = 1;
@@ -34,10 +37,8 @@ Series* SeriesInt::operator+(Series* src2){
 
 void SeriesInt::add(Series* src){
   if(gpu.use_gpu){
-    gpuArithmetic("vecAddInt",&(this -> getVec(int())[0]), &(src -> getVec(int())[0]), &(this -> getVec(int())[0]),
-                this -> getVec(int()).size(), true, NULL, NULL, NULL,
-                 CL_MEM_READ_ONLY,  CL_MEM_WRITE_ONLY);
-  }
+      redirectToGPU("vecAddInt", this -> getVec(int()), src -> getVec(int()), this -> getVec(int()), model);
+    }
   else
     Add<int>(this -> getVec(int()), src -> getVec(int()), this -> getVec(int()));
 }

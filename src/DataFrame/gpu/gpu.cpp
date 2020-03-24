@@ -32,7 +32,12 @@ void setup(){
 
 
 /*
-Model 1:
+Model 1: use
+read: false
+hostptrs: src1, src2, src1
+flags: use
+
+Model 0:
 read: true
 hostptrs: NULL
 flags: read only, write only
@@ -42,10 +47,6 @@ read: true
 hostptrs: NULL
 flags: alloc host ptr for both
 
-Model 3: use
-read: false
-hostptrs: src1, src2, src1
-flags: use
 
 model 4: copy
 read: false
