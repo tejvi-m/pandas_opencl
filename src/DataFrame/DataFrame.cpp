@@ -1,8 +1,8 @@
 #include "DataFrame.h"
 #include <iostream>
 #include <fstream>
-#include <stdexcept> 
-#include <sstream> 
+#include <stdexcept>
+#include <sstream>
 
 DataFrame::DataFrame(): dataframe_({}), columns_({}), index_(""){}
 
@@ -99,7 +99,7 @@ DataFrame DataFrame::operator+(DataFrame& src2){
     DataFrame newDF;
     for(auto col: this -> columns_){
       if((*this)[col] -> isArithmetic())
-        newDF.add((*(*this)[col]) + (*this)[col], col);
+        newDF.add((*(*this)[col]) + src2[col], col);
       else
         newDF.add((*(*this)[col]).copy(), col);
     }
@@ -110,7 +110,7 @@ DataFrame DataFrame::operator+(DataFrame& src2){
 void DataFrame::add(DataFrame& src2){
   for(auto col: this -> columns_){
     if((*this)[col] -> isArithmetic())
-      (*(*this)[col]).add((*this)[col]);
+      (*(*this)[col]).add(src2[col]);
   }
 }
 
@@ -118,7 +118,7 @@ DataFrame DataFrame::operator-(DataFrame& src2){
     DataFrame newDF;
     for(auto col: this -> columns_){
       if((*this)[col] -> isArithmetic())
-        newDF.add((*(*this)[col]) - (*this)[col], col);
+        newDF.add((*(*this)[col]) - src2[col], col);
       else
         newDF.add((*(*this)[col]).copy(), col);
     }
@@ -129,7 +129,7 @@ DataFrame DataFrame::operator-(DataFrame& src2){
 void DataFrame::sub(DataFrame& src2){
   for(auto col: this -> columns_){
     if((*this)[col] -> isArithmetic())
-      (*(*this)[col]).sub((*this)[col]);
+      (*(*this)[col]).sub(src2[col]);
   }
 }
 
@@ -137,7 +137,7 @@ DataFrame DataFrame::operator*(DataFrame& src2){
     DataFrame newDF;
     for(auto col: this -> columns_){
       if((*this)[col] -> isArithmetic())
-        newDF.add((*(*this)[col]) * (*this)[col], col);
+        newDF.add((*(*this)[col]) * src2[col], col);
       else
         newDF.add((*(*this)[col]).copy(), col);
     }
@@ -148,7 +148,7 @@ DataFrame DataFrame::operator*(DataFrame& src2){
 void DataFrame::mul(DataFrame& src2){
   for(auto col: this -> columns_){
     if((*this)[col] -> isArithmetic())
-      (*(*this)[col]).mul((*this)[col]);
+      (*(*this)[col]).mul(src2[col]);
   }
 }
 
@@ -156,7 +156,7 @@ DataFrame DataFrame::operator/(DataFrame& src2){
     DataFrame newDF;
     for(auto col: this -> columns_){
       if((*this)[col] -> isArithmetic())
-        newDF.add((*(*this)[col]) / (*this)[col], col);
+        newDF.add((*(*this)[col]) / src2[col], col);
       else
         newDF.add((*(*this)[col]).copy(), col);
     }
@@ -167,7 +167,7 @@ DataFrame DataFrame::operator/(DataFrame& src2){
 void DataFrame::div(DataFrame& src2){
   for(auto col: this -> columns_){
     if((*this)[col] -> isArithmetic())
-      (*(*this)[col]).div((*this)[col]);
+      (*(*this)[col]).div(src2[col]);
   }
 }
 
@@ -201,7 +201,7 @@ std::vector<std::pair<std::string, float>> DataFrame::apply(T&& Fn){
   return results;
 }
 
-std::stringstream& operator>>(std::stringstream& os, vTypes *v) 
+std::stringstream& operator>>(std::stringstream& os, vTypes *v)
 {
   std::visit([&os](auto &e){ os >> e; }, *v);
   return os;
@@ -230,28 +230,28 @@ DataFrame::DataFrame(const std::string filename)
         std::stringstream ss(line);
 
         while(std::getline(ss, col, ','))
-        { 
+        {
             std::stringstream ss1(col);
             ss1 >> val; //Column Name
             columns_.push_back(val);
             ss1 >> val; // ':' character
             ss1 >> val; //DType
-            if(!(val.compare("INT")))  
+            if(!(val.compare("INT")))
                 dataframe_.push_back(new SeriesInt());
             else if(!(val.compare("FLOAT")))
                 dataframe_.push_back(new SeriesFloat());
             else if(!(val.compare("STRING")))
                 dataframe_.push_back(new SeriesStr());
-            else 
+            else
                 throw std::runtime_error("Invalid data type");
         }
-        int i;       
+        int i;
         while(std::getline(myFile, line))
         {
             std::stringstream ss(line);
             i = 0;
             while(std::getline(ss, col, ','))
-            {    
+            {
                 vTypes v = dataframe_[i]->type();
                 std::stringstream ss1(col);
                 std::visit([&ss1](auto &e){ ss1 >> e; }, v);
@@ -260,5 +260,5 @@ DataFrame::DataFrame(const std::string filename)
             }
         }
     }
-    myFile.close();     
+    myFile.close();
 }
