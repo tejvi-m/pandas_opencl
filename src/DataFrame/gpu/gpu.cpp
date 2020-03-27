@@ -9,7 +9,7 @@ void setup(){
     std::ifstream in("./src/DataFrame/gpu/src.cl");
     if(!in.is_open()) throw std::runtime_error("Could not open file");
 
-    gpu.localSize = 512;
+    gpu.localSize = 64;
 
     std::string contents((std::istreambuf_iterator<char>(in)),
                         std::istreambuf_iterator<char>());
@@ -65,7 +65,7 @@ void gpuArithmetic(std::string operation, T* src1, T* src2, T* dst, int n, bool 
 
   cl_kernel kernel;
 
-  std::cout << "int gpu" << std::endl;
+  std::cout << "running on gpu: "<< operation << std::endl;
   size_t bytes = n * sizeof(T);
   kernel = clCreateKernel(gpu.program, operation.c_str() , &gpu.err);
   gpu.globalSize = ceil(n/(float)gpu.localSize)*gpu.localSize;
@@ -95,8 +95,8 @@ void gpuArithmetic(std::string operation, T* src1, T* src2, T* dst, int n, bool 
   clReleaseMemObject(d_a);
   clReleaseMemObject(d_b);
   clReleaseMemObject(d_c);
-  clReleaseProgram(gpu.program);
+  // clReleaseProgram(gpu.program);
   clReleaseKernel(kernel);
-  clReleaseCommandQueue(gpu.queue);
-  clReleaseContext(gpu.context);
+  // clReleaseCommandQueue(gpu.queue);
+  // clReleaseContext(gpu.context);
 }
