@@ -10,7 +10,7 @@ void setup(){
     std::ifstream in("./src/DataFrame/gpu/src.cl");
     if(!in.is_open()) throw std::runtime_error("Could not open file");
 
-    gpu.localSize = 64;
+    gpu.localSize = 32;
 
     std::string contents((std::istreambuf_iterator<char>(in)),
                         std::istreambuf_iterator<char>());
@@ -56,7 +56,15 @@ flags: CL_MEM_ALLOC_HOST_PTR | CL_MEM_COPY_HOST_PTR, CL_MEM_ALLOC_HOST_PTR
 */
 
 template<typename T>
-void gpuArithmetic(std::string operation, T* src1, T* src2, T* dst, int n, bool read = true, void* hostPtr1 = NULL, void* hostPtr2 = NULL, void* hostPtr3 = NULL, cl_mem_flags memFlagsSrc = CL_MEM_READ_ONLY, cl_mem_flags memFlagsDst = CL_MEM_WRITE_ONLY){
+void gpuArithmetic(std::string operation,
+                  T* src1, T* src2,
+                  T* dst,
+                  int n,
+                  bool read = true,
+                  void* hostPtr1 = NULL, void* hostPtr2 = NULL,
+                  void* hostPtr3 = NULL,
+                  cl_mem_flags memFlagsSrc = CL_MEM_READ_ONLY,
+                  cl_mem_flags memFlagsDst = CL_MEM_WRITE_ONLY){
 
   cl_mem d_a;
   cl_mem d_b;
