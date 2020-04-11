@@ -128,6 +128,8 @@ void runGeneratedKernel(std::string Kernel, T* src1, T* src2,
 
   gpu.program = clCreateProgramWithSource(gpu.context, 1,
                               (const char **) & Kernel, NULL, &gpu.err);
+  clBuildProgram(gpu.program, 0, NULL, NULL, NULL, NULL);
+
 
   std::string k= "genKernel";
   kernel = clCreateKernel(gpu.program, "genKernel" , &gpu.err);
@@ -135,8 +137,8 @@ void runGeneratedKernel(std::string Kernel, T* src1, T* src2,
 std::cout << "first element" << n << std::endl;
   d_a = clCreateBuffer(gpu.context, memFlagsSrc, bytes, hostPtr1, NULL);
   d_b = clCreateBuffer(gpu.context, memFlagsSrc, bytes, hostPtr2, NULL);
-  d_c = clCreateBuffer(gpu.context, memFlagsDst , bytes, hostPtr3, NULL);
-  d_d = clCreateBuffer(gpu.context, memFlagsDst , bytes, hostPtr3, NULL);
+  d_c = clCreateBuffer(gpu.context, memFlagsDst, bytes, hostPtr3, NULL);
+  d_d = clCreateBuffer(gpu.context, memFlagsDst, bytes, hostPtr3, NULL);
 
   gpu.err  = clSetKernelArg(kernel, 0, sizeof(cl_mem), &d_a);
   gpu.err |= clSetKernelArg(kernel, 1, sizeof(cl_mem), &d_b);

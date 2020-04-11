@@ -40,15 +40,15 @@ void Graph::insertOperation(std::string operation, DataFrame* DF1, DataFrame* DF
   //first DF is the one that gets updated.
   std::string newOp;
   if(this -> Kernel == ""){
-     newOp = getGenName(DF1) + "_copy[i] " + " = " + getGenName(DF1) + "[i] "
-                      + operationSymbol[operation]
-                      + getGenName(DF2) + "[i]";
+     newOp = getGenName(DF1) + "_copy[id] " + " = " + getGenName(DF1) + "[id] "
+                      + operationSymbol[operation] + " "
+                      + getGenName(DF2) + "[id]";
 
   }
   else {
-    newOp = getGenName(DF1) + "_copy[i] " + " = " + getGenName(DF1) + "_copy[i] "
-                      + operationSymbol[operation]
-                      + getGenName(DF2) + "[i]";
+    newOp = getGenName(DF1) + "_copy[id] " + " = " + getGenName(DF1) + "_copy[id] "
+                      + operationSymbol[operation] + " "
+                      + getGenName(DF2) + "[id]";
 
   }
 
@@ -67,13 +67,13 @@ void Graph::insertOperation(std::string operation, DataFrame* DF1, T constant){
   //first DF is the one that gets updated.
   std::string newOp;
   if(this -> Kernel == ""){
-     newOp = getGenName(DF1) + "_copy[i] " + " = " + getGenName(DF1) + "[i] "
+     newOp = getGenName(DF1) + "_copy[id] " + " = " + getGenName(DF1) + "[id] "
                       + operationSymbol[operation]
                       + std::__cxx11::to_string(constant);
 
   }
   else {
-    newOp = getGenName(DF1) + "_copy[i] " + " = "+ getGenName(DF1) + "_copy[i] "
+    newOp = getGenName(DF1) + "_copy[id] " + " = "+ getGenName(DF1) + "_copy[id] "
                       + operationSymbol[operation]
                       + std::__cxx11::to_string(constant);
 
@@ -89,8 +89,8 @@ std::string Graph::getKernel(std::string dtype){
                         + "__global " + dtype + " *v1_copy, \n"
                         + "__global " + dtype + " *v2_copy, \n"
                         + "const unsigned int n){\n"
-                        + "\tint i = get_global_id(0);\n"
-                        + "\tif(i < n){\n"
+                        + "\tint id = get_global_id(0);\n"
+                        + "\tif(id < n){\n"
                         + this -> Kernel
                         + "\t}\n}";
 
