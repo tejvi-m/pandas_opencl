@@ -46,13 +46,13 @@ void Graph::insertOperation(std::string operation, DataFrame* DF1, DataFrame* DF
 
   }
   else {
-    newOp = getGenName(DF1) + "_copy[i] " + " = "+ getGenName(DF1) + "_copy[i] "
+    newOp = getGenName(DF1) + "_copy[i] " + " = " + getGenName(DF1) + "_copy[i] "
                       + operationSymbol[operation]
-                      + getGenName(DF2) + "[i] ";
+                      + getGenName(DF2) + "[i]";
 
   }
 
-  this -> Kernel += newOp + "\n";
+  this -> Kernel += "\t\t\t" + newOp + ";\n";
 
 }
 
@@ -79,9 +79,19 @@ void Graph::insertOperation(std::string operation, DataFrame* DF1, T constant){
 
   }
 
-  this -> Kernel += newOp + ";\n";
+  this -> Kernel += "\t\t\t" + newOp + ";\n";
 
 }
 std::string Graph::getKernel(std::string dtype){
-  return this -> Kernel;
+  std::string fullKernel = std::string("__kernel void genKernel(")
+                        + "__global " + dtype + " *v1, \n"
+                        + "__global " + dtype + " *v2, \n"
+                        + "__global " + dtype + " *v1_copy, \n"
+                        + "__global " + dtype + " *v2_copy){\n"
+                        + "\tint id = get_global_id(0);\n"
+                        + "\tif(id < n){\n"
+                        + this -> Kernel
+                        + "\t}\n}";
+
+  return fullKernel;
 }
