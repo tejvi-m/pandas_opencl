@@ -5,6 +5,10 @@
 #include "DataFrame/SeriesStr.cpp"
 #include "DataFrame/Graph.cpp"
 #include <numeric>
+#include <ctime>
+#include <cmath>
+#include <iomanip>
+
 
 
 
@@ -29,11 +33,20 @@ int main(){
     std::cout << graph.getGenName(&y) << std::endl;
 
     graph.insertOperation("add", &x, &y);
-    // graph.insertOperation("mul", &x, &y);
-    // graph.insertOperation("div", &x, 3);
+    graph.insertOperation("mul", &x, &y);
+    graph.insertOperation("mul", &x, &y);
+    graph.insertOperation("mul", &x, &y);
+    // graph.insertOperation("mul", &y, &x);
+    graph.insertOperation("mul", &x, 3);
+    graph.insertOperation("mul", &x, 3);
+    graph.insertOperation("mul", &x, 3);
+    graph.insertOperation("sub", &x, 3);
 
 
+    auto clock1 = clock();
     runGeneratedKernel(graph.getKernel("int"), &((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0], &((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0], (y[0] -> getVec(0)).size());
+    auto clock2 = clock();
+    std::cout << "time: " << (float)(clock2 - clock1)/CLOCKS_PER_SEC << std::endl;
     std::cout << graph.getKernel("int") << std::endl;
     x.printDF();
     y.printDF();

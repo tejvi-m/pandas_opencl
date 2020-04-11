@@ -128,7 +128,7 @@ void runGeneratedKernel(std::string Kernel, T* src1, T* src2,
 
   gpu.program = clCreateProgramWithSource(gpu.context, 1,
                               (const char **) & Kernel, NULL, &gpu.err);
-  clBuildProgram(gpu.program, 0, NULL, NULL, NULL, NULL);
+  clBuildProgram(gpu.program, 0, NULL, "-cl-fast-relaxed-math", NULL, NULL);
 
 
   std::string k= "genKernel";
