@@ -1,4 +1,4 @@
-#include "DataFrame.h"
+
 #include <vector>
 #include <unordered_map>
 
@@ -15,9 +15,9 @@ private:
 public:
   Graph();
   void addDF(DataFrame*);
-  void getGenName(DataFrame*);
+  std::string getGenName(DataFrame*);
   void insertOperation(std::string, DataFrame*);
   void insertOperation(std::string, DataFrame*, DataFrame*);
   std::string getKernel(std::string);
 
-}
+};
