@@ -1,9 +1,5 @@
 #include "helpers.h"
 #include "gpu/gpu.cpp"
-// #include "chlorine.hpp"
-// #include "boost/compute.hpp"
-
-// namespace compute = boost::compute;
 
 template<typename T>
 void redirectToGPU(std::string operation, std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst, int model){
@@ -34,6 +30,43 @@ void redirectToGPU(std::string operation, std::vector<T>& src1, std::vector<T>& 
                 src1.size(), false,
                 &(src1[0]),
                 &(src2[0]),
+                NULL,
+                CL_MEM_ALLOC_HOST_PTR | CL_MEM_COPY_HOST_PTR,
+                CL_MEM_ALLOC_HOST_PTR);
+  }
+}
+
+template<typename T>
+void redirectToGPUGen(std::string Kernel, std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst1, std::vector<T>& dst2, int model = 1){
+  if(model == 1){
+    // use
+    runGeneratedKernel(Kernel, &(src1[0]), &(src2[0]), &(dst1[0]), &(dst2[0]),
+                src1.size(), false,
+                 &(src1[0]),
+                 &(src2[0]),
+                 &(dst1[0]),
+                 &(dst2[0]),
+                 CL_MEM_USE_HOST_PTR,  CL_MEM_USE_HOST_PTR);
+  }
+  else if(model == 2){
+    //alloc
+    runGeneratedKernel(Kernel, &(src1[0]), &(src2[0]), &(dst1[0]), &(dst2[0]),
+                src1.size(), true, NULL, NULL, NULL,
+                CL_MEM_ALLOC_HOST_PTR,  CL_MEM_ALLOC_HOST_PTR);
+  }
+  else if(model == 3){
+    //copy
+    runGeneratedKernel(Kernel, &(src1[0]), &(src2[0]), &(dst1[0]), &(dst2[0]),
+                src1.size(), true, NULL, NULL, NULL,
+                 CL_MEM_READ_ONLY,  CL_MEM_WRITE_ONLY);
+  }
+  else{
+    // read_write, default
+    runGeneratedKernel(Kernel, &(src1[0]), &(src2[0]), &(dst1[0]), &(dst2[0]),
+                src1.size(), false,
+                &(src1[0]),
+                &(src2[0]),
+                NULL,
                 NULL,
                 CL_MEM_ALLOC_HOST_PTR | CL_MEM_COPY_HOST_PTR,
                 CL_MEM_ALLOC_HOST_PTR);
