@@ -33,7 +33,7 @@ int main(){
     // graph.insertOperation("div", &x, 3);
 
 
-    runGeneratedKernel(graph.getKernel("int"), &(x[0]) -> getVec(0), &(y[0]) -> getVec(0), &(x[0]) -> getVec(0), &(y[0]) -> getVec(0), (y[0] -> getVec(0)).size());
+    runGeneratedKernel(graph.getKernel("int"), &((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0], &((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0], (y[0] -> getVec(0)).size());
     std::cout << graph.getKernel("int") << std::endl;
     x.printDF();
     y.printDF();

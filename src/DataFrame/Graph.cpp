@@ -83,7 +83,7 @@ void Graph::insertOperation(std::string operation, DataFrame* DF1, T constant){
 
 }
 std::string Graph::getKernel(std::string dtype){
-  std::string fullKernel = std::string("__kernel void genKernel(")
+  std::string fullKernel = std::string("__kernel void genKernel( ")
                         + "__global " + dtype + " *v1, \n"
                         + "__global " + dtype + " *v2, \n"
                         + "__global " + dtype + " *v1_copy, \n"

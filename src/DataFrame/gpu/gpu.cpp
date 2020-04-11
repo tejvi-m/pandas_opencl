@@ -1,5 +1,6 @@
 #include "gpu.h"
 #include <cmath>
+#include <iostream>
 #include <fstream>
 
 extern GPU gpu;
@@ -110,8 +111,8 @@ void runGeneratedKernel(std::string Kernel, T* src1, T* src2,
                 void* hostPtr2 = NULL,
                 void* hostPtr3 = NULL,
                 void* hostPtr4 = NULL,
-                cl_mem_flags memFlagsSrc = CL_MEM_READ_ONLY,
-                cl_mem_flags memFlagsDst = CL_MEM_WRITE_ONLY){
+                cl_mem_flags memFlagsSrc =   CL_MEM_ALLOC_HOST_PTR,
+                cl_mem_flags memFlagsDst = CL_MEM_ALLOC_HOST_PTR){
 
   cl_mem d_a;
   cl_mem d_b;
@@ -131,7 +132,7 @@ void runGeneratedKernel(std::string Kernel, T* src1, T* src2,
   std::string k= "genKernel";
   kernel = clCreateKernel(gpu.program, "genKernel" , &gpu.err);
   gpu.globalSize = ceil(n/(float)gpu.localSize)*gpu.localSize;
-
+std::cout << "first element" << n << std::endl;
   d_a = clCreateBuffer(gpu.context, memFlagsSrc, bytes, hostPtr1, NULL);
   d_b = clCreateBuffer(gpu.context, memFlagsSrc, bytes, hostPtr2, NULL);
   d_c = clCreateBuffer(gpu.context, memFlagsDst , bytes, hostPtr3, NULL);
