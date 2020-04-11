@@ -103,6 +103,7 @@ void gpuArithmetic(std::string operation, T* src1, T* src2, T* dst, int n, bool 
 
 template<typename T>
 void runGeneratedKernel(std::string Kernel, T* src1, T* src2,
+                T* dst1, T* dst2,
                 int n,
                 bool read = true,
                 void* hostPtr1 = NULL,
@@ -121,13 +122,14 @@ void runGeneratedKernel(std::string Kernel, T* src1, T* src2,
 
   cl_kernel kernel;
 
-  std::cout << "running on gpu: "<< operation << std::endl;
+  std::cout << "running on gpu: "<< std::endl;
   size_t bytes = n * sizeof(T);
 
-  program = clCreateProgramWithSource(gpu.context, 1,
-                              (const char **) & Kernel.c_str(), NULL, &err);
+  gpu.program = clCreateProgramWithSource(gpu.context, 1,
+                              (const char **) & Kernel, NULL, &gpu.err);
 
-  kernel = clCreateKernel(gpu.program, operation.c_str() , &gpu.err);
+  std::string k= "genKernel";
+  kernel = clCreateKernel(gpu.program, "genKernel" , &gpu.err);
   gpu.globalSize = ceil(n/(float)gpu.localSize)*gpu.localSize;
 
   d_a = clCreateBuffer(gpu.context, memFlagsSrc, bytes, hostPtr1, NULL);
@@ -138,8 +140,8 @@ void runGeneratedKernel(std::string Kernel, T* src1, T* src2,
   gpu.err  = clSetKernelArg(kernel, 0, sizeof(cl_mem), &d_a);
   gpu.err |= clSetKernelArg(kernel, 1, sizeof(cl_mem), &d_b);
   gpu.err |= clSetKernelArg(kernel, 2, sizeof(cl_mem), &d_c);
-  gpu.err |= clSetKernelArg(kernel, 4, sizeof(cl_mem), &d_d);
-  gpu.err |= clSetKernelArg(kernel, 3, sizeof(unsigned int), &n);
+  gpu.err |= clSetKernelArg(kernel, 3, sizeof(cl_mem), &d_d);
+  gpu.err |= clSetKernelArg(kernel, 4, sizeof(unsigned int), &n);
 
   if(read){
       gpu.err = clEnqueueWriteBuffer(gpu.queue, d_a, CL_TRUE, 0,
@@ -153,10 +155,10 @@ void runGeneratedKernel(std::string Kernel, T* src1, T* src2,
   clFinish(gpu.queue);
 
   clEnqueueReadBuffer(gpu.queue, d_c, CL_TRUE, 0,
-                              bytes, src1, 0, NULL, NULL );
+                              bytes, dst1, 0, NULL, NULL );
 
-  clEnqueueReadBuffer(gpu.queue, d_c, CL_TRUE, 0,
-                              bytes, src2, 0, NULL, NULL );
+  clEnqueueReadBuffer(gpu.queue, d_d, CL_TRUE, 0,
+                              bytes, dst2, 0, NULL, NULL );
 
   clReleaseMemObject(d_a);
   clReleaseMemObject(d_b);

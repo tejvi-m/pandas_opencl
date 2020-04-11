@@ -87,9 +87,10 @@ std::string Graph::getKernel(std::string dtype){
                         + "__global " + dtype + " *v1, \n"
                         + "__global " + dtype + " *v2, \n"
                         + "__global " + dtype + " *v1_copy, \n"
-                        + "__global " + dtype + " *v2_copy){\n"
-                        + "\tint id = get_global_id(0);\n"
-                        + "\tif(id < n){\n"
+                        + "__global " + dtype + " *v2_copy, \n"
+                        + "const unsigned int n){\n"
+                        + "\tint i = get_global_id(0);\n"
+                        + "\tif(i < n){\n"
                         + this -> Kernel
                         + "\t}\n}";
 

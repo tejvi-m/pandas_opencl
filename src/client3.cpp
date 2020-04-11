@@ -29,11 +29,13 @@ int main(){
     std::cout << graph.getGenName(&y) << std::endl;
 
     graph.insertOperation("add", &x, &y);
-    graph.insertOperation("mul", &x, &y);
-    graph.insertOperation("div", &x, 3);
+    // graph.insertOperation("mul", &x, &y);
+    // graph.insertOperation("div", &x, 3);
 
 
-
+    runGeneratedKernel(graph.getKernel("int"), &(x[0]) -> getVec(0), &(y[0]) -> getVec(0), &(x[0]) -> getVec(0), &(y[0]) -> getVec(0), (y[0] -> getVec(0)).size());
     std::cout << graph.getKernel("int") << std::endl;
+    x.printDF();
+    y.printDF();
     return 0;
 }
