@@ -30,6 +30,7 @@ int main(){
 
     graph.insertOperation("add", &x, &y);
     graph.insertOperation("mul", &x, &y);
+    graph.insertOperation("div", &x, 3);
 
 
 

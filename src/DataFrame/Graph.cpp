@@ -56,6 +56,32 @@ void Graph::insertOperation(std::string operation, DataFrame* DF1, DataFrame* DF
 
 }
 
+template<typename T>
+void Graph::insertOperation(std::string operation, DataFrame* DF1, T constant){
+  std::unordered_map<std::string, char> operationSymbol({
+    {"add", '+'},
+    {"sub", '-'},
+    {"mul", '*'},
+    {"div", '/'}
+  });
+  //first DF is the one that gets updated.
+  std::string newOp;
+  if(this -> Kernel == ""){
+     newOp = getGenName(DF1) + "_copy[i] " + " = " + getGenName(DF1) + "[i] "
+                      + operationSymbol[operation]
+                      + std::__cxx11::to_string(constant);
+
+  }
+  else {
+    newOp = getGenName(DF1) + "_copy[i] " + " = "+ getGenName(DF1) + "_copy[i] "
+                      + operationSymbol[operation]
+                      + std::__cxx11::to_string(constant);
+
+  }
+
+  this -> Kernel += newOp + ";\n";
+
+}
 std::string Graph::getKernel(std::string dtype){
   return this -> Kernel;
 }

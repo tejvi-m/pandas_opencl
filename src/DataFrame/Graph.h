@@ -18,6 +18,9 @@ public:
   std::string getGenName(DataFrame*);
   void insertOperation(std::string, DataFrame*);
   void insertOperation(std::string, DataFrame*, DataFrame*);
+
+  template<typename T>
+  void insertOperation(std::string operation, DataFrame* DF1, T constant);
   std::string getKernel(std::string);
 
 };
