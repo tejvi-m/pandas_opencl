@@ -1,12 +1,7 @@
 #include "Graph.h"
 #include <string>
-
-std::unordered_map operationSymbol({
-      {"add", '+'},
-      {"sub", '-'},
-      {"mul", '*'},
-      {"div", '/'}
-})
+#include <cstring>
+#include <unordered_map>
 
 Graph::Graph(){
 
@@ -15,14 +10,19 @@ Graph::Graph(){
 void Graph::addDF(DataFrame* DF){
   if(mapping.find(DF) == mapping.end()){
     this -> toLoad.push_back(DF);
-    std::string oldName = genNames.back();
-    string newName = "v" + to_string(atoi(oldName.erase(0, 1)) + 1);
+    std::string oldName;
+    if(genNames.size() == 0){
+      oldName = "v0";
+    }
+    else oldName = genNames.back();
+    oldName.erase(0,1);
+    std::string newName = "v" + std::__cxx11::to_string(atoi(oldName.c_str()) + 1);
     genNames.push_back(newName);
     mapping[DF] = newName;
   }
 }
 
-void Graph::getGenName(DataFrame* DF){
+std::string Graph::getGenName(DataFrame* DF){
   return this -> mapping[DF];
 }
 
@@ -31,8 +31,31 @@ void Graph::insertOperation(std::string operation, DataFrame* DF){
 }
 
 void Graph::insertOperation(std::string operation, DataFrame* DF1, DataFrame* DF2){
+  std::unordered_map<std::string, char> operationSymbol({
+    {"add", '+'},
+    {"sub", '-'},
+    {"mul", '*'},
+    {"div", '/'}
+  });
   //first DF is the one that gets updated.
-  std::string newOp = getGenName(DF1) + "[i] " + " = "+ operationSymbol[operation] +
+  std::string newOp;
+  if(this -> Kernel == ""){
+     newOp = getGenName(DF1) + "_copy[i] " + " = " + getGenName(DF1) + "[i] "
+                      + operationSymbol[operation]
+                      + getGenName(DF2) + "[i]";
 
+  }
+  else {
+    newOp = getGenName(DF1) + "_copy[i] " + " = "+ getGenName(DF1) + "_copy[i] "
+                      + operationSymbol[operation]
+                      + getGenName(DF2) + "[i] ";
 
+  }
+
+  this -> Kernel += newOp + "\n";
+
+}
+
+std::string Graph::getKernel(std::string dtype){
+  return this -> Kernel;
 }
