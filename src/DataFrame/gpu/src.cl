@@ -18,7 +18,7 @@ __kernel void vecAddFloat(  __global float *a,
         c[id] = a[id] + b[id];
 }
 
-__kernel void vecSubtInt(  __global int *a,
+__kernel void vecSubInt(  __global int *a,
                        __global int *b,
                        __global int *c,
                        const unsigned int n){
