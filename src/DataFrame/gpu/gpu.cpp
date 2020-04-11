@@ -100,3 +100,70 @@ void gpuArithmetic(std::string operation, T* src1, T* src2, T* dst, int n, bool 
   // clReleaseCommandQueue(gpu.queue);
   // clReleaseContext(gpu.context);
 }
+
+template<typename T>
+void runGeneratedKernel(std::string Kernel, T* src1, T* src2,
+                int n,
+                bool read = true,
+                void* hostPtr1 = NULL,
+                void* hostPtr2 = NULL,
+                void* hostPtr3 = NULL,
+                void* hostPtr4 = NULL,
+                cl_mem_flags memFlagsSrc = CL_MEM_READ_ONLY,
+                cl_mem_flags memFlagsDst = CL_MEM_WRITE_ONLY){
+
+  cl_mem d_a;
+  cl_mem d_b;
+  cl_mem d_c;
+  cl_mem d_d;
+
+  // setup();
+
+  cl_kernel kernel;
+
+  std::cout << "running on gpu: "<< operation << std::endl;
+  size_t bytes = n * sizeof(T);
+
+  program = clCreateProgramWithSource(gpu.context, 1,
+                              (const char **) & Kernel.c_str(), NULL, &err);
+
+  kernel = clCreateKernel(gpu.program, operation.c_str() , &gpu.err);
+  gpu.globalSize = ceil(n/(float)gpu.localSize)*gpu.localSize;
+
+  d_a = clCreateBuffer(gpu.context, memFlagsSrc, bytes, hostPtr1, NULL);
+  d_b = clCreateBuffer(gpu.context, memFlagsSrc, bytes, hostPtr2, NULL);
+  d_c = clCreateBuffer(gpu.context, memFlagsDst , bytes, hostPtr3, NULL);
+  d_d = clCreateBuffer(gpu.context, memFlagsDst , bytes, hostPtr3, NULL);
+
+  gpu.err  = clSetKernelArg(kernel, 0, sizeof(cl_mem), &d_a);
+  gpu.err |= clSetKernelArg(kernel, 1, sizeof(cl_mem), &d_b);
+  gpu.err |= clSetKernelArg(kernel, 2, sizeof(cl_mem), &d_c);
+  gpu.err |= clSetKernelArg(kernel, 4, sizeof(cl_mem), &d_d);
+  gpu.err |= clSetKernelArg(kernel, 3, sizeof(unsigned int), &n);
+
+  if(read){
+      gpu.err = clEnqueueWriteBuffer(gpu.queue, d_a, CL_TRUE, 0,
+                                   bytes, src1, 0, NULL, NULL);
+      gpu.err |= clEnqueueWriteBuffer(gpu.queue, d_b, CL_TRUE, 0,
+                                    bytes, src2, 0, NULL, NULL);
+  }
+
+  gpu.err = clEnqueueNDRangeKernel(gpu.queue, kernel, 1, NULL, &gpu.globalSize, &gpu.localSize,
+                                                            0, NULL, NULL);
+  clFinish(gpu.queue);
+
+  clEnqueueReadBuffer(gpu.queue, d_c, CL_TRUE, 0,
+                              bytes, src1, 0, NULL, NULL );
+
+  clEnqueueReadBuffer(gpu.queue, d_c, CL_TRUE, 0,
+                              bytes, src2, 0, NULL, NULL );
+
+  clReleaseMemObject(d_a);
+  clReleaseMemObject(d_b);
+  clReleaseMemObject(d_c);
+  clReleaseMemObject(d_d);
+  // clReleaseProgram(gpu.program);
+  clReleaseKernel(kernel);
+  // clReleaseCommandQueue(gpu.queue);
+  // clReleaseContext(gpu.context);
+}

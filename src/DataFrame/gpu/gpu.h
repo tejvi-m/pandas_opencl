@@ -20,3 +20,6 @@ void setup();
 
 template<typename T>
 void gpuArithmetic(std::string operation, std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst, cl_mem_flags memFlags);
+
+template<typename T>
+void runGeneratedKernel(std::string Kernel, std::vector<T>& src1, std::vector<T>& src2, cl_mem_flags memFlags);
