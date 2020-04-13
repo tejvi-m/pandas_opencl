@@ -112,34 +112,62 @@ std::string Graph::getKernel(std::string dtype){
 
 
 void Graph::compute(int model = 0){
-    /*
-    runGeneratedKernel(graph.getKernel("int"), std::vector<int*>({&((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0]}),
-     std::vector<int*>({&((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0]}), (y[0] -> getVec(0)).size(),
-     vector<int*>({NULL, NULL, NULL, NULL}));
-         */
-       int col = 0;
 
-// make it the smallest
-       // int n = *(this -> toLoad[0])[col].getVec(0).size();
-       DataFrame temp = *(this -> toLoad[0]);
+    for(int col = 0; col < (this -> toLoad[0]) -> shape().first; col++){
+        DataFrame temp = *(this -> toLoad[0]);
+        int n = temp[0] -> getVec(0).size();
 
-       int n = temp[0] -> getVec(0).size();
-      std::vector<int*> srcVecs(this -> toLoad.size());
-      std::vector<int*> dstVecs;
-//temp since it throws compile time errors
+        vTypes x = (temp[col]) -> type();
+        if(std::holds_alternative<int>(x)){
+          DataFrame temp = *(this -> toLoad[0]);
+          int n = temp[0] -> getVec(int()).size();
 
-      for(int i = 0; i < srcVecs.size(); i++){
-        DataFrame temp = *(this -> toLoad[i]);
-        srcVecs[i] = &(temp[col] -> getVec(int()))[0];
-        if(this -> modifiedDF.find(this -> toLoad[i]) != this -> modifiedDF.end()){
-          dstVecs.push_back(&(temp[col] -> getVec(int()))[0]);
+          std::vector<int*> srcVecs(this -> toLoad.size());
+          std::vector<int*> dstVecs;
+          //temp since it throws compile time errors
+
+          for(int i = 0; i < srcVecs.size(); i++){
+            DataFrame temp = *(this -> toLoad[i]);
+
+            srcVecs[i] = &(temp[col] -> getVec(int()))[0];
+            if(this -> modifiedDF.find(this -> toLoad[i]) != this -> modifiedDF.end()){
+              dstVecs.push_back(&(temp[col] -> getVec(int()))[0]);
+            }
+          }
+
+          runGeneratedKernel(this -> getKernel("int"),
+              srcVecs,
+              dstVecs,
+              n,
+              std::vector<int*>({NULL, NULL, NULL, NULL})
+              );
         }
-      }
+        
+        else if(std::holds_alternative<float>(x)){
+            DataFrame temp = *(this -> toLoad[0]);
+            int n = temp[0] -> getVec(float()).size();
 
-      runGeneratedKernel(this -> getKernel("int"),
-                      srcVecs,
-                      dstVecs,
-                      n,
-                      std::vector<int*>({NULL, NULL, NULL, NULL})
-                    );
+            std::vector<float*> srcVecs(this -> toLoad.size());
+            std::vector<float*> dstVecs;
+            //temp since it throws compile time errors
+
+            for(int i = 0; i < srcVecs.size(); i++){
+              DataFrame temp = *(this -> toLoad[i]);
+
+              srcVecs[i] = &(temp[col] -> getVec(float()))[0];
+              if(this -> modifiedDF.find(this -> toLoad[i]) != this -> modifiedDF.end()){
+                dstVecs.push_back(&(temp[col] -> getVec(float()))[0]);
+              }
+            }
+
+            runGeneratedKernel(this -> getKernel("float"),
+                srcVecs,
+                dstVecs,
+                n,
+                std::vector<float*>({NULL, NULL, NULL, NULL})
+                );
+        }
+
+    }
+    // make it the smallest
 }

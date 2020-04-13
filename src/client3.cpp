@@ -44,8 +44,8 @@ int main(){
     graph.insertOperation("mul", &x, &y);
     // graph.insertOperation("mul", &x, &y);
     // graph.insertOperation("mul", &x, &y);
-    graph.insertOperation("mul", &y, &x);
-    graph.insertOperation("mul", &y, &x);
+    // graph.insertOperation("mul", &y, &x);
+    // graph.insertOperation("mul", &y, &x);
 
     // graph.insertOperation("mul", &x, 3);
     // graph.insertOperation("mul", &x, 3);
