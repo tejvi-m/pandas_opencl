@@ -88,16 +88,8 @@ void Graph::insertOperation(std::string operation, DataFrame* DF1, T constant){
 }
 
 std::string Graph::getKernel(std::string dtype){
+
   std::string fullKernel = std::string("__kernel void genKernel( \n");
-                        // + "__global " + dtype + " *v1, \n"
-                        // + "__global " + dtype + " *v2, \n"
-                        // + "__global " + dtype + " *v1_copy, \n"
-                        // + "__global " + dtype + " *v2_copy, \n"
-                        // + "const unsigned int n){\n"
-                        // + "\tint id = get_global_id(0);\n"
-                        // + "\tif(id < n){\n"
-                        // + this -> Kernel
-                        // + "\t}\n}";
 
   for(auto DF: this -> toLoad){
     fullKernel += std::string("__global " + dtype + " *" + getGenName(DF, 1) + ",\n");
@@ -116,4 +108,38 @@ std::string Graph::getKernel(std::string dtype){
               + this -> Kernel + "\t}\n}";
 
   return fullKernel;
+}
+
+
+void Graph::compute(int model = 0){
+    /*
+    runGeneratedKernel(graph.getKernel("int"), std::vector<int*>({&((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0]}),
+     std::vector<int*>({&((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0]}), (y[0] -> getVec(0)).size(),
+     vector<int*>({NULL, NULL, NULL, NULL}));
+         */
+       int col = 0;
+
+// make it the smallest
+       // int n = *(this -> toLoad[0])[col].getVec(0).size();
+       DataFrame temp = *(this -> toLoad[0]);
+
+       int n = temp[0] -> getVec(0).size();
+      std::vector<int*> srcVecs(this -> toLoad.size());
+      std::vector<int*> dstVecs;
+//temp since it throws compile time errors
+
+      for(int i = 0; i < srcVecs.size(); i++){
+        DataFrame temp = *(this -> toLoad[i]);
+        srcVecs[i] = &(temp[col] -> getVec(int()))[0];
+        if(this -> modifiedDF.find(this -> toLoad[i]) != this -> modifiedDF.end()){
+          dstVecs.push_back(&(temp[col] -> getVec(int()))[0]);
+        }
+      }
+
+      runGeneratedKernel(this -> getKernel("int"),
+                      srcVecs,
+                      dstVecs,
+                      n,
+                      std::vector<int*>({NULL, NULL, NULL, NULL})
+                    );
 }
