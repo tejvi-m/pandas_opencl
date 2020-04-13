@@ -1,6 +1,7 @@
 #include "gpu.h"
 #include <cmath>
 #include <iostream>
+#include <vector>
 #include <fstream>
 
 extern GPU gpu;
@@ -111,22 +112,21 @@ void gpuArithmetic(std::string operation,
 }
 
 template<typename T>
-void runGeneratedKernel(std::string Kernel, T* src1, T* src2,
-                T* dst1, T* dst2,
+void runGeneratedKernel(std::string Kernel, std::vector<T*> srcVecs,
+                std::vector<T*> dstVecs,
                 int n,
+                std::vector<T*> hostPtrs,
                 bool read = true,
-                void* hostPtr1 = NULL,
-                void* hostPtr2 = NULL,
-                void* hostPtr3 = NULL,
-                void* hostPtr4 = NULL,
                 cl_mem_flags memFlagsSrc =   CL_MEM_ALLOC_HOST_PTR,
                 cl_mem_flags memFlagsDst = CL_MEM_ALLOC_HOST_PTR){
 
-  cl_mem d_a;
-  cl_mem d_b;
-  cl_mem d_c;
-  cl_mem d_d;
+  // cl_mem d_a;
+  // cl_mem d_b;
+  // cl_mem d_c;
+  // cl_mem d_d;
 
+  std::vector<cl_mem> buffers(srcVecs.size() + dstVecs.size());
+  std::cout<< "cerated buffers for " << buffers.size() << std::endl;
   // setup();
 
   cl_kernel kernel;
@@ -142,39 +142,76 @@ void runGeneratedKernel(std::string Kernel, T* src1, T* src2,
   std::string k= "genKernel";
   kernel = clCreateKernel(gpu.program, "genKernel" , &gpu.err);
   gpu.globalSize = ceil(n/(float)gpu.localSize)*gpu.localSize;
-std::cout << "first element" << n << std::endl;
-  d_a = clCreateBuffer(gpu.context, memFlagsSrc, bytes, hostPtr1, NULL);
-  d_b = clCreateBuffer(gpu.context, memFlagsSrc, bytes, hostPtr2, NULL);
-  d_c = clCreateBuffer(gpu.context, memFlagsDst, bytes, hostPtr3, NULL);
-  d_d = clCreateBuffer(gpu.context, memFlagsDst, bytes, hostPtr3, NULL);
 
-  gpu.err  = clSetKernelArg(kernel, 0, sizeof(cl_mem), &d_a);
-  gpu.err |= clSetKernelArg(kernel, 1, sizeof(cl_mem), &d_b);
-  gpu.err |= clSetKernelArg(kernel, 2, sizeof(cl_mem), &d_c);
-  gpu.err |= clSetKernelArg(kernel, 3, sizeof(cl_mem), &d_d);
-  gpu.err |= clSetKernelArg(kernel, 4, sizeof(unsigned int), &n);
+  std::cout << "first element" << n << std::endl;
+
+  for(int i = 0; i < srcVecs.size(); i++){
+    std::cout<< "cerated buffers for buffer src" << i << std::endl;
+    buffers[i] = clCreateBuffer(gpu.context, memFlagsSrc, bytes, hostPtrs[i], NULL);
+  }
+  for(int i = 0; i < dstVecs.size(); i++){
+    std::cout<< "cerated buffers for buffer dst" << srcVecs.size() + i << std::endl;
+    buffers[srcVecs.size() + i] = clCreateBuffer(gpu.context, memFlagsSrc, bytes, hostPtrs[srcVecs.size() + i], NULL);
+  }
+
+  // d_a = clCreateBuffer(gpu.context, memFlagsSrc, bytes, hostPtr1, NULL);
+  // d_b = clCreateBuffer(gpu.context, memFlagsSrc, bytes, hostPtr2, NULL);
+  // d_c = clCreateBuffer(gpu.context, memFlagsDst, bytes, hostPtr3, NULL);
+  // d_d = clCreateBuffer(gpu.context, memFlagsDst, bytes, hostPtr4, NULL);
+
+  for(int i = 0; i < srcVecs.size(); i++){
+    std::cout << "setting kernel arg src" << i << std::endl;
+    if(i == 0) gpu.err = clSetKernelArg(kernel, i, sizeof(cl_mem), &(buffers[i]));
+    else gpu.err |= clSetKernelArg(kernel, i, sizeof(cl_mem), &(buffers[i]));
+  }
+  for(int i = 0; i < dstVecs.size(); i++){
+    std::cout << "setting kernel arg dst" << srcVecs.size() + i << std::endl;
+    gpu.err |= clSetKernelArg(kernel, srcVecs.size() + i, sizeof(cl_mem), &(buffers[srcVecs.size() + i]));
+  }
+  // gpu.err  = clSetKernelArg(kernel, 0, sizeof(cl_mem), &d_a);
+  // gpu.err |= clSetKernelArg(kernel, 1, sizeof(cl_mem), &d_b);
+  // gpu.err |= clSetKernelArg(kernel, 2, sizeof(cl_mem), &d_c);
+  // gpu.err |= clSetKernelArg(kernel, 3, sizeof(cl_mem), &d_d);
+  gpu.err |= clSetKernelArg(kernel, buffers.size(), sizeof(unsigned int), &n);
 
   if(read){
-      gpu.err = clEnqueueWriteBuffer(gpu.queue, d_a, CL_TRUE, 0,
-                                   bytes, src1, 0, NULL, NULL);
-      gpu.err |= clEnqueueWriteBuffer(gpu.queue, d_b, CL_TRUE, 0,
-                                    bytes, src2, 0, NULL, NULL);
+
+      for(int i = 0; i < srcVecs.size(); i++){
+        std::cout << "reading src" << i << std::endl;
+        if(i == 0) gpu.err = clEnqueueWriteBuffer(gpu.queue, buffers[i], CL_TRUE, 0,
+                                      bytes, srcVecs[i], 0, NULL, NULL);
+        else gpu.err |= clEnqueueWriteBuffer(gpu.queue, buffers[i], CL_TRUE, 0,
+                                      bytes, srcVecs[i], 0, NULL, NULL);
+      }
+      // gpu.err = clEnqueueWriteBuffer(gpu.queue, d_a, CL_TRUE, 0,
+      //                              bytes, src1, 0, NULL, NULL);
+      // gpu.err |= clEnqueueWriteBuffer(gpu.queue, d_b, CL_TRUE, 0,
+      //                               bytes, src2, 0, NULL, NULL);
   }
 
   gpu.err = clEnqueueNDRangeKernel(gpu.queue, kernel, 1, NULL, &gpu.globalSize, &gpu.localSize,
                                                             0, NULL, NULL);
   clFinish(gpu.queue);
 
-  clEnqueueReadBuffer(gpu.queue, d_c, CL_TRUE, 0,
-                              bytes, dst1, 0, NULL, NULL );
 
-  clEnqueueReadBuffer(gpu.queue, d_d, CL_TRUE, 0,
-                              bytes, dst2, 0, NULL, NULL );
+  for(int i = 0; i < dstVecs.size(); i++){
+    std::cout << "reading to buffer dst" << srcVecs.size() + i << std::endl;
+    clEnqueueReadBuffer(gpu.queue, buffers[srcVecs.size() + i], CL_TRUE, 0,
+                        bytes, dstVecs[i], 0, NULL, NULL);
+  }
+  // clEnqueueReadBuffer(gpu.queue, d_c, CL_TRUE, 0,
+  //                             bytes, dst1, 0, NULL, NULL );
+  //
+  // clEnqueueReadBuffer(gpu.queue, d_d, CL_TRUE, 0,
+  //                             bytes, dst2, 0, NULL, NULL );
 
-  clReleaseMemObject(d_a);
-  clReleaseMemObject(d_b);
-  clReleaseMemObject(d_c);
-  clReleaseMemObject(d_d);
+  for(int i = 0; i < buffers.size(); i++){
+    clReleaseMemObject(buffers[i]);
+  }
+  // clReleaseMemObject(d_a);
+  // clReleaseMemObject(d_b);
+  // clReleaseMemObject(d_c);
+  // clReleaseMemObject(d_d);
   // clReleaseProgram(gpu.program);
   clReleaseKernel(kernel);
   // clReleaseCommandQueue(gpu.queue);
