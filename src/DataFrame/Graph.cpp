@@ -88,16 +88,32 @@ void Graph::insertOperation(std::string operation, DataFrame* DF1, T constant){
 }
 
 std::string Graph::getKernel(std::string dtype){
-  std::string fullKernel = std::string("__kernel void genKernel( ")
-                        + "__global " + dtype + " *v1, \n"
-                        + "__global " + dtype + " *v2, \n"
-                        + "__global " + dtype + " *v1_copy, \n"
-                        + "__global " + dtype + " *v2_copy, \n"
-                        + "const unsigned int n){\n"
-                        + "\tint id = get_global_id(0);\n"
-                        + "\tif(id < n){\n"
-                        + this -> Kernel
-                        + "\t}\n}";
+  std::string fullKernel = std::string("__kernel void genKernel( \n");
+                        // + "__global " + dtype + " *v1, \n"
+                        // + "__global " + dtype + " *v2, \n"
+                        // + "__global " + dtype + " *v1_copy, \n"
+                        // + "__global " + dtype + " *v2_copy, \n"
+                        // + "const unsigned int n){\n"
+                        // + "\tint id = get_global_id(0);\n"
+                        // + "\tif(id < n){\n"
+                        // + this -> Kernel
+                        // + "\t}\n}";
+
+  for(auto DF: this -> toLoad){
+    fullKernel += std::string("__global " + dtype + " *" + getGenName(DF, 1) + ",\n");
+  }
+
+  // to impose some kind of order
+  for(auto DF: this -> toLoad){
+      if(this -> modifiedDF.find(DF) != this -> modifiedDF.end()){
+        fullKernel += std::string("__global " + dtype + " *" + getGenName(DF) + ",\n");
+      }
+  }
+
+  fullKernel += std::string("const unsigned int n) {\n")
+              + "\t int id = get_global_id(0);\n"
+              + "\t if (id < n) {\n"
+              + this -> Kernel + "\t}\n}";
 
   return fullKernel;
 }
