@@ -14,11 +14,11 @@
 using namespace std;
 
 int main(){
-    // DataFrame x("./src/example.csv");
-    // setup();
-    //
-    // auto  y = x.copy();
-    // x.printDF();
+    DataFrame x("./src/example.csv");
+    setup();
+
+    auto  y = x.copy();
+    x.printDF();
 
 
 
@@ -27,12 +27,12 @@ int main(){
     // y.printDF();
     // std::cout << "done\n";
 
-    vector<int> y1(9999999 * 2), x1(9999999 * 2);
-    std::generate(y1.begin(), y1.end(), std::rand);
-    std::generate(x1.begin(), x1.end(), std::rand);
-
-    DataFrame x({new SeriesInt(x1)}, {"a"});
-    DataFrame y({new SeriesInt(y1)}, {"a"});
+    // vector<int> y1(9999999 * 2), x1(9999999 * 2);
+    // std::generate(y1.begin(), y1.end(), std::rand);
+    // std::generate(x1.begin(), x1.end(), std::rand);
+    //
+    // DataFrame x({new SeriesInt(x1)}, {"a"});
+    // DataFrame y({new SeriesInt(y1)}, {"a"});
 
     Graph graph;
     graph.addDF(&x);
@@ -41,7 +41,7 @@ int main(){
     std::cout << graph.getGenName(&y) << std::endl;
 
     graph.insertOperation("add", &x, &y);
-    // graph.insertOperation("mul", &x, &y);
+    graph.insertOperation("mul", &x, &y);
     // graph.insertOperation("mul", &x, &y);
     // graph.insertOperation("mul", &x, &y);
     // // graph.insertOperation("mul", &y, &x);
@@ -52,11 +52,14 @@ int main(){
 
 
     auto clock1 = clock();
-    runGeneratedKernel(graph.getKernel("int"), &((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0], &((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0], (y[0] -> getVec(0)).size());
+    runGeneratedKernel(graph.getKernel("int"), std::vector<int*>({&((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0]}),
+     std::vector<int*>({&((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0]}), (y[0] -> getVec(0)).size(),
+     vector<int*>({NULL, NULL, NULL, NULL}));
+
     auto clock2 = clock();
     std::cout << "time: " << (float)(clock2 - clock1)/CLOCKS_PER_SEC << std::endl;
     std::cout << graph.getKernel("int") << std::endl;
-    // x.printDF();
-    // y.printDF();
+    x.printDF();
+    y.printDF();
     return 0;
 }
