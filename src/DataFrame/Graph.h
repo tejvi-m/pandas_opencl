@@ -1,12 +1,15 @@
 
 #include <vector>
 #include <unordered_map>
+#include <unordered_set>
+
 
 class Graph{
 private:
   std::vector<DataFrame*> toLoad;
   std::vector<std::string> genNames;
   std::unordered_map<DataFrame*, std::string> mapping;
+  std::unordered_set<DataFrame*> modifiedDF;
 
   // std::vector<std::pair<std::string, std::vector<DataFrame*>>> operations;
 
@@ -15,7 +18,7 @@ private:
 public:
   Graph();
   void addDF(DataFrame*);
-  std::string getGenName(DataFrame*);
+  std::string getGenName(DataFrame*, int);
   void insertOperation(std::string, DataFrame*);
   void insertOperation(std::string, DataFrame*, DataFrame*);
 
