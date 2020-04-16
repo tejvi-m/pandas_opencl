@@ -39,6 +39,9 @@ void Graph::insertOperation(std::string operation, DataFrame* DF1, DataFrame* DF
     {"mul", '*'},
     {"div", '/'}
   });
+
+  this -> addDF(DF1);
+  this -> addDF(DF2);
   //first DF is the one that gets updated.
   std::string newOp;
   if(this -> modifiedDF.find(DF1) == this -> modifiedDF.end()){
@@ -68,6 +71,7 @@ void Graph::insertOperation(std::string operation, DataFrame* DF1, T constant){
     {"div", '/'}
   });
   //first DF is the one that gets updated.
+  this -> addDF(DF1);
   std::string newOp;
   if(this -> modifiedDF.find(DF1) == this -> modifiedDF.end()){
      newOp = getGenName(DF1, 1) + "_copy[id] " + " = " + getGenName(DF1) + "[id] "
@@ -142,7 +146,7 @@ void Graph::compute(int model = 0){
               std::vector<int*>({NULL, NULL, NULL, NULL})
               );
         }
-        
+
         else if(std::holds_alternative<float>(x)){
             DataFrame temp = *(this -> toLoad[0]);
             int n = temp[0] -> getVec(float()).size();
