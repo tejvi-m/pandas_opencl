@@ -1,3 +1,4 @@
+#pragma once
 #include "gpu.h"
 #include <cmath>
 #include <iostream>

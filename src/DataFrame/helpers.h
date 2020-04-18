@@ -1,3 +1,5 @@
+#pragma once
+
 void printRow(Row data);
 
 template <typename T>

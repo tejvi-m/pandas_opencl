@@ -1,3 +1,4 @@
+#pragma once
 #include <CL/opencl.h>
 #include <string>
 #include <vector>

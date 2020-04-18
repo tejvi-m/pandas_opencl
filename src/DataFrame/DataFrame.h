@@ -1,3 +1,4 @@
+#pragma once
 #include "Series.h"
 #include <vector>
 #include <variant>

@@ -1,4 +1,6 @@
+#pragma once
 #include "DataFrame.h"
+#include "Graph.cpp"
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
@@ -168,10 +170,10 @@ DataFrame DataFrame::operator/(DataFrame& src2){
 
 
 void DataFrame::div(DataFrame& src2){
-  if(_graph == nullptr){
-    std::cout << "not found\n";
+  if(_graph != nullptr){
+    _graph -> insertOperation("div", this, &src2);
   }
-  else std::cout << "found\n";
+  else
   for(auto col: this -> columns_){
     if((*this)[col] -> isArithmetic())
       (*(*this)[col]).div(src2[col]);

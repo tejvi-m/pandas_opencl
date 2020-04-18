@@ -1,4 +1,6 @@
-
+#pragma once
+#include "Graph.h"
+#include "gpu/gpu.cpp"
 #include <string>
 #include <cstring>
 #include <unordered_map>

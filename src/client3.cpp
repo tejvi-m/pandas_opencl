@@ -1,7 +1,8 @@
 #include "DataFrame/DataFrame.cpp"
 #include "DataFrame/helpers.cpp"
-#include "DataFrame/SeriesInt.cpp"
+#include "DataFrame/Series.h"
 #include "DataFrame/SeriesFloat.cpp"
+#include "DataFrame/SeriesInt.cpp"
 #include "DataFrame/SeriesStr.cpp"
 #include "DataFrame/Graph.h"
 #include "DataFrame/Graph.cpp"
@@ -63,7 +64,7 @@ int main(){
     // runGeneratedKernel(graph.getKernel("int"), std::vector<int*>({&((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0]}),
     //  std::vector<int*>({&((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0]}), (y[0] -> getVec(0)).size(),
     //  vector<int*>({NULL, NULL, NULL, NULL}));
-    // graph.compute();
+    graph.compute();
     auto clock2 = clock();
     std::cout << "time: " << (float)(clock2 - clock1)/CLOCKS_PER_SEC << std::endl;
     std::cout << graph.getKernel("int") << std::endl;

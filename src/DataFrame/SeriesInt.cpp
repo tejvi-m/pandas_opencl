@@ -1,14 +1,15 @@
-
-int model = 0;
-
-SeriesInt::SeriesInt(): size_(0){};
-
-// int gpu = 1;
-SeriesInt::SeriesInt(std::vector<int> data): series_(data), size_(data.size()){};
+#pragma once
+#include "Series.h"
+#include <vector>
 
 std::vector<int>& SeriesInt::getVec(int){
   return this -> series_;
 }
+
+SeriesInt::SeriesInt(): size_(int()){};
+
+SeriesInt::SeriesInt(std::vector<int> data): series_(data), size_(data.size()){};
+
 
 long int SeriesInt::size(){
   return this -> size_;
@@ -34,7 +35,8 @@ Series* SeriesInt::operator+(Series* src2){
 
 void SeriesInt::add(Series* src){
   if(gpu.use_gpu){
-      redirectToGPU("vecAddInt", this -> getVec(int()), src -> getVec(int()), this -> getVec(int()), model);
+
+      redirectToGPU("vecAddInt", this -> getVec(int()), src -> getVec(int()), this -> getVec(int()), 0);
     }
   else
     Add<int>(this -> getVec(int()), src -> getVec(int()), this -> getVec(int()));
@@ -58,7 +60,8 @@ void SeriesInt::mul(Series* src2, Series* dst){
 
 void SeriesInt::mul(Series* src){
   if(gpu.use_gpu){
-    redirectToGPU("vecMulInt", this -> getVec(int()), src -> getVec(int()), this -> getVec(int()), model);
+
+    redirectToGPU("vecMulInt", this -> getVec(int()), src -> getVec(int()), this -> getVec(int()), 0);
 
   }
   else
@@ -67,7 +70,7 @@ void SeriesInt::mul(Series* src){
 
 void SeriesInt::div(Series* src){
   if(gpu.use_gpu){
-    redirectToGPU("vecDivInt", this -> getVec(int()), src -> getVec(int()), this -> getVec(int()), model);
+    redirectToGPU("vecDivInt", this -> getVec(int()), src -> getVec(int()), this -> getVec(int()), 0);
   }
   else
       Div<int>(this -> getVec(0), src -> getVec(0), this -> getVec(0));
@@ -75,7 +78,7 @@ void SeriesInt::div(Series* src){
 
 void SeriesInt::sub(Series* src){
   if(gpu.use_gpu){
-    redirectToGPU("vecSubInt", this -> getVec(int()), src -> getVec(int()), this -> getVec(int()), model);
+    redirectToGPU("vecSubInt", this -> getVec(int()), src -> getVec(int()), this -> getVec(int()), 0);
 
   }
   else

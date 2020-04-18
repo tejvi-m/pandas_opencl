@@ -1,5 +1,7 @@
+#pragma once
 #include "helpers.h"
 #include "gpu/gpu.cpp"
+#include "Graph.cpp"
 
 template<typename T>
 void redirectToGPU(std::string operation, std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst, int model){
@@ -149,4 +151,8 @@ void printRow(Row data){
 template<typename T, typename F>
 void Apply(std::vector<T>& vec, F&& fn){
   for_each(vec.begin(), vec.end(), fn);
+}
+
+void redirectToGraph(std::string op, DataFrame* src1, DataFrame* src2){
+  _graph -> insertOperation(op, src1, src2);
 }
