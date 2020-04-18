@@ -113,6 +113,10 @@ DataFrame DataFrame::operator+(DataFrame& src2){
 
 
 void DataFrame::add(DataFrame& src2){
+  if(_graph != nullptr){
+    _graph -> insertOperation("add", this, &src2);
+  }
+  else
   for(auto col: this -> columns_){
     if((*this)[col] -> isArithmetic())
       (*(*this)[col]).add(src2[col]);
@@ -132,6 +136,10 @@ DataFrame DataFrame::operator-(DataFrame& src2){
 
 
 void DataFrame::sub(DataFrame& src2){
+  if(_graph != nullptr){
+    _graph -> insertOperation("sub", this, &src2);
+  }
+  else
   for(auto col: this -> columns_){
     if((*this)[col] -> isArithmetic())
       (*(*this)[col]).sub(src2[col]);
@@ -151,6 +159,10 @@ DataFrame DataFrame::operator*(DataFrame& src2){
 
 
 void DataFrame::mul(DataFrame& src2){
+  if(_graph != nullptr){
+    _graph -> insertOperation("mul", this, &src2);
+  }
+  else
   for(auto col: this -> columns_){
     if((*this)[col] -> isArithmetic())
       (*(*this)[col]).mul(src2[col]);

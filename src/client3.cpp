@@ -29,12 +29,12 @@ int main(){
     // y.printDF();
     // std::cout << "done\n";
 
-    vector<int> y1(9999999 * 2), x1(9999999 * 2);
+    vector<float> y1(9 * 2), x1(9 * 2);
     std::generate(y1.begin(), y1.end(), std::rand);
     std::generate(x1.begin(), x1.end(), std::rand);
 
-    DataFrame x({new SeriesInt(x1)}, {"a"});
-    DataFrame y({new SeriesInt(y1)}, {"a"});
+    DataFrame x({new SeriesFloat(x1)}, {"a"});
+    DataFrame y({new SeriesFloat(y1)}, {"a"});
 
     Graph graph;
     // graph.addDF(&x);
@@ -54,8 +54,13 @@ int main(){
     // graph.insertOperation("mul", &x, 3);
     // graph.insertOperation("sub", &x, 3);
 
+    x.printDF();
+    y.printDF();
 
     x.div(y);
+    x.mul(x);
+    // x.mul(y);
+    // x.sub(y);
     // if(_graph != nullptr){
     //   std::cout << "graph detected" << endl;
     // }
@@ -68,7 +73,7 @@ int main(){
     auto clock2 = clock();
     std::cout << "time: " << (float)(clock2 - clock1)/CLOCKS_PER_SEC << std::endl;
     std::cout << graph.getKernel("int") << std::endl;
-    // x.printDF();
-    // y.printDF();
+    x.printDF();
+    y.printDF();
     return 0;
 }
