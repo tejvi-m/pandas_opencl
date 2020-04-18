@@ -28,3 +28,5 @@ public:
   std::string getKernel(std::string);
 
 };
+
+Graph* _graph = nullptr;

@@ -3,6 +3,7 @@
 #include "DataFrame/SeriesInt.cpp"
 #include "DataFrame/SeriesFloat.cpp"
 #include "DataFrame/SeriesStr.cpp"
+#include "DataFrame/Graph.h"
 #include "DataFrame/Graph.cpp"
 #include <numeric>
 #include <ctime>
@@ -39,7 +40,7 @@ int main(){
     // graph.addDF(&y);
     // std::cout << graph.getGenName(&x) << std::endl;
     // std::cout << graph.getGenName(&y) << std::endl;
-
+    //
     graph.insertOperation("add", &x, 3);
     graph.insertOperation("mul", &x, 4);
     graph.insertOperation("mul", &x, &y);
@@ -52,7 +53,10 @@ int main(){
     graph.insertOperation("mul", &x, 3);
     graph.insertOperation("sub", &x, 3);
 
-
+    if(_graph != nullptr){
+      std::cout << "graph detected" << endl;
+    }
+    else std::cout << "graph not detected" << endl;
     auto clock1 = clock();
     // runGeneratedKernel(graph.getKernel("int"), std::vector<int*>({&((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0]}),
     //  std::vector<int*>({&((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0]}), (y[0] -> getVec(0)).size(),

@@ -1,10 +1,12 @@
-#include "Graph.h"
+
 #include <string>
 #include <cstring>
 #include <unordered_map>
 
-Graph::Graph(){
+extern Graph* _graph;
 
+Graph::Graph(){
+  _graph = this;
 }
 
 void Graph::addDF(DataFrame* DF){
