@@ -1,7 +1,9 @@
-
+#include "Graph.h"
+// #include "DataFrame.h"
 #include <string>
 #include <cstring>
 #include <unordered_map>
+
 
 extern Graph* _graph;
 
@@ -117,7 +119,7 @@ std::string Graph::getKernel(std::string dtype){
 }
 
 
-void Graph::compute(int model = 0){
+void Graph::compute(){
 
     for(int col = 0; col < (this -> toLoad[0]) -> shape().first; col++){
         DataFrame temp = *(this -> toLoad[0]);

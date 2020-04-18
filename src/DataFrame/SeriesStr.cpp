@@ -1,3 +1,7 @@
+#include "Series.h"
+// #include "helpers.h"
+#include <iostream>
+
 SeriesStr::SeriesStr(): size_(0){}
 
 SeriesStr::SeriesStr(std::vector<std::string> data): series_(data), size_(data.size()){};

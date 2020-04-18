@@ -1,4 +1,8 @@
-// int model = 2;
+#include "Series.h"
+// #include "helpers.h"
+#include <iostream>
+
+int model = 0;
 
 SeriesFloat::SeriesFloat(): size_(float()){};
 

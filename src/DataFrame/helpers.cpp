@@ -1,5 +1,5 @@
 #include "helpers.h"
-#include "gpu/gpu.cpp"
+// #include "gpu/gpu.cpp"
 
 template<typename T>
 void redirectToGPU(std::string operation, std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst, int model){

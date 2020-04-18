@@ -1,3 +1,6 @@
+#include "Series.h"
+// #include "helpers.h"
+#include <iostream>
 
 int model = 0;
 

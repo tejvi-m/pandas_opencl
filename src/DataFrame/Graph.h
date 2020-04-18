@@ -1,8 +1,12 @@
+// #include "DataFrame.h"
 
+// #include "gpu/gpu.h"
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
+#include <string>
 
+class DataFrame;
 
 class Graph{
 private:
@@ -21,7 +25,7 @@ public:
   std::string getGenName(DataFrame*, int);
   void insertOperation(std::string, DataFrame*);
   void insertOperation(std::string, DataFrame*, DataFrame*);
-  void compute(int);
+  void compute();
 
   template<typename T>
   void insertOperation(std::string operation, DataFrame* DF1, T constant);

@@ -8,8 +8,8 @@ extern GPU gpu;
 
 
 void setup(){
-    std::ifstream in("./src/DataFrame/gpu/src.cl");
-    if(!in.is_open()) throw std::runtime_error("Could not open file");
+    std::ifstream in("./DataFrame/gpu/src.cl");
+    if(!in.is_open()) throw std::runtime_error("Could not open file: kernel source");
 
     gpu.localSize = 32;
 
@@ -116,9 +116,9 @@ void runGeneratedKernel(std::string Kernel, std::vector<T*> srcVecs,
                 std::vector<T*> dstVecs,
                 int n,
                 std::vector<T*> hostPtrs,
-                bool read = true,
-                cl_mem_flags memFlagsSrc =   CL_MEM_ALLOC_HOST_PTR,
-                cl_mem_flags memFlagsDst = CL_MEM_ALLOC_HOST_PTR){
+                bool read,
+                cl_mem_flags memFlagsSrc,
+                cl_mem_flags memFlagsDst){
 
 
   std::vector<cl_mem> buffers(srcVecs.size() + dstVecs.size());

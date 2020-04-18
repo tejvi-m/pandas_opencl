@@ -6,7 +6,7 @@
 
 DataFrame::DataFrame(): dataframe_({}), columns_({}), index_(""){}
 
-DataFrame::DataFrame(std::vector<Series *> data, std::vector<std::string> columns = {}, std::string index = ""): dataframe_(data), columns_(columns), index_(index){}
+DataFrame::DataFrame(std::vector<Series *> data, std::vector<std::string> columns = {}, std::string index): dataframe_(data), columns_(columns), index_(index){}
 
 Series* DataFrame::operator[](int i){
     return this -> dataframe_[i];

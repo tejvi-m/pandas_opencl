@@ -1,16 +1,33 @@
+// // #include "DataFrame/DataFrame.cpp"
+// #include "DataFrame/helpers.h"
+// // #include "DataFrame/SeriesInt.cpp"
+// // #include "DataFrame/SeriesFloat.cpp"
+// // #include "DataFrame/SeriesStr.cpp"
+// // #include "DataFrame/Graph.h"
+// // #include "DataFrame/Graph.cpp"
+// // #include "DataFrame/gpu/gpu.h"
+// #include "DataFrame/DataFrame.h"
+// // #include "DataFrame/Series.h"
+// #include "DataFrame/Graph.h"
+// #include <iostream>
+// #include <numeric>
+// #include <ctime>
+// #include <cmath>
+// #include <iomanip>
+// #include <random>
+// #include <string>
+
 #include "DataFrame/DataFrame.cpp"
 #include "DataFrame/helpers.cpp"
 #include "DataFrame/SeriesInt.cpp"
 #include "DataFrame/SeriesFloat.cpp"
 #include "DataFrame/SeriesStr.cpp"
-#include "DataFrame/Graph.h"
 #include "DataFrame/Graph.cpp"
 #include <numeric>
 #include <ctime>
 #include <cmath>
 #include <iomanip>
 #include <random>
-
 
 using namespace std;
 
@@ -32,8 +49,8 @@ int main(){
     std::generate(y1.begin(), y1.end(), std::rand);
     std::generate(x1.begin(), x1.end(), std::rand);
 
-    DataFrame x({new SeriesInt(x1)}, {"a"});
-    DataFrame y({new SeriesInt(y1)}, {"a"});
+    DataFrame x(vector<Series*>({new SeriesInt(x1)}), vector<string>({"a"}));
+    DataFrame y(vector<Series*>({new SeriesInt(y1)}), vector<string>({"a"}));
 
     Graph graph;
     // graph.addDF(&x);
