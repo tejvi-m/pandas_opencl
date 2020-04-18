@@ -4,6 +4,9 @@
 #include <stdexcept>
 #include <sstream>
 
+class Graph;
+extern Graph* _graph;
+
 DataFrame::DataFrame(): dataframe_({}), columns_({}), index_(""){}
 
 DataFrame::DataFrame(std::vector<Series *> data, std::vector<std::string> columns = {}, std::string index = ""): dataframe_(data), columns_(columns), index_(index){}
@@ -165,6 +168,10 @@ DataFrame DataFrame::operator/(DataFrame& src2){
 
 
 void DataFrame::div(DataFrame& src2){
+  if(_graph == nullptr){
+    std::cout << "not found\n";
+  }
+  else std::cout << "found\n";
   for(auto col: this -> columns_){
     if((*this)[col] -> isArithmetic())
       (*(*this)[col]).div(src2[col]);
