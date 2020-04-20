@@ -35,15 +35,23 @@ public:
 
   DataFrame operator+(DataFrame& src2);
   void add(DataFrame& src2);
+  template<typename T>
+  void add(T src2);
 
   DataFrame operator-(DataFrame& src2);
   void sub(DataFrame& src2);
+  template<typename T>
+  void sub(T src2);
 
   DataFrame operator*(DataFrame& src2);
   void mul(DataFrame& src2);
+  template<typename T>
+  void mul(T src2);
 
   DataFrame operator/(DataFrame& src2);
   void div(DataFrame& src2);
+  template<typename T>
+  void div(T src2);
 
   template<typename T>
   void transform(T&&);

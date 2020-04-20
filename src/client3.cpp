@@ -59,6 +59,10 @@ int main(){
 
     x.div(y);
     x.mul(x);
+    x.div(2);
+    x.sub(0 + 2);
+    x.mul(0);
+    x.add(2);
     // x.mul(y);
     // x.sub(y);
     // if(_graph != nullptr){

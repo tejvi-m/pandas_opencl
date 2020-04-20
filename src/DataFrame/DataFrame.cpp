@@ -123,6 +123,18 @@ void DataFrame::add(DataFrame& src2){
   }
 }
 
+template<typename T>
+void DataFrame::add(T src2){
+  if(_graph != nullptr){
+    _graph -> insertOperation("add", this, src2);
+  }
+  // else
+  // for(auto col: this -> columns_){
+  //   if((*this)[col] -> isArithmetic())
+  //     (*(*this)[col]).add(src2);
+  // }
+}
+
 DataFrame DataFrame::operator-(DataFrame& src2){
     DataFrame newDF;
     for(auto col: this -> columns_){
@@ -144,6 +156,18 @@ void DataFrame::sub(DataFrame& src2){
     if((*this)[col] -> isArithmetic())
       (*(*this)[col]).sub(src2[col]);
   }
+}
+
+template<typename T>
+void DataFrame::sub(T src2){
+  if(_graph != nullptr){
+    _graph -> insertOperation("sub", this, src2);
+  }
+  // else
+  // for(auto col: this -> columns_){
+  //   if((*this)[col] -> isArithmetic())
+  //     (*(*this)[col]).sub(src2);
+  // }
 }
 
 DataFrame DataFrame::operator*(DataFrame& src2){
@@ -169,6 +193,18 @@ void DataFrame::mul(DataFrame& src2){
   }
 }
 
+template<typename T>
+void DataFrame::mul(T src2){
+  if(_graph != nullptr){
+    _graph -> insertOperation("mul", this, src2);
+  }
+  // else
+  // for(auto col: this -> columns_){
+  //   if((*this)[col] -> isArithmetic())
+  //     (*(*this)[col]).mul(src2);
+  // }
+}
+
 DataFrame DataFrame::operator/(DataFrame& src2){
     DataFrame newDF;
     for(auto col: this -> columns_){
@@ -190,6 +226,18 @@ void DataFrame::div(DataFrame& src2){
     if((*this)[col] -> isArithmetic())
       (*(*this)[col]).div(src2[col]);
   }
+}
+
+template<typename T>
+void DataFrame::div(T src2){
+  if(_graph != nullptr){
+    _graph -> insertOperation("div", this, src2);
+  }
+  // else
+  // for(auto col: this -> columns_){
+  //   if((*this)[col] -> isArithmetic())
+  //     (*(*this)[col]).div(src2);
+  // }
 }
 
 template<typename F>
