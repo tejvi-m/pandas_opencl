@@ -24,18 +24,26 @@ public:
   virtual Series* operator+(Series*){}
   virtual void add(Series*, Series*){}
   virtual void add(Series*){}
+  virtual void add(int){}
+  virtual void add(float){}
 
   virtual Series* operator-(Series*){}
   virtual void sub(Series*, Series*){}
   virtual void sub(Series*){}
+  virtual void sub(int){}
+  virtual void sub(float){}
 
   virtual Series* operator*(Series*){}
   virtual void mul(Series*, Series*){}
   virtual void mul(Series*){}
+  virtual void mul(int){}
+  virtual void mul(float){}
 
   virtual Series* operator/(Series*){}
   virtual void div(Series*, Series*){}
   virtual void div(Series*){}
+  virtual void div(int){}
+  virtual void div(float){}
 
   virtual Series* copy(){}
 
@@ -79,6 +87,11 @@ public:
   virtual void div(Series*);
 
   virtual void sub(Series*);
+
+  virtual void add(int);
+  virtual void mul(int);
+  virtual void sub(int);
+  virtual void div(int);
 
   virtual void map(std::unordered_map<int, int>);
 
@@ -163,6 +176,11 @@ virtual void map(std::unordered_map<float, float>);
   virtual Series* append(vTypes);
 
   virtual bool isArithmetic();
+
+  virtual void add(float);
+  virtual void mul(float);
+  virtual void sub(float);
+  virtual void div(float);
 
   template<typename T>
   void transform(T&&);

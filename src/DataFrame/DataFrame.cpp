@@ -128,11 +128,16 @@ void DataFrame::add(T src2){
   if(_graph != nullptr){
     _graph -> insertOperation("add", this, src2);
   }
-  // else
-  // for(auto col: this -> columns_){
-  //   if((*this)[col] -> isArithmetic())
-  //     (*(*this)[col]).add(src2);
-  // }
+  else
+  for(auto col: this -> columns_){
+      vTypes x = ((*this)[col]) -> type();
+      if(std::holds_alternative<int>(x)){
+        (*(*this)[col]).add((int) src2);
+      }
+      else if(std::holds_alternative<float>(x)){
+        (*(*this)[col]).add((float) src2);
+      }
+    }
 }
 
 DataFrame DataFrame::operator-(DataFrame& src2){
@@ -163,11 +168,16 @@ void DataFrame::sub(T src2){
   if(_graph != nullptr){
     _graph -> insertOperation("sub", this, src2);
   }
-  // else
-  // for(auto col: this -> columns_){
-  //   if((*this)[col] -> isArithmetic())
-  //     (*(*this)[col]).sub(src2);
-  // }
+  else
+  for(auto col: this -> columns_){
+      vTypes x = ((*this)[col]) -> type();
+      if(std::holds_alternative<int>(x)){
+        (*(*this)[col]).sub((int) src2);
+      }
+      else if(std::holds_alternative<float>(x)){
+        (*(*this)[col]).div((float) src2);
+      }
+    }
 }
 
 DataFrame DataFrame::operator*(DataFrame& src2){
@@ -198,11 +208,16 @@ void DataFrame::mul(T src2){
   if(_graph != nullptr){
     _graph -> insertOperation("mul", this, src2);
   }
-  // else
-  // for(auto col: this -> columns_){
-  //   if((*this)[col] -> isArithmetic())
-  //     (*(*this)[col]).mul(src2);
-  // }
+  else
+  for(auto col: this -> columns_){
+    vTypes x = ((*this)[col]) -> type();
+    if(std::holds_alternative<int>(x)){
+      (*(*this)[col]).mul((int) src2);
+    }
+    else if(std::holds_alternative<float>(x)){
+      (*(*this)[col]).mul((float) src2);
+    }
+  }
 }
 
 DataFrame DataFrame::operator/(DataFrame& src2){
@@ -233,11 +248,16 @@ void DataFrame::div(T src2){
   if(_graph != nullptr){
     _graph -> insertOperation("div", this, src2);
   }
-  // else
-  // for(auto col: this -> columns_){
-  //   if((*this)[col] -> isArithmetic())
-  //     (*(*this)[col]).div(src2);
-  // }
+  else
+  for(auto col: this -> columns_){
+      vTypes x = ((*this)[col]) -> type();
+      if(std::holds_alternative<int>(x)){
+        (*(*this)[col]).div((int) src2);
+      }
+      else if(std::holds_alternative<float>(x)){
+        (*(*this)[col]).div((float) src2);
+      }
+    }
 }
 
 template<typename F>

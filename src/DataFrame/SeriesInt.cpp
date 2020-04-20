@@ -129,3 +129,22 @@ template<typename R = int, typename F>
 R SeriesInt::apply(F&& Fn){
     return Fn(this -> getVec(0));
 }
+
+void SeriesInt::add(int src){
+    Add<int>(this -> getVec(int()), src, this -> getVec(int()));
+}
+
+
+void SeriesInt::sub(int src){
+    Sub<int>(this -> getVec(int()), src, this -> getVec(int()));
+}
+
+
+void SeriesInt::div(int src){
+    Div<int>(this -> getVec(int()), src, this -> getVec(int()));
+}
+
+
+void SeriesInt::mul(int src){
+    Mul<int>(this -> getVec(int()), src, this -> getVec(int()));
+}

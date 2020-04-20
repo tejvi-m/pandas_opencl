@@ -17,7 +17,7 @@ using namespace std;
 
 int main(){
     // DataFrame x("./src/example.csv");
-    setup();
+    // setup();
     //
     // auto  y = x.copy();
     // x.printDF();
@@ -36,7 +36,7 @@ int main(){
     DataFrame x({new SeriesFloat(x1)}, {"a"});
     DataFrame y({new SeriesFloat(y1)}, {"a"});
 
-    Graph graph;
+    // Graph graph;
     // graph.addDF(&x);
     // graph.addDF(&y);
     // std::cout << graph.getGenName(&x) << std::endl;
@@ -73,10 +73,10 @@ int main(){
     // runGeneratedKernel(graph.getKernel("int"), std::vector<int*>({&((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0]}),
     //  std::vector<int*>({&((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0]}), (y[0] -> getVec(0)).size(),
     //  vector<int*>({NULL, NULL, NULL, NULL}));
-    graph.compute();
+    // graph.compute();
     auto clock2 = clock();
     std::cout << "time: " << (float)(clock2 - clock1)/CLOCKS_PER_SEC << std::endl;
-    std::cout << graph.getKernel("int") << std::endl;
+    // std::cout << graph.getKernel("int") << std::endl;
     x.printDF();
     y.printDF();
     return 0;

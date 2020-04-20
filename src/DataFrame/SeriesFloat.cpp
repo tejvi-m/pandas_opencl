@@ -99,6 +99,25 @@ void SeriesFloat::add(Series* src){
     Add<float>(this -> getVec(float()), src -> getVec(float()), this -> getVec(float()));
 }
 
+void SeriesFloat::add(float src){
+    Add<float>(this -> getVec(float()), src, this -> getVec(float()));
+}
+
+
+void SeriesFloat::sub(float src){
+    Sub<float>(this -> getVec(float()), src, this -> getVec(float()));
+}
+
+
+void SeriesFloat::div(float src){
+    Div<float>(this -> getVec(float()), src, this -> getVec(float()));
+}
+
+
+void SeriesFloat::mul(float src){
+    Mul<float>(this -> getVec(float()), src, this -> getVec(float()));
+}
+
 template<typename T>
 void SeriesFloat::transform(T&& Fn){
   for_each(this -> getVec(float()).begin(), this -> getVec(float()).end(), Fn);
