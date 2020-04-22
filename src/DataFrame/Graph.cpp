@@ -181,5 +181,11 @@ void Graph::compute_with_model(int model = 0){
         }
 
     }
+
+
     // make it the smallest
+    this -> toLoad.clear();
+    this -> genNames.clear();
+    this -> mapping.clear();
+    this -> modifiedDF.clear();
 }
