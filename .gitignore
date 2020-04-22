@@ -2,3 +2,4 @@
 data/*
 src/DataFrame/*.hpp
 *.o
+*.so
