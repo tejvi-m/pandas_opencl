@@ -21,7 +21,8 @@ public:
   std::string getGenName(DataFrame*, int);
   void insertOperation(std::string, DataFrame*);
   void insertOperation(std::string, DataFrame*, DataFrame*);
-  void compute(int);
+  void compute_with_model(int);
+  void compute();
 
   template<typename T>
   void insertOperation(std::string operation, DataFrame* DF1, T constant);

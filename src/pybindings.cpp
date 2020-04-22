@@ -23,6 +23,11 @@
         .def(boost::python::init<std::string>())
         .def("showDF", &DataFrame::printDF)
         .def("add", (void(DataFrame::*)(DataFrame&))&DataFrame::add)
+        .def("sub", (void(DataFrame::*)(DataFrame&))&DataFrame::sub)
+        .def("div", (void(DataFrame::*)(DataFrame&))&DataFrame::div)
+        .def("mul", (void(DataFrame::*)(DataFrame&))&DataFrame::mul)
         // .def("")
       ;
+    boost::python::class_<Graph>("Graph")
+      .def("compute", &Graph::compute);
  }

@@ -119,7 +119,11 @@ std::string Graph::getKernel(std::string dtype){
 }
 
 
-void Graph::compute(int model = 0){
+void Graph::compute(){
+  this -> compute_with_model(0);
+}
+
+void Graph::compute_with_model(int model = 0){
 
     for(int col = 0; col < (this -> toLoad[0]) -> shape().first; col++){
         DataFrame temp = *(this -> toLoad[0]);
