@@ -132,8 +132,8 @@ void Graph::compute_with_model(int model = 0){
         vTypes x = (temp[col]) -> type();
         if(std::holds_alternative<int>(x)){
           DataFrame temp = *(this -> toLoad[0]);
-          int n = temp[0] -> getVec(int()).size();
-
+          int n = temp[col] -> getVec(int()).size();
+          // std::cout << "n: " << n << std::endl;
           std::vector<int*> srcVecs(this -> toLoad.size());
           std::vector<int*> dstVecs;
           //temp since it throws compile time errors
@@ -141,7 +141,7 @@ void Graph::compute_with_model(int model = 0){
           for(int i = 0; i < srcVecs.size(); i++){
             DataFrame temp = *(this -> toLoad[i]);
 
-            srcVecs[i] = &(temp[col] -> getVec(int()))[0];
+            srcVecs[i] = &((temp[col] -> getVec(int()))[0]);
             if(this -> modifiedDF.find(this -> toLoad[i]) != this -> modifiedDF.end()){
               dstVecs.push_back(&(temp[col] -> getVec(int()))[0]);
             }
@@ -157,7 +157,8 @@ void Graph::compute_with_model(int model = 0){
 
         else if(std::holds_alternative<float>(x)){
             DataFrame temp = *(this -> toLoad[0]);
-            int n = temp[0] -> getVec(float()).size();
+            int n = temp[col] -> getVec(float()).size();
+            // std::cout << "n: " << n << std::endl;
 
             std::vector<float*> srcVecs(this -> toLoad.size());
             std::vector<float*> dstVecs;
