@@ -42,5 +42,7 @@
         // .def("")
       ;
     boost::python::class_<Graph>("Graph")
-      .def("compute", &Graph::compute);
+      .def("compute", &Graph::compute)
+      .def("getKernel", (std::string (Graph::*)(std::string))&Graph::getKernel)
+      ;
  }

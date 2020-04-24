@@ -260,6 +260,13 @@ void DataFrame::div(T src2){
     }
 }
 
+
+void DataFrame::transform(std::string operation){
+  // only GPU mode supported.
+  if(_graph != nullptr){
+    _graph -> insertOperation("tx", operation, this);
+  }
+}
 template<typename F>
 void DataFrame::transform(F&& fn){
   for(auto col: this -> columns_){
@@ -272,7 +279,6 @@ void DataFrame::transform(F&& fn){
     }
   }
 }
-
 template<typename T>
 std::vector<std::pair<std::string, float>> DataFrame::apply(T&& Fn){
   std::vector<std::pair<std::string, float>> results;
