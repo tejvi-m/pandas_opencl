@@ -38,6 +38,8 @@
         .def("div", (void(DataFrame::*)(int))&DataFrame::div)
         .def("mul", (void(DataFrame::*)(int))&DataFrame::mul)
 
+        .def("transform", (void(DataFrame::*)(std::string))&DataFrame::transform)
+
         .def("copy", (DataFrame (DataFrame::*)())&DataFrame::copy)
         // .def("")
       ;
