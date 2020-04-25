@@ -53,6 +53,7 @@ public:
   template<typename T>
   void div(T src2);
 
+  void transform(std::string);
   template<typename T>
   void transform(T&&);
 

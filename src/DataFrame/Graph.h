@@ -19,7 +19,7 @@ public:
   Graph();
   void addDF(DataFrame*);
   std::string getGenName(DataFrame*, int);
-  void insertOperation(std::string, DataFrame*);
+  void insertOperation(std::string, std::string, DataFrame*);
   void insertOperation(std::string, DataFrame*, DataFrame*);
   void compute_with_model(int);
   void compute();

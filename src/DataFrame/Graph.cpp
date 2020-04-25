@@ -4,6 +4,7 @@
 #include <string>
 #include <cstring>
 #include <unordered_map>
+#include <boost/algorithm/string/replace.hpp>
 
 extern Graph* _graph;
 
@@ -32,7 +33,27 @@ std::string Graph::getGenName(DataFrame* DF, int f = 0){
   else return this -> mapping[DF] + "_copy";
 }
 
-void Graph::insertOperation(std::string operation, DataFrame* DF){
+void Graph::insertOperation(std::string op,  std::string operation, DataFrame* DF){
+
+  this -> addDF(DF);
+  std::string newOp;
+  //first DF is the one that gets updated.
+  if(op=="tx"){
+    std::string newOp;
+    if(this -> modifiedDF.find(DF) == this -> modifiedDF.end()){
+       boost::replace_all(operation, "x", getGenName(DF) + "[id]");
+       newOp = getGenName(DF, 1) + "_copy[id] = " + operation;
+    }
+
+    else {
+      boost::replace_all(operation, "x", getGenName(DF) + "[id]");
+      newOp = getGenName(DF, 1) + "_copy[id] = " + operation;
+    }
+
+    this -> modifiedDF.insert(DF);
+
+    this -> Kernel += "\t\t\t" + newOp + ";\n";
+  }
 
 }
 
