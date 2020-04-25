@@ -15,7 +15,7 @@ Graph::Graph(){
 void Graph::addDF(DataFrame* DF){
   if(mapping.find(DF) == mapping.end()){
     this -> toLoad.push_back(DF);
-    std::string oldName;
+    std::string oldName = "";
     if(genNames.size() == 0){
       oldName = "v0";
     }
@@ -36,10 +36,10 @@ std::string Graph::getGenName(DataFrame* DF, int f = 0){
 void Graph::insertOperation(std::string op,  std::string operation, DataFrame* DF){
 
   this -> addDF(DF);
-  std::string newOp;
+  std::string newOp= "" ;
   //first DF is the one that gets updated.
   if(op=="tx"){
-    std::string newOp;
+    std::string newOp = "";
     if(this -> modifiedDF.find(DF) == this -> modifiedDF.end()){
        boost::replace_all(operation, "x", getGenName(DF) + "[id]");
        newOp = getGenName(DF, 1) + "_copy[id] = " + operation;
@@ -68,7 +68,7 @@ void Graph::insertOperation(std::string operation, DataFrame* DF1, DataFrame* DF
   this -> addDF(DF1);
   this -> addDF(DF2);
   //first DF is the one that gets updated.
-  std::string newOp;
+  std::string newOp = "";
   if(this -> modifiedDF.find(DF1) == this -> modifiedDF.end()){
      newOp = getGenName(DF1, 1) + "_copy[id] " + " = " + getGenName(DF1) + "[id] "
                       + operationSymbol[operation] + " "
@@ -97,7 +97,7 @@ void Graph::insertOperation(std::string operation, DataFrame* DF1, T constant){
   });
   //first DF is the one that gets updated.
   this -> addDF(DF1);
-  std::string newOp;
+  std::string newOp = "";
   if(this -> modifiedDF.find(DF1) == this -> modifiedDF.end()){
      newOp = getGenName(DF1, 1) + "_copy[id] " + " = " + getGenName(DF1) + "[id] "
                       + operationSymbol[operation]
@@ -145,10 +145,10 @@ void Graph::compute(){
 }
 
 void Graph::compute_with_model(int model = 0){
-
+    // std::cout << "dhspe: " << (this -> toLoad[0]) -> shape().first << std::endl;
     for(int col = 0; col < (this -> toLoad[0]) -> shape().first; col++){
-        DataFrame temp = *(this -> toLoad[0]);
-        int n = temp[0] -> getVec(0).size();
+      DataFrame temp = *(this -> toLoad[0]);
+              // int n = temp[0] -> getVec(0).size();
 
         vTypes x = (temp[col]) -> type();
         if(std::holds_alternative<int>(x)){

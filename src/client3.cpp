@@ -59,7 +59,8 @@ int main(){
 
     // x.mul(y);
     std::string op = "x * x + 2 - x";
-    x.transform(op);
+    // x.transform(op);
+    x.mul(x);
     // x.mul(x);
     // x.div(2);
     // x.sub(0 + 2);
