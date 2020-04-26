@@ -63,15 +63,15 @@ public:
   void map(std::unordered_map<float, float>);
   void map(std::unordered_map<std::string, std::string>);
   template<typename T>
-  std::vector<std::pair<std::string, float>> apply(T&&);
+  std::unordered_map<std::string, float> apply(T&&);
 
   void dropNA(float toDrop = 0);
   void fillNA(float Replacement, float toDrop = 0);
 
-  std::vector<std::pair<std::string, float>> sum();
-  std::vector<std::pair<std::string, float>> mean();
-  std::vector<std::pair<std::string, float>> max();
-  std::vector<std::pair<std::string, float>> min();
+  std::unordered_map<std::string, float> sum();
+  std::unordered_map<std::string, float> mean();
+  std::unordered_map<std::string, float> max();
+  std::unordered_map<std::string, float> min();
 
   std::pair<int, int> shape();
   void printDF();

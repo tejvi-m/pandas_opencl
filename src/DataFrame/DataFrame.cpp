@@ -281,38 +281,41 @@ void DataFrame::transform(F&& fn){
 }
 
 template<typename T>
-std::vector<std::pair<std::string, float>> DataFrame::apply(T&& Fn){
-  std::vector<std::pair<std::string, float>> results;
+std::unordered_map<std::string, float> DataFrame::apply(T&& Fn){
+  std::unordered_map<std::string, float> results;
+
   for(auto col: this -> columns_){
+
     vTypes x = ((*this)[col]) -> type();
+
     if(std::holds_alternative<int>(x)){
       float res = Fn((*this)[col] -> getVec(int()));
-      results.push_back(std::make_pair(col, res));
+      results["col"] = res;
     }
     else if(std::holds_alternative<float>(x)){
       float res = Fn((*this)[col] -> getVec(float()));
-      results.push_back(std::make_pair(col, res));
+      results["col"] = res;
     }
   }
   return results;
 }
 
-std::vector<std::pair<std::string, float>> DataFrame::sum(){
+std::unordered_map<std::string, float> DataFrame::sum(){
   return this -> apply(Sum());
 }
 
 
-std::vector<std::pair<std::string, float>> DataFrame::mean(){
+std::unordered_map<std::string, float> DataFrame::mean(){
   return this -> apply(Mean());
 }
 
 
-std::vector<std::pair<std::string, float>> DataFrame::max(){
+std::unordered_map<std::string, float> DataFrame::max(){
   return this -> apply(Max());
 }
 
 
-std::vector<std::pair<std::string, float>> DataFrame::min(){
+std::unordered_map<std::string, float> DataFrame::min(){
   return this -> apply(Min());
 }
 
