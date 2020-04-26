@@ -183,3 +183,10 @@ void Apply(std::vector<T>& vec, F&& fn){
 void redirectToGraph(std::string op, DataFrame* src1, DataFrame* src2){
   _graph -> insertOperation(op, src1, src2);
 }
+
+template<typename T>
+void getValidity_generic(std::vector<T>& v, std::vector<bool>& valid, T toDrop){
+  for(int i = 0; i < v.size(); i++){
+    if(v[i] == toDrop) valid[i] = false;
+  }
+}

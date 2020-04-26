@@ -61,6 +61,7 @@ public:
   template<typename T>
   std::vector<std::pair<std::string, float>> apply(T&&);
 
+  void dropNA(float toDrop = 0);
 
   std::pair<int, int> shape();
   void printDF();

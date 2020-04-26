@@ -18,8 +18,10 @@ public:
   virtual void Index(){}
   virtual void show(){}
 
+  virtual void getValidity(std::vector<bool>&, float){}
   virtual vTypes operator[](int){}
   virtual int index(int){}
+
 
   virtual Series* operator+(Series*){}
   virtual void add(Series*, Series*){}
@@ -107,6 +109,7 @@ public:
   virtual Series* copy();
 
   virtual vTypes type();
+  void getValidity(std::vector<bool>&, float);
 
   template<typename T>
   void transform(T&&);
@@ -132,7 +135,7 @@ public:
   virtual Series* append(vTypes);
 
   virtual bool isArithmetic();
-
+  void getValidity(std::vector<bool>&, float);
   virtual vTypes type();
 
 };
@@ -152,8 +155,8 @@ public:
   virtual vTypes operator[](int i);
   virtual int index(float i);
 
-virtual void map(std::unordered_map<float, float>);
-
+  virtual void map(std::unordered_map<float, float>);
+  void getValidity(std::vector<bool>&, float);
     virtual Series* operator+(Series*);
     // virtual void add(Series*, Series*);
     // virtual void add(Series*);

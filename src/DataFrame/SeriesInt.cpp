@@ -148,3 +148,7 @@ void SeriesInt::div(int src){
 void SeriesInt::mul(int src){
     Mul<int>(this -> getVec(int()), src, this -> getVec(int()));
 }
+
+void SeriesInt::getValidity(std::vector<bool>& valid, float toDrop){
+    getValidity_generic(this -> getVec(int()), valid, (int) toDrop);
+}

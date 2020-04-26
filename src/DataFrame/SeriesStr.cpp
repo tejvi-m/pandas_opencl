@@ -41,3 +41,8 @@ bool SeriesStr::isArithmetic(){
 vTypes SeriesStr::type(){
   return std::string();
 }
+
+void SeriesStr::getValidity(std::vector<bool>& valid, float toDrop){
+    // getValidity<string>(this -> getVec(str()), valid, (int)toDrop);
+    return;
+}

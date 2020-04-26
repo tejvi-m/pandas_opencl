@@ -81,6 +81,8 @@ int main(){
     auto clock2 = clock();
     std::cout << "time: " << (float)(clock2 - clock1)/CLOCKS_PER_SEC << std::endl;
     x.printDF();
+
+    x.dropNA();
     // y.printDF();
     return 0;
 }

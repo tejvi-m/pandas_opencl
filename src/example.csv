@@ -1,5 +1,5 @@
 a : INT, b : INT, c : STRING
 1, 2, abc
-1, 2, adc
+NULL, 2, adc
 4, 54, aerfaerf
-7, 83445, aevgav
+7, NULL, aevgav

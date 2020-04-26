@@ -131,3 +131,9 @@ template<typename R = int, typename F>
 R SeriesFloat::apply(F&& Fn){
     return Fn(this -> getVec(0));
 }
+
+
+
+void SeriesFloat::getValidity(std::vector<bool>& valid, float toDrop){
+    getValidity_generic(this -> getVec(float()), valid, toDrop);
+}

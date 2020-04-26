@@ -357,3 +357,19 @@ DataFrame::DataFrame(const std::string filename)
     }
     myFile.close();
 }
+
+
+void DataFrame::dropNA(float toDrop){
+  std::vector<bool> valid(this -> shape().second, true);
+
+  for(int i = 0; i < this -> shape().first; i++){
+    (*this)[i] -> getValidity(valid, toDrop);
+  }
+
+  std::cout<<" valid:\n";
+  for(bool b: valid){
+    std::cout << b << std::endl;
+  }
+
+
+}
