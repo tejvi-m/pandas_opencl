@@ -306,6 +306,16 @@ std::vector<std::pair<std::string, float>> DataFrame::mean(){
   return this -> apply(Mean());
 }
 
+
+std::vector<std::pair<std::string, float>> DataFrame::max(){
+  return this -> apply(Max());
+}
+
+
+std::vector<std::pair<std::string, float>> DataFrame::min(){
+  return this -> apply(Min());
+}
+
 void DataFrame::map(std::unordered_map<int, int> Map){
   for(auto col: this -> columns_){
     vTypes x = ((*this)[col]) -> type();

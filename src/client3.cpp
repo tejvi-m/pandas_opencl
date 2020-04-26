@@ -92,6 +92,20 @@ int main(){
       std::cout << x.first << x.second << std::endl;
     }
 
+    res = x.max();
+   for(auto x: res){
+     std::cout << x.first << x.second << std::endl;
+   }
+
+
+
+   res = x.min();
+  for(auto x: res){
+    std::cout << x.first << x.second << std::endl;
+  }
+
+
+
     // x.dropNA();
     x.fillNA(2);
     x.printDF();

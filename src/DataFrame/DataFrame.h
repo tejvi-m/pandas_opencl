@@ -70,6 +70,8 @@ public:
 
   std::vector<std::pair<std::string, float>> sum();
   std::vector<std::pair<std::string, float>> mean();
+  std::vector<std::pair<std::string, float>> max();
+  std::vector<std::pair<std::string, float>> min();
 
   std::pair<int, int> shape();
   void printDF();
@@ -101,5 +103,25 @@ struct Mean{
   float operator()(std::vector<float>& vec){
       float x = std::accumulate(vec.begin(), vec.end(), 0) / (float) vec.size();
       return x;
+  }
+};
+
+struct Min{
+  int operator()(std::vector<int>& vec){
+    return *min_element(vec.begin(), vec.end());
+  }
+
+  float operator()(std::vector<float>& vec){
+      return *min_element(vec.begin(), vec.end());
+  }
+};
+
+struct Max{
+  int operator()(std::vector<int>& vec){
+      return *max_element(vec.begin(), vec.end());
+  }
+
+  float operator()(std::vector<float>& vec){
+      return *max_element(vec.begin(), vec.end());
   }
 };
