@@ -57,11 +57,17 @@ public:
   template<typename T>
   void transform(T&&);
 
-
+  void map(std::unordered_map<int, int>);
+  void map(std::unordered_map<float, float>);
+  void map(std::unordered_map<std::string, std::string>);
   template<typename T>
   std::vector<std::pair<std::string, float>> apply(T&&);
 
   void dropNA(float toDrop = 0);
+  void fillNA(float Replacement, float toDrop = 0);
+
+
+
 
   std::pair<int, int> shape();
   void printDF();

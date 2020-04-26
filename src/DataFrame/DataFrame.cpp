@@ -279,6 +279,7 @@ void DataFrame::transform(F&& fn){
     }
   }
 }
+
 template<typename T>
 std::vector<std::pair<std::string, float>> DataFrame::apply(T&& Fn){
   std::vector<std::pair<std::string, float>> results;
@@ -295,6 +296,37 @@ std::vector<std::pair<std::string, float>> DataFrame::apply(T&& Fn){
   }
   return results;
 }
+
+
+void DataFrame::map(std::unordered_map<int, int> Map){
+  for(auto col: this -> columns_){
+    vTypes x = ((*this)[col]) -> type();
+    if(std::holds_alternative<int>(x)){
+      (*this)[col] -> map(Map);
+    }
+  }
+}
+
+void DataFrame::map(std::unordered_map<float, float> Map){
+  for(auto col: this -> columns_){
+    vTypes x = ((*this)[col]) -> type();
+    if(std::holds_alternative<float>(x)){
+      (*this)[col] -> map(Map);
+    }
+  }
+}
+
+
+
+void DataFrame::map(std::unordered_map<std::string, std::string> Map){
+  for(auto col: this -> columns_){
+    vTypes x = ((*this)[col]) -> type();
+    if(std::holds_alternative<std::string>(x)){
+      (*this)[col] -> map(Map);
+    }
+  }
+}
+
 
 std::stringstream& operator>>(std::stringstream& os, vTypes *v)
 {
@@ -376,4 +408,12 @@ void DataFrame::dropNA(float toDrop){
   }
 
   std::cout << "shape " << this -> shape().first << this -> shape().second << std::endl;
+}
+
+void DataFrame::fillNA(float Replacement, float toDrop){
+  std::unordered_map<int, int> iMap{{(int) toDrop, (int) Replacement}};
+  std::unordered_map<int, int> fMap{{toDrop, Replacement}};
+
+  this -> map(iMap);
+  this -> map(fMap);
 }

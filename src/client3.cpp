@@ -82,7 +82,8 @@ int main(){
     std::cout << "time: " << (float)(clock2 - clock1)/CLOCKS_PER_SEC << std::endl;
     x.printDF();
 
-    x.dropNA();
+    // x.dropNA();
+    x.fillNA(2);
     x.printDF();
     // y.printDF();
     return 0;
