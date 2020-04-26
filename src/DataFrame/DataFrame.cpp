@@ -371,5 +371,9 @@ void DataFrame::dropNA(float toDrop){
     std::cout << b << std::endl;
   }
 
+  for(int i = 0; i < this -> shape().first; i++){
+    (*this)[i] -> dropRows(valid);
+  }
 
+  std::cout << "shape " << this -> shape().first << this -> shape().second << std::endl;
 }

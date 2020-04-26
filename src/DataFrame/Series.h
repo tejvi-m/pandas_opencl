@@ -19,6 +19,8 @@ public:
   virtual void show(){}
 
   virtual void getValidity(std::vector<bool>&, float){}
+  virtual void dropRows(std::vector<bool>&){}
+
   virtual vTypes operator[](int){}
   virtual int index(int){}
 
@@ -107,6 +109,7 @@ public:
   virtual bool isArithmetic();
 
   virtual Series* copy();
+  void dropRows(std::vector<bool>&);
 
   virtual vTypes type();
   void getValidity(std::vector<bool>&, float);
@@ -137,6 +140,8 @@ public:
   virtual bool isArithmetic();
   void getValidity(std::vector<bool>&, float);
   virtual vTypes type();
+
+  void  dropRows(std::vector<bool>&);
 
 };
 
@@ -189,6 +194,7 @@ public:
   void transform(T&&);
 
   virtual vTypes type();
+  void  dropRows(std::vector<bool>&);
 
 
   template<typename R = int, typename F>

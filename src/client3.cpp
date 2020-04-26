@@ -83,6 +83,7 @@ int main(){
     x.printDF();
 
     x.dropNA();
+    x.printDF();
     // y.printDF();
     return 0;
 }

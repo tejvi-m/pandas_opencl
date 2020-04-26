@@ -46,3 +46,8 @@ void SeriesStr::getValidity(std::vector<bool>& valid, float toDrop){
     // getValidity<string>(this -> getVec(str()), valid, (int)toDrop);
     return;
 }
+
+
+void  SeriesStr::dropRows(std::vector<bool>& valid){
+  drop<std::string>(this ->getVec(std::string()), valid);
+}

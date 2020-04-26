@@ -137,3 +137,7 @@ R SeriesFloat::apply(F&& Fn){
 void SeriesFloat::getValidity(std::vector<bool>& valid, float toDrop){
     getValidity_generic(this -> getVec(float()), valid, toDrop);
 }
+
+void  SeriesFloat::dropRows(std::vector<bool>& valid){
+  drop<float>(this ->getVec(float()), valid);
+}

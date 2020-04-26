@@ -152,3 +152,8 @@ void SeriesInt::mul(int src){
 void SeriesInt::getValidity(std::vector<bool>& valid, float toDrop){
     getValidity_generic(this -> getVec(int()), valid, (int) toDrop);
 }
+
+
+void  SeriesInt::dropRows(std::vector<bool>& valid){
+  drop<int>(this ->getVec(int()), valid);
+}

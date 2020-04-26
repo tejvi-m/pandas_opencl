@@ -190,3 +190,12 @@ void getValidity_generic(std::vector<T>& v, std::vector<bool>& valid, T toDrop){
     if(v[i] == toDrop) valid[i] = false;
   }
 }
+
+
+template<typename T>
+void drop(std::vector<T>& v, std::vector<bool>& valid){
+  // int size = v.size();
+  for(int i = v.size(); i >= 0; i--){
+    if(!valid[i]) v.erase(v.begin() + i);
+  }
+}
