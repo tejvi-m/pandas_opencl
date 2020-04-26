@@ -82,9 +82,20 @@ int main(){
     std::cout << "time: " << (float)(clock2 - clock1)/CLOCKS_PER_SEC << std::endl;
     x.printDF();
 
+    auto res = x.sum();
+    for(auto x: res){
+      std::cout << x.first << x.second << std::endl;
+    }
+
+     res = x.mean();
+    for(auto x: res){
+      std::cout << x.first << x.second << std::endl;
+    }
+
     // x.dropNA();
     x.fillNA(2);
     x.printDF();
     // y.printDF();
+
     return 0;
 }

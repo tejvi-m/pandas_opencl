@@ -297,6 +297,14 @@ std::vector<std::pair<std::string, float>> DataFrame::apply(T&& Fn){
   return results;
 }
 
+std::vector<std::pair<std::string, float>> DataFrame::sum(){
+  return this -> apply(Sum());
+}
+
+
+std::vector<std::pair<std::string, float>> DataFrame::mean(){
+  return this -> apply(Mean());
+}
 
 void DataFrame::map(std::unordered_map<int, int> Map){
   for(auto col: this -> columns_){

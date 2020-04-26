@@ -4,6 +4,8 @@
 #include <variant>
 #include <string>
 #include <algorithm>
+#include <numeric>
+
 
 using Row = std::vector<std::variant<int, std::string, float>>;
 
@@ -66,9 +68,38 @@ public:
   void dropNA(float toDrop = 0);
   void fillNA(float Replacement, float toDrop = 0);
 
-
-
+  std::vector<std::pair<std::string, float>> sum();
+  std::vector<std::pair<std::string, float>> mean();
 
   std::pair<int, int> shape();
   void printDF();
+};
+
+
+// template<typename T>
+struct Sum{
+  int operator()(std::vector<int>& vec){
+      float x = std::accumulate(vec.begin(), vec.end(), 0);
+      return x;
+  }
+
+  float operator()(std::vector<float>& vec){
+      float x = std::accumulate(vec.begin(), vec.end(), 0);
+      return x;
+  }
+
+
+};
+
+// template<typename T>
+struct Mean{
+  float operator()(std::vector<int>& vec){
+      float x = std::accumulate(vec.begin(), vec.end(), 0) / (float) vec.size();
+      return x;
+  }
+
+  float operator()(std::vector<float>& vec){
+      float x = std::accumulate(vec.begin(), vec.end(), 0) / (float) vec.size();
+      return x;
+  }
 };
