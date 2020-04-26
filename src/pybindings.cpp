@@ -13,12 +13,16 @@
 #include <random>
 #include <string>
 #include <boost/python.hpp>
+#include <boost/python/suite/indexing/map_indexing_suite.hpp>
 
 // void add(DataFrame)
 
  BOOST_PYTHON_MODULE(DataFrame)  // Name here must match the name of the final shared library, i.e. mantid.dll or mantid.so
  {
     boost::python::def("setup", &setup);
+    boost::python::class_<std::map<std::string, float>>("stl_map")
+        .def(boost::python::map_indexing_suite<std::map<std::string, float> >())
+    ;
     boost::python::class_<DataFrame>("DataFrame")
         .def(boost::python::init<std::string>())
         .def("showDF", &DataFrame::printDF)
@@ -41,6 +45,12 @@
         .def("transform", (void(DataFrame::*)(std::string))&DataFrame::transform)
 
         .def("copy", (DataFrame (DataFrame::*)())&DataFrame::copy)
+
+        .def("max", (boost::python::class_<std::map<std::string, float>> (DataFrame::*)()) &DataFrame::max)
+        .def("min", (boost::python::class_<std::map<std::string, float>> (DataFrame::*)()) &DataFrame::min)
+        .def("mean", (boost::python::class_<std::map<std::string, float>> (DataFrame::*)()) &DataFrame::mean)
+        .def("sum", (boost::python::class_<std::map<std::string, float>> (DataFrame::*)()) &DataFrame::sum)
+
         // .def("")
       ;
     boost::python::class_<Graph>("Graph")
