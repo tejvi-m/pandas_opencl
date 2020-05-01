@@ -27,6 +27,8 @@ public:
   template<typename T>
   Row loc(T);
   Row iloc(int);
+  
+  Series* getCol(int);  
 
   void add(Series*, std::string);
   void drop(std::string);

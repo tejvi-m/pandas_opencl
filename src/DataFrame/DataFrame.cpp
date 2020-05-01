@@ -17,6 +17,10 @@ Series* DataFrame::operator[](int i){
     return this -> dataframe_[i];
 }
 
+Series* DataFrame::getCol(int i){
+    return this -> dataframe_[i];
+}
+
 Series* DataFrame::operator[](std::string column){
     auto indexIt = std::find(this -> columns_.begin(), this -> columns_.end(), column);
     if(indexIt == this -> columns_.end()) return new Series();
