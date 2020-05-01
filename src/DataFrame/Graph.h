@@ -21,6 +21,7 @@ public:
   std::string getGenName(DataFrame*, int);
   void insertOperation(std::string, std::string, DataFrame*);
   void insertOperation(std::string, DataFrame*, DataFrame*);
+  void insertOperation(std::string, std::string, std::unordered_map<std::string, DataFrame&>, DataFrame*);
   void compute_with_model(int);
   void compute();
 

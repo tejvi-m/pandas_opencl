@@ -267,6 +267,13 @@ void DataFrame::transform(std::string operation){
     _graph -> insertOperation("tx", operation, this);
   }
 }
+
+void DataFrame::transform(std::string operation, std::unordered_map<std::string, DataFrame&> mapping){
+  if(_graph != nullptr){
+    _graph -> insertOperation("tx", operation, mapping, this);
+  }
+}
+
 template<typename F>
 void DataFrame::transform(F&& fn){
   for(auto col: this -> columns_){

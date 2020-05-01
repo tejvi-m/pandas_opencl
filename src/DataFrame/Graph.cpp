@@ -57,6 +57,38 @@ void Graph::insertOperation(std::string op,  std::string operation, DataFrame* D
 
 }
 
+
+
+void Graph::insertOperation(std::string op,  std::string operation, std::unordered_map<std::string, DataFrame&> mapping, DataFrame* DF){
+
+  // this -> addDF(DF);
+  std::string newOp= "" ;
+  //first DF is the one that gets updated.
+  if(op=="tx"){
+
+    for(auto key: mapping){
+      this -> addDF(&key.second);
+      boost::replace_all(operation, key.first, getGenName(&key.second) + "[id]");
+    }
+
+    std::string newOp = "";
+    if(this -> modifiedDF.find(DF) == this -> modifiedDF.end()){
+      //  boost::replace_all(operation, "x", getGenName(DF) + "[id]");
+       newOp = getGenName(DF, 1) + "_copy[id] = " + operation;
+    }
+
+    else {
+      // boost::replace_all(operation, "x", getGenName(DF) + "[id]");
+      newOp = getGenName(DF, 1) + "_copy[id] = " + operation;
+    }
+
+    this -> modifiedDF.insert(DF);
+
+    this -> Kernel += "\t\t\t" + newOp + ";\n";
+  }
+
+}
+
 void Graph::insertOperation(std::string operation, DataFrame* DF1, DataFrame* DF2){
   std::unordered_map<std::string, char> operationSymbol({
     {"add", '+'},

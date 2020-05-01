@@ -56,6 +56,7 @@ public:
   void div(T src2);
 
   void transform(std::string);
+  void transform(std::string, std::unordered_map<std::string, DataFrame&>);
   template<typename T>
   void transform(T&&);
 
@@ -89,8 +90,6 @@ struct Sum{
       float x = std::accumulate(vec.begin(), vec.end(), 0);
       return x;
   }
-
-
 };
 
 // template<typename T>
