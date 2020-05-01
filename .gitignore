@@ -5,3 +5,4 @@ src/DataFrame/*.hpp
 *.so
 todo.txt
 .vscode/*
+.ipynb_checkpoints/*
