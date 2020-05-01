@@ -4,8 +4,8 @@
 #include "DataFrame/SeriesFloat.cpp"
 #include "DataFrame/SeriesInt.cpp"
 #include "DataFrame/SeriesStr.cpp"
-#include "DataFrame/Graph.h"
-#include "DataFrame/Graph.cpp"
+#include "DataFrame/Session.h"
+#include "DataFrame/Session.cpp"
 #include <numeric>
 #include <ctime>
 #include <cmath>
@@ -36,23 +36,23 @@ int main(){
     // DataFrame x({new SeriesFloat(x1)}, {"a"});
     // DataFrame y({new SeriesFloat(y1)}, {"a"});
 
-    Graph graph;
-    // graph.addDF(&x);
-    // graph.addDF(&y);
-    // std::cout << graph.getGenName(&x) << std::endl;
-    // std::cout << graph.getGenName(&y) << std::endl;
+    Session Session;
+    // Session.addDF(&x);
+    // Session.addDF(&y);
+    // std::cout << Session.getGenName(&x) << std::endl;
+    // std::cout << Session.getGenName(&y) << std::endl;
     //
-    // graph.insertOperation("add", &x, 3);
-    // graph.insertOperation("mul", &x, 4);
-    // graph.insertOperation("mul", &x, &y);
-    // graph.insertOperation("mul", &x, &y);
-    // graph.insertOperation("mul", &y, &x);
-    // graph.insertOperation("mul", &y, &x);
+    // Session.insertOperation("add", &x, 3);
+    // Session.insertOperation("mul", &x, 4);
+    // Session.insertOperation("mul", &x, &y);
+    // Session.insertOperation("mul", &x, &y);
+    // Session.insertOperation("mul", &y, &x);
+    // Session.insertOperation("mul", &y, &x);
     //
-    // graph.insertOperation("mul", &x, 3);
-    // graph.insertOperation("mul", &x, 3);
-    // graph.insertOperation("mul", &x, 3);
-    // graph.insertOperation("sub", &x, 3);
+    // Session.insertOperation("mul", &x, 3);
+    // Session.insertOperation("mul", &x, 3);
+    // Session.insertOperation("mul", &x, 3);
+    // Session.insertOperation("sub", &x, 3);
 
     // x.printDF();
     // y.printDF();
@@ -68,16 +68,16 @@ int main(){
     // x.mul(0);
     // x.mul(y);
     // x.sub(y);
-    // if(_graph != nullptr){
-    //   std::cout << "graph detected" << endl;
+    // if(_Session != nullptr){
+    //   std::cout << "Session detected" << endl;
     // }
-    // else std::cout << "graph not detected" << endl;
+    // else std::cout << "Session not detected" << endl;
     auto clock1 = clock();
-    // runGeneratedKernel(graph.getKernel("int"), std::vector<int*>({&((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0]}),
+    // runGeneratedKernel(Session.getKernel("int"), std::vector<int*>({&((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0]}),
     //  std::vector<int*>({&((x[0]) -> getVec(0))[0], &((y[0]) -> getVec(0))[0]}), (y[0] -> getVec(0)).size(),
     //  vector<int*>({NULL, NULL, NULL, NULL}));
-    std::cout << graph.getKernel("int") << std::endl;
-    graph.compute();
+    std::cout << Session.getKernel("int") << std::endl;
+    Session.compute();
     auto clock2 = clock();
     std::cout << "time: " << (float)(clock2 - clock1)/CLOCKS_PER_SEC << std::endl;
     x.printDF();

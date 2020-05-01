@@ -4,7 +4,7 @@
 #include <unordered_set>
 
 
-class Graph{
+class Session{
 private:
   std::vector<DataFrame*> toLoad;
   std::vector<std::string> genNames;
@@ -16,7 +16,7 @@ private:
   std::string Kernel;
 
 public:
-  Graph();
+  Session();
   void addDF(DataFrame*);
   std::string getGenName(DataFrame*, int);
   void insertOperation(std::string, std::string, DataFrame*);
@@ -32,4 +32,4 @@ public:
 
 };
 
-Graph* _graph = nullptr;
+Session* _Session = nullptr;

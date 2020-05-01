@@ -1,18 +1,18 @@
 #pragma once
-#include "Graph.h"
+#include "Session.h"
 #include "gpu/gpu.cpp"
 #include <string>
 #include <cstring>
 #include <unordered_map>
 #include <boost/algorithm/string/replace.hpp>
 
-extern Graph* _graph;
+extern Session* _Session;
 
-Graph::Graph(){
-  _graph = this;
+Session::Session(){
+  _Session = this;
 }
 
-void Graph::addDF(DataFrame* DF){
+void Session::addDF(DataFrame* DF){
   if(mapping.find(DF) == mapping.end()){
     this -> toLoad.push_back(DF);
     std::string oldName = "";
@@ -28,12 +28,12 @@ void Graph::addDF(DataFrame* DF){
   }
 }
 
-std::string Graph::getGenName(DataFrame* DF, int f = 0){
+std::string Session::getGenName(DataFrame* DF, int f = 0){
   if(this -> modifiedDF.find(DF) == modifiedDF.end() || f) return this -> mapping[DF];
   else return this -> mapping[DF] + "_copy";
 }
 
-void Graph::insertOperation(std::string op,  std::string operation, DataFrame* DF){
+void Session::insertOperation(std::string op,  std::string operation, DataFrame* DF){
 
   this -> addDF(DF);
   std::string newOp= "" ;
@@ -59,7 +59,7 @@ void Graph::insertOperation(std::string op,  std::string operation, DataFrame* D
 
 
 
-void Graph::insertOperation(std::string op,  std::string operation, std::unordered_map<std::string, DataFrame&> mapping, DataFrame* DF){
+void Session::insertOperation(std::string op,  std::string operation, std::unordered_map<std::string, DataFrame&> mapping, DataFrame* DF){
 
   // this -> addDF(DF);
   std::string newOp= "" ;
@@ -89,7 +89,7 @@ void Graph::insertOperation(std::string op,  std::string operation, std::unorder
 
 }
 
-void Graph::insertOperation(std::string operation, DataFrame* DF1, DataFrame* DF2){
+void Session::insertOperation(std::string operation, DataFrame* DF1, DataFrame* DF2){
   std::unordered_map<std::string, char> operationSymbol({
     {"add", '+'},
     {"sub", '-'},
@@ -120,7 +120,7 @@ void Graph::insertOperation(std::string operation, DataFrame* DF1, DataFrame* DF
 }
 
 template<typename T>
-void Graph::insertOperation(std::string operation, DataFrame* DF1, T constant){
+void Session::insertOperation(std::string operation, DataFrame* DF1, T constant){
   std::unordered_map<std::string, char> operationSymbol({
     {"add", '+'},
     {"sub", '-'},
@@ -148,7 +148,7 @@ void Graph::insertOperation(std::string operation, DataFrame* DF1, T constant){
 
 }
 
-std::string Graph::getKernel(std::string dtype){
+std::string Session::getKernel(std::string dtype){
 
   std::string fullKernel = std::string("__kernel void genKernel( \n");
 
@@ -172,11 +172,11 @@ std::string Graph::getKernel(std::string dtype){
 }
 
 
-void Graph::compute(){
+void Session::compute(){
   this -> compute_with_model(0);
 }
 
-void Graph::compute_with_model(int model = 0){
+void Session::compute_with_model(int model = 0){
     // std::cout << "dhspe: " << (this -> toLoad[0]) -> shape().first << std::endl;
     for(int col = 0; col < (this -> toLoad[0]) -> shape().first; col++){
       DataFrame temp = *(this -> toLoad[0]);
@@ -245,7 +245,7 @@ void Graph::compute_with_model(int model = 0){
     this -> Kernel.clear();
 }
 
-void Graph::clear(){
+void Session::clear(){
   this -> toLoad.clear();
   this -> genNames.clear();
   this -> mapping.clear();

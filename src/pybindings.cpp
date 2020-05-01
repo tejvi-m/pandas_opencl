@@ -4,8 +4,8 @@
 #include "DataFrame/SeriesFloat.cpp"
 #include "DataFrame/SeriesInt.cpp"
 #include "DataFrame/SeriesStr.cpp"
-#include "DataFrame/Graph.h"
-#include "DataFrame/Graph.cpp"
+#include "DataFrame/Session.h"
+#include "DataFrame/Session.cpp"
 #include <numeric>
 #include <ctime>
 #include <cmath>
@@ -48,9 +48,9 @@
         .def("dropNA", (void (DataFrame::*)(int))&DataFrame::dropNA)
         // .def("")
       ;
-    boost::python::class_<Graph>("Graph")
-      .def("compute", &Graph::compute)
-      .def("getKernel", (std::string (Graph::*)(std::string))&Graph::getKernel)
-      .def("clear", (void (Graph::*)())&Graph::clear)
+    boost::python::class_<Session>("Session")
+      .def("compute", &Session::compute)
+      .def("getKernel", (std::string (Session::*)(std::string))&Session::getKernel)
+      .def("clear", (void (Session::*)())&Session::clear)
       ;
  }

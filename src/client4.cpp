@@ -4,8 +4,8 @@
 #include "DataFrame/SeriesFloat.cpp"
 #include "DataFrame/SeriesInt.cpp"
 #include "DataFrame/SeriesStr.cpp"
-#include "DataFrame/Graph.h"
-#include "DataFrame/Graph.cpp"
+#include "DataFrame/Session.h"
+#include "DataFrame/Session.cpp"
 #include <numeric>
 #include <ctime>
 #include <cmath>
@@ -22,15 +22,15 @@ int main(){
     DataFrame z = x.copy();
 
     x.printDF();
-    Graph graph;
+    Session Session;
 
     x.transform("x + y * 2 - z + 3", {{"x", x}, {"y", y}, {"z", z}});
 
-    graph.clear();
-    std::cout << graph.getKernel("int");
+    Session.clear();
+    std::cout << Session.getKernel("int");
     
     x.transform(std::string("x * 3"));
-    graph.compute();
+    Session.compute();
 
     x.printDF();
     z.printDF();

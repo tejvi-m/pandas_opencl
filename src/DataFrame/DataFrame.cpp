@@ -1,13 +1,13 @@
 #pragma once
 #include "DataFrame.h"
-#include "Graph.cpp"
+#include "Session.cpp"
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
 #include <sstream>
 
-class Graph;
-extern Graph* _graph;
+class Session;
+extern Session* _Session;
 
 DataFrame::DataFrame(): dataframe_({}), columns_({}), index_(""){}
 
@@ -113,8 +113,8 @@ DataFrame DataFrame::operator+(DataFrame& src2){
 
 
 void DataFrame::add(DataFrame& src2){
-  if(_graph != nullptr){
-    _graph -> insertOperation("add", this, &src2);
+  if(_Session != nullptr){
+    _Session -> insertOperation("add", this, &src2);
   }
   else
   for(auto col: this -> columns_){
@@ -125,8 +125,8 @@ void DataFrame::add(DataFrame& src2){
 
 template<typename T>
 void DataFrame::add(T src2){
-  if(_graph != nullptr){
-    _graph -> insertOperation("add", this, src2);
+  if(_Session != nullptr){
+    _Session -> insertOperation("add", this, src2);
   }
   else
   for(auto col: this -> columns_){
@@ -153,8 +153,8 @@ DataFrame DataFrame::operator-(DataFrame& src2){
 
 
 void DataFrame::sub(DataFrame& src2){
-  if(_graph != nullptr){
-    _graph -> insertOperation("sub", this, &src2);
+  if(_Session != nullptr){
+    _Session -> insertOperation("sub", this, &src2);
   }
   else
   for(auto col: this -> columns_){
@@ -165,8 +165,8 @@ void DataFrame::sub(DataFrame& src2){
 
 template<typename T>
 void DataFrame::sub(T src2){
-  if(_graph != nullptr){
-    _graph -> insertOperation("sub", this, src2);
+  if(_Session != nullptr){
+    _Session -> insertOperation("sub", this, src2);
   }
   else
   for(auto col: this -> columns_){
@@ -193,8 +193,8 @@ DataFrame DataFrame::operator*(DataFrame& src2){
 
 
 void DataFrame::mul(DataFrame& src2){
-  if(_graph != nullptr){
-    _graph -> insertOperation("mul", this, &src2);
+  if(_Session != nullptr){
+    _Session -> insertOperation("mul", this, &src2);
   }
   else
   for(auto col: this -> columns_){
@@ -205,8 +205,8 @@ void DataFrame::mul(DataFrame& src2){
 
 template<typename T>
 void DataFrame::mul(T src2){
-  if(_graph != nullptr){
-    _graph -> insertOperation("mul", this, src2);
+  if(_Session != nullptr){
+    _Session -> insertOperation("mul", this, src2);
   }
   else
   for(auto col: this -> columns_){
@@ -233,8 +233,8 @@ DataFrame DataFrame::operator/(DataFrame& src2){
 
 
 void DataFrame::div(DataFrame& src2){
-  if(_graph != nullptr){
-    _graph -> insertOperation("div", this, &src2);
+  if(_Session != nullptr){
+    _Session -> insertOperation("div", this, &src2);
   }
   else
   for(auto col: this -> columns_){
@@ -245,8 +245,8 @@ void DataFrame::div(DataFrame& src2){
 
 template<typename T>
 void DataFrame::div(T src2){
-  if(_graph != nullptr){
-    _graph -> insertOperation("div", this, src2);
+  if(_Session != nullptr){
+    _Session -> insertOperation("div", this, src2);
   }
   else
   for(auto col: this -> columns_){
@@ -263,14 +263,14 @@ void DataFrame::div(T src2){
 
 void DataFrame::transform(std::string operation){
   // only GPU mode supported.
-  if(_graph != nullptr){
-    _graph -> insertOperation("tx", operation, this);
+  if(_Session != nullptr){
+    _Session -> insertOperation("tx", operation, this);
   }
 }
 
 void DataFrame::transform(std::string operation, std::unordered_map<std::string, DataFrame&> mapping){
-  if(_graph != nullptr){
-    _graph -> insertOperation("tx", operation, mapping, this);
+  if(_Session != nullptr){
+    _Session -> insertOperation("tx", operation, mapping, this);
   }
 }
 
