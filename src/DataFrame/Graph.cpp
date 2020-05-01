@@ -242,4 +242,13 @@ void Graph::compute_with_model(int model = 0){
     this -> genNames.clear();
     this -> mapping.clear();
     this -> modifiedDF.clear();
+    this -> Kernel.clear();
+}
+
+void Graph::clear(){
+  this -> toLoad.clear();
+  this -> genNames.clear();
+  this -> mapping.clear();
+  this -> modifiedDF.clear(); 
+  this -> Kernel.clear();
 }

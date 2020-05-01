@@ -26,8 +26,10 @@ int main(){
 
     x.transform("x + y * 2 - z + 3", {{"x", x}, {"y", y}, {"z", z}});
 
-
+    graph.clear();
     std::cout << graph.getKernel("int");
+    
+    x.transform(std::string("x * 3"));
     graph.compute();
 
     x.printDF();

@@ -24,6 +24,7 @@ public:
   void insertOperation(std::string, std::string, std::unordered_map<std::string, DataFrame&>, DataFrame*);
   void compute_with_model(int);
   void compute();
+  void clear();
 
   template<typename T>
   void insertOperation(std::string operation, DataFrame* DF1, T constant);
