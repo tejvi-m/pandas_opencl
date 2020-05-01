@@ -3,6 +3,7 @@
 #include "gpu/gpu.cpp"
 #include <string>
 #include <cstring>
+#include <thread>
 #include <unordered_map>
 #include <boost/algorithm/string/replace.hpp>
 
@@ -176,13 +177,8 @@ void Session::compute(){
   this -> compute_with_model(0);
 }
 
-void Session::compute_with_model(int model = 0){
-    // std::cout << "dhspe: " << (this -> toLoad[0]) -> shape().first << std::endl;
-    for(int col = 0; col < (this -> toLoad[0]) -> shape().first; col++){
-      // DataFrame temp = *(this -> toLoad[0]);
-              // int n = temp[0] -> getVec(0).size();
-
-        vTypes x = (this -> toLoad[0] -> getCol(col)) -> type();
+void Session::run(int col){
+  vTypes x = (this -> toLoad[0] -> getCol(col)) -> type();
         if(std::holds_alternative<int>(x)){
           // DataFrame temp = *(this -> toLoad[0]);
           int n = this -> toLoad[0] -> getCol(col) -> getVec(int()).size();
@@ -196,7 +192,7 @@ void Session::compute_with_model(int model = 0){
 
             srcVecs[i] = &((this -> toLoad[i] -> getCol(col) -> getVec(int()))[0]);
             if(this -> modifiedDF.find(this -> toLoad[i]) != this -> modifiedDF.end()){
-              dstVecs.push_back(&(temp[col] -> getVec(int()))[0]);
+              dstVecs.push_back(&(this -> toLoad[i] -> getCol(col) -> getVec(int()))[0]);
             }
           }
 
@@ -221,7 +217,7 @@ void Session::compute_with_model(int model = 0){
 
               srcVecs[i] = &(this -> toLoad[i] -> getCol(col) -> getVec(float()))[0];
               if(this -> modifiedDF.find(this -> toLoad[i]) != this -> modifiedDF.end()){
-                dstVecs.push_back(&(temp[col] -> getVec(float()))[0]);
+                dstVecs.push_back(&(this -> toLoad[i] -> getCol(col) -> getVec(float()))[0]);
               }
             }
 
@@ -233,6 +229,18 @@ void Session::compute_with_model(int model = 0){
                 );
         }
 
+    }
+
+
+void Session::compute_with_model(int model = 0){
+    // std::cout << "dhspe: " << (this -> toLoad[0]) -> shape().first << std::endl;
+    std::vector<std::thread> threads((this -> toLoad[0]) -> shape().first);
+    for(int col = 0; col < (this -> toLoad[0]) -> shape().first; col++){
+      threads[col] = std::thread(&Session::run, this, col);
+    }
+
+    for(int i = 0; i < threads.size(); i++){
+      threads[i].join();
     }
 
 
