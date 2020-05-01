@@ -426,16 +426,16 @@ void DataFrame::dropNA(float toDrop){
     (*this)[i] -> getValidity(valid, toDrop);
   }
 
-  std::cout<<" valid:\n";
-  for(bool b: valid){
-    std::cout << b << std::endl;
-  }
+  // std::cout<<" valid:\n";
+  // for(bool b: valid){
+  //   std::cout << b << std::endl;
+  // }
 
   for(int i = 0; i < this -> shape().first; i++){
     (*this)[i] -> dropRows(valid);
   }
 
-  std::cout << "shape " << this -> shape().first << this -> shape().second << std::endl;
+  // std::cout << "shape " << this -> shape().first << this -> shape().second << std::endl;
 }
 
 void DataFrame::fillNA(float Replacement, float toDrop){

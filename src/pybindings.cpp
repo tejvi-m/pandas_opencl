@@ -43,6 +43,9 @@
         .def("copy", (DataFrame (DataFrame::*)())&DataFrame::copy)
 
         .def("fillNA", (void (DataFrame::*)(float, float))&DataFrame::fillNA)
+        
+        .def("dropNA", (void (DataFrame::*)(float))&DataFrame::dropNA)
+        .def("dropNA", (void (DataFrame::*)(int))&DataFrame::dropNA)
         // .def("")
       ;
     boost::python::class_<Graph>("Graph")
