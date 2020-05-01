@@ -140,27 +140,27 @@ void runGeneratedKernel(std::string Kernel, std::vector<T*> srcVecs,
   gpu.globalSize = ceil(n/(float)gpu.localSize)*gpu.localSize;
 
 
-  for(int i = 0; i < srcVecs.size(); i++){
+  for(unsigned int i = 0; i < srcVecs.size(); i++){
     buffers[i] = clCreateBuffer(gpu.context, memFlagsSrc, bytes, hostPtrs[i], NULL);
   }
 
-  for(int i = 0; i < dstVecs.size(); i++){
+  for(unsigned int i = 0; i < dstVecs.size(); i++){
     buffers[srcVecs.size() + i] = clCreateBuffer(gpu.context, memFlagsSrc, bytes, hostPtrs[srcVecs.size() + i], NULL);
   }
 
-  for(int i = 0; i < srcVecs.size(); i++){
+  for(unsigned int i = 0; i < srcVecs.size(); i++){
     if(i == 0) gpu.err = clSetKernelArg(kernel, i, sizeof(cl_mem), &(buffers[i]));
     else gpu.err |= clSetKernelArg(kernel, i, sizeof(cl_mem), &(buffers[i]));
   }
 
-  for(int i = 0; i < dstVecs.size(); i++){
+  for(unsigned int i = 0; i < dstVecs.size(); i++){
     gpu.err |= clSetKernelArg(kernel, srcVecs.size() + i, sizeof(cl_mem), &(buffers[srcVecs.size() + i]));
   }
 
   gpu.err |= clSetKernelArg(kernel, buffers.size(), sizeof(unsigned int), &n);
 
   if(read){
-      for(int i = 0; i < srcVecs.size(); i++){
+      for(unsigned int i = 0; i < srcVecs.size(); i++){
         if(i == 0) gpu.err = clEnqueueWriteBuffer(gpu.queue, buffers[i], CL_TRUE, 0,
                                       bytes, srcVecs[i], 0, NULL, NULL);
         else gpu.err |= clEnqueueWriteBuffer(gpu.queue, buffers[i], CL_TRUE, 0,
@@ -172,12 +172,12 @@ void runGeneratedKernel(std::string Kernel, std::vector<T*> srcVecs,
                                                             0, NULL, NULL);
   clFinish(gpu.queue);
 
-  for(int i = 0; i < dstVecs.size(); i++){
+  for(unsigned int i = 0; i < dstVecs.size(); i++){
     clEnqueueReadBuffer(gpu.queue, buffers[srcVecs.size() + i], CL_TRUE, 0,
                         bytes, dstVecs[i], 0, NULL, NULL);
   }
 
-  for(int i = 0; i < buffers.size(); i++){
+  for(unsigned int i = 0; i < buffers.size(); i++){
     clReleaseMemObject(buffers[i]);
   }
   clReleaseKernel(kernel);

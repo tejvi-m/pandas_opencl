@@ -191,7 +191,7 @@ void Graph::compute_with_model(int model = 0){
           std::vector<int*> dstVecs;
           //temp since it throws compile time errors
 
-          for(int i = 0; i < srcVecs.size(); i++){
+          for(unsigned int i = 0; i < srcVecs.size(); i++){
             DataFrame temp = *(this -> toLoad[i]);
 
             srcVecs[i] = &((temp[col] -> getVec(int()))[0]);
@@ -217,7 +217,7 @@ void Graph::compute_with_model(int model = 0){
             std::vector<float*> dstVecs;
             //temp since it throws compile time errors
 
-            for(int i = 0; i < srcVecs.size(); i++){
+            for(unsigned int i = 0; i < srcVecs.size(); i++){
               DataFrame temp = *(this -> toLoad[i]);
 
               srcVecs[i] = &(temp[col] -> getVec(float()))[0];

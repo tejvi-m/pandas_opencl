@@ -42,7 +42,7 @@ DataFrame DataFrame::operator[](std::vector<std::string> columns){
 Row DataFrame::iloc(int index){
   Row row;
 
-  for(int i = 0; i < this -> dataframe_.size(); i++){
+  for(unsigned int i = 0; i < this -> dataframe_.size(); i++){
     // std::cout << (*(this-> dataframe_[i]))[index] << std::endl;
     row.push_back((*(this-> dataframe_[i]))[index]);
   }
@@ -59,7 +59,7 @@ Row DataFrame::loc(T value){
 }
 
 void DataFrame::printDF(){
-  for(int i = 0; i < this -> dataframe_.size(); i++){
+  for(unsigned int i = 0; i < this -> dataframe_.size(); i++){
     this-> dataframe_[i] -> show();
   }
 }
@@ -422,7 +422,7 @@ DataFrame::DataFrame(const std::string filename)
 void DataFrame::dropNA(float toDrop){
   std::vector<bool> valid(this -> shape().second, true);
 
-  for(int i = 0; i < this -> shape().first; i++){
+  for(unsigned int i = 0; i < this -> shape().first; i++){
     (*this)[i] -> getValidity(valid, toDrop);
   }
 
@@ -431,7 +431,7 @@ void DataFrame::dropNA(float toDrop){
   //   std::cout << b << std::endl;
   // }
 
-  for(int i = 0; i < this -> shape().first; i++){
+  for(unsigned int i = 0; i < this -> shape().first; i++){
     (*this)[i] -> dropRows(valid);
   }
 
