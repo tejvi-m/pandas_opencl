@@ -8,9 +8,9 @@
 extern GPU gpu;
 
 
-void setup(){
-    std::ifstream in("./DataFrame/gpu/src.cl");
-    if(!in.is_open()) throw std::runtime_error("Could not open file");
+void setup(std::string fileName){
+    std::ifstream in(fileName);
+    if(!in.is_open()) throw std::runtime_error("Could not open kernel src file");
 
     gpu.localSize = 32;
 

@@ -17,7 +17,7 @@ struct GPU{
 GPU gpu;
 
 
-void setup();
+void setup(std::string filename = "/home/tejvi/HPProject/src/DataFrame/gpu/src.cl");
 
 template<typename T>
 void gpuArithmetic(std::string operation, std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst, cl_mem_flags memFlags);
