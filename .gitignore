@@ -3,3 +3,5 @@ data/*
 src/DataFrame/*.hpp
 *.o
 *.so
+todo.txt
+.vscode/*
