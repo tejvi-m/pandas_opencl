@@ -37,18 +37,17 @@ int main(int argc, char *argv[]){
   DataFrame d1({new SeriesFloat(v1)}, {"a"});
   DataFrame d2({new SeriesFloat(v2)}, {"a"});
   
-  // Session session;
+  Session session;
   
-  // d1.add(d2);
-  // d1.add(d2);
-  // d1.add(d2);
+  d1.add(d2);
+  d1.add(d2);
   //
   auto clock1 = clock();
   // // d1.div(d2);
-  d1.add(d2);
-  d1.add(d2);
   // d1.add(d2);
-  // session.compute();
+  // d1.add(d2);
+  // d1.add(d2);
+  session.compute();
   auto clock2 = clock();
   // cout << (float)(clock2 - clock1)/CLOCKS_PER_SEC;
 

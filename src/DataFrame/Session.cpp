@@ -196,7 +196,7 @@ void Session::compute_with_model(int model = 0){
 
             srcVecs[i] = &((this -> toLoad[i] -> getCol(col) -> getVec(int()))[0]);
             if(this -> modifiedDF.find(this -> toLoad[i]) != this -> modifiedDF.end()){
-              dstVecs.push_back(&(temp[col] -> getVec(int()))[0]);
+              dstVecs.push_back(&(this -> toLoad[i] -> getCol(col) -> getVec(int()))[0]);
             }
           }
 
@@ -221,7 +221,7 @@ void Session::compute_with_model(int model = 0){
 
               srcVecs[i] = &(this -> toLoad[i] -> getCol(col) -> getVec(float()))[0];
               if(this -> modifiedDF.find(this -> toLoad[i]) != this -> modifiedDF.end()){
-                dstVecs.push_back(&(temp[col] -> getVec(float()))[0]);
+                dstVecs.push_back(&(this -> toLoad[i] -> getCol(col) -> getVec(float()))[0]);
               }
             }
 
