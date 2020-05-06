@@ -173,6 +173,7 @@ std::string Session::getKernel(std::string dtype){
 
 
 void Session::compute(){
+  if(this -> toLoad.size() <= 0) return;
   this -> compute_with_model(0);
 }
 
