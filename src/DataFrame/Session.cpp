@@ -61,7 +61,6 @@ void Session::insertOperation(std::string op,  std::string operation, DataFrame*
 
 void Session::insertOperation(std::string op,  std::string operation, std::unordered_map<std::string, DataFrame&> mapping, DataFrame* DF){
 
-  // this -> addDF(DF);
   std::string newOp= "" ;
   //first DF is the one that gets updated.
   if(op=="tx"){
@@ -73,12 +72,10 @@ void Session::insertOperation(std::string op,  std::string operation, std::unord
 
     std::string newOp = "";
     if(this -> modifiedDF.find(DF) == this -> modifiedDF.end()){
-      //  boost::replace_all(operation, "x", getGenName(DF) + "[id]");
        newOp = getGenName(DF, 1) + "_copy[id] = " + operation;
     }
 
     else {
-      // boost::replace_all(operation, "x", getGenName(DF) + "[id]");
       newOp = getGenName(DF, 1) + "_copy[id] = " + operation;
     }
 
@@ -178,22 +175,16 @@ void Session::compute(){
 }
 
 void Session::compute_with_model(int model = 0){
-    // std::cout << "dhspe: " << (this -> toLoad[0]) -> shape().first << std::endl;
-    for(int col = 0; col < (this -> toLoad[0]) -> shape().first; col++){
-      // DataFrame temp = *(this -> toLoad[0]);
-              // int n = temp[0] -> getVec(0).size();
 
+    for(int col = 0; col < (this -> toLoad[0]) -> shape().first; col++){
+    
         vTypes x = (this -> toLoad[0] -> getCol(col)) -> type();
         if(std::holds_alternative<int>(x)){
-          // DataFrame temp = *(this -> toLoad[0]);
           int n = this -> toLoad[0] -> getCol(col) -> getVec(int()).size();
-          // std::cout << "n: " << n << std::endl;
           std::vector<int*> srcVecs(this -> toLoad.size());
           std::vector<int*> dstVecs;
-          //temp since it throws compile time errors
 
           for(unsigned int i = 0; i < srcVecs.size(); i++){
-            // DataFrame temp = *(this -> toLoad[i]);
 
             srcVecs[i] = &((this -> toLoad[i] -> getCol(col) -> getVec(int()))[0]);
             if(this -> modifiedDF.find(this -> toLoad[i]) != this -> modifiedDF.end()){
@@ -210,16 +201,12 @@ void Session::compute_with_model(int model = 0){
         }
 
         else if(std::holds_alternative<float>(x)){
-            // DataFrame temp = *(this -> toLoad[0]);
             int n = this -> toLoad[0] -> getCol(col) -> getVec(float()).size();            // std::cout << "n: " << n << std::endl;
 
             std::vector<float*> srcVecs(this -> toLoad.size());
             std::vector<float*> dstVecs;
-            //temp since it throws compile time errors
 
             for(unsigned int i = 0; i < srcVecs.size(); i++){
-              // DataFrame temp = *(this -> toLoad[i]);
-
               srcVecs[i] = &(this -> toLoad[i] -> getCol(col) -> getVec(float()))[0];
               if(this -> modifiedDF.find(this -> toLoad[i]) != this -> modifiedDF.end()){
                 dstVecs.push_back(&(this -> toLoad[i] -> getCol(col) -> getVec(float()))[0]);
@@ -235,14 +222,7 @@ void Session::compute_with_model(int model = 0){
         }
 
     }
-
-
-    // make it the smallest
-    this -> toLoad.clear();
-    this -> genNames.clear();
-    this -> mapping.clear();
-    this -> modifiedDF.clear();
-    this -> Kernel.clear();
+    this -> clear();
 }
 
 void Session::clear(){

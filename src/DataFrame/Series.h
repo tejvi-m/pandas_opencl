@@ -56,13 +56,6 @@ public:
   virtual void map(std::unordered_map<float, float>){}
 
   virtual bool isArithmetic(){}
-  // all of these are in place
-  // template<typename T>
-  // virtual Series* operator+(T val){}
-  // virtual Series* operator-(T val){}
-  // virtual Series* operator*(T val){}
-  // virtual Series* operator/(T val){}
-  // virtual Series* operator%(T val){}
 
   virtual Series* append(vTypes){}
 
@@ -126,9 +119,11 @@ private:
   std::vector<std::string> series_;
   int size_;
   std::unordered_map<float, int> index_;
+  
 public:
   SeriesStr();
   SeriesStr(std::vector<std::string> data);
+
   virtual std::vector<std::string>& getVec(std::string);
   virtual long int size();
   virtual void show();
@@ -146,28 +141,28 @@ public:
 };
 
 class SeriesFloat : public Series{
+
 private:
-  std::vector<float> series_;
-  int size_;
-  std::unordered_map<float, int> index_;
+    std::vector<float> series_;
+    int size_;
+    std::unordered_map<float, int> index_;
+
 public:
-  SeriesFloat();
-  SeriesFloat(std::vector<float> data);
-  virtual std::vector<float>& getVec(float);
-  virtual long int size();
-  virtual void show();
-  virtual void Index();
-  virtual vTypes operator[](int i);
-  virtual int index(float i);
+    SeriesFloat();
+    SeriesFloat(std::vector<float> data);
 
-  virtual void map(std::unordered_map<float, float>);
-  void getValidity(std::vector<bool>&, float);
+    virtual std::vector<float>& getVec(float);
+    
+    virtual long int size();
+    virtual void show();
+    virtual void Index();
+    virtual vTypes operator[](int i);
+    virtual int index(float i);
+
+    virtual void map(std::unordered_map<float, float>);
+    void getValidity(std::vector<bool>&, float);
     virtual Series* operator+(Series*);
-    // virtual void add(Series*, Series*);
-    // virtual void add(Series*);
 
-    // virtual Series* operator-(Series*);
-    // virtual void sub(Series*, Series*);
     virtual void sub(Series*);
 
     virtual void add(Series*);
@@ -176,27 +171,24 @@ public:
     virtual void mul(Series*, Series*);
     virtual void mul(Series*);
 
-    // virtual Series* operator/(Series*);
-    // virtual void div(Series*, Series*);
     virtual void div(Series*);
 
     virtual Series* copy();
-  virtual Series* append(vTypes);
+    virtual Series* append(vTypes);
 
-  virtual bool isArithmetic();
+    virtual bool isArithmetic();
 
-  virtual void add(float);
-  virtual void mul(float);
-  virtual void sub(float);
-  virtual void div(float);
+    virtual void add(float);
+    virtual void mul(float);
+    virtual void sub(float);
+    virtual void div(float);
 
-  template<typename T>
-  void transform(T&&);
+    template<typename T>
+    void transform(T&&);
 
-  virtual vTypes type();
-  void  dropRows(std::vector<bool>&);
+    virtual vTypes type();
+    void  dropRows(std::vector<bool>&);
 
-
-  template<typename R = int, typename F>
-  R apply(F&&);
+    template<typename R = int, typename F>
+    R apply(F&&);
 };
