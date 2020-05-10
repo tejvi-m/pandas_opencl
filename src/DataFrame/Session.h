@@ -15,7 +15,7 @@ private:
 
   std::string Kernel;
 
-  void run();
+  void run(int);
 public:
   Session();
   void addDF(DataFrame*);

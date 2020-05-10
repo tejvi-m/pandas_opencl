@@ -76,7 +76,7 @@ void gpuArithmetic(std::string operation,
 
   cl_kernel kernel;
 
-  std::cout << "running on gpu: "<< operation << std::endl;
+  // std::cout << "running on gpu: "<< operation << std::endl;
   size_t bytes = n * sizeof(T);
   kernel = clCreateKernel(gpu.program, operation.c_str() , &gpu.err);
   gpu.globalSize = ceil(n/(float)gpu.localSize)*gpu.localSize;
@@ -126,7 +126,7 @@ void runGeneratedKernel(std::string Kernel, std::vector<T*> srcVecs,
 
   cl_kernel kernel;
 
-  std::cout << "running on gpu: "<< std::endl;
+  // std::cout << "running on gpu: "<< std::endl;
   size_t bytes = n * sizeof(T);
 
   gpu.program = clCreateProgramWithSource(gpu.context, 1,

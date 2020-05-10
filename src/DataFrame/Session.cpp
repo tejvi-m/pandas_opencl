@@ -3,6 +3,7 @@
 #include "gpu/gpu.cpp"
 #include <string>
 #include <cstring>
+#include <thread>
 #include <unordered_map>
 #include <boost/algorithm/string/replace.hpp>
 
@@ -174,11 +175,8 @@ void Session::compute(){
   this -> compute_with_model(0);
 }
 
-void Session::compute_with_model(int model = 0){
-
-    for(int col = 0; col < (this -> toLoad[0]) -> shape().first; col++){
-    
-        vTypes x = (this -> toLoad[0] -> getCol(col)) -> type();
+void Session::run(int col){
+  vTypes x = (this -> toLoad[0] -> getCol(col)) -> type();
         if(std::holds_alternative<int>(x)){
           int n = this -> toLoad[0] -> getCol(col) -> getVec(int()).size();
           std::vector<int*> srcVecs(this -> toLoad.size());
@@ -222,7 +220,26 @@ void Session::compute_with_model(int model = 0){
         }
 
     }
-    this -> clear();
+
+
+void Session::compute_with_model(int model = 0){
+    // std::cout << "dhspe: " << (this -> toLoad[0]) -> shape().first << std::endl;
+    std::vector<std::thread> threads((this -> toLoad[0]) -> shape().first);
+    for(int col = 0; col < (this -> toLoad[0]) -> shape().first; col++){
+      threads[col] = std::thread(&Session::run, this, col);
+    }
+
+    for(int i = 0; i < threads.size(); i++){
+      threads[i].join();
+    }
+
+
+    // make it the smallest
+    this -> toLoad.clear();
+    this -> genNames.clear();
+    this -> mapping.clear();
+    this -> modifiedDF.clear();
+    this -> Kernel.clear();
 }
 
 void Session::clear(){

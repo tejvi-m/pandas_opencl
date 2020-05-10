@@ -4,33 +4,21 @@ import pandas as pd
 import numpy as np
 import sys
 
+data2 = {'a':np.random.rand(int(sys.argv[1]) * 2) , 'b': np.random.rand(int(sys.argv[1]) * 2) ,
+                               'c': np.random.rand(int(sys.argv[1]) * 2) , 'd': np.random.rand(int(sys.argv[1]) * 2)}
 
-a = pd.DataFrame(np.random.rand(int(sys.argv[1]) * 2) * 254, columns=["a"])
-b = pd.DataFrame(np.random.rand(int(sys.argv[1]) * 2) * 254, columns=["a"])
+data1 = {'a':np.random.rand(int(sys.argv[1]) * 2) , 'b': np.random.rand(int(sys.argv[1]) * 2) ,
+                               'c': np.random.rand(int(sys.argv[1]) * 2) , 'd': np.random.rand(int(sys.argv[1]) * 2)}
+a = pd.DataFrame(data1)
+b =  pd.DataFrame(data2)
 
-# a1 = time.time()
-# a.add(b)
-# a2 = time.time()
-# print(a2 - a1)
 
-# a1 = time.time()
-# a.sub(b)
-# a2 = time.time()
-# print(a2 - a1)
-#
-# a1 = time.time()
-# a.mul(b)
-# a2 = time.time()
-# print( a2 - a1)
-
-# a1 = time.time()
-# a.div(b)
-# a2 = time.time()
-# print(a2 - a1)
-#
-#
 a1 = time.time()
-a.transform(lambda x:  -x)
+a.add(b)
+a.sub(b)
+a.transform(lambda x:  x + 1)
+a.mul(b)
+a.div(b)
 a2 = time.time()
 print(a2 - a1)
 
