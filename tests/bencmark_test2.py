@@ -4,13 +4,13 @@ import scipy.stats
 
 results  = []
 
-command = os.popen(' g++ -lpthread -std=c++17 tests/test1_graph.cpp -lOpenCL -O3 -w')
+command = os.popen(' g++ -lpthread -std=c++17 tests/test2_serial.cpp -lOpenCL -O3 -w')
 command.close()
 
-for j in [9, 99, 999, 9999, 99999, 999999, 9999999, 99999999]:
+for j in range(1, 7):
     xres = []
     for i in range(0, 6):
-        command = os.popen('./a.out ' + str(j))
+        command = os.popen('./a.out 999999 ' + str(j))
         # print(command.read())
         z = float(command.read())
         xres.append(z)
