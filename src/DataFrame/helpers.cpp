@@ -39,7 +39,7 @@ void redirectToGPU(std::string operation, std::vector<T>& src1, std::vector<T>& 
 }
 
 template<typename T>
-void redirectToGPUGen(std::string Kernel, std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst1, std::vector<T>& dst2, int model = 1){
+void redirectToGPUGen(std::string Kernel, std::vector<T>& src1, std::vector<T>& src2, std::vector<T>& dst1, std::vector<T>& dst2, int model = 2){
   if(model == 1){
     // use
     runGeneratedKernel(Kernel, &(src1[0]), &(src2[0]), &(dst1[0]), &(dst2[0]),
