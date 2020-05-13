@@ -7,7 +7,7 @@ results  = []
 command = os.popen(' g++ -lpthread -std=c++17 tests/test1_graph.cpp -lOpenCL -O3 -w')
 command.close()
 
-for j in [9, 99, 999, 9999, 99999, 999999, 9999999, 99999999]:
+for j in [9, 99, 999, 9999, 99999, 999999, 9999999]:
     xres = []
     for i in range(0, 6):
         command = os.popen('./a.out ' + str(j))
