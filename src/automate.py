@@ -8,6 +8,7 @@ class GenCode:
         self.endAt = {}
         self.currentSession = "session0"
         self.operations = {"add", "sub", "mul", "div", "transform"}
+        self.dataFrameLines= {}
 
     def getSession(self):
         self.currentSession = "session" + str(int(self.currentSession[7:]) + 1)
@@ -28,6 +29,8 @@ class GenCode:
 
         insess = 0
         current = self.getSession()
+
+        currentSet = {}
 
         for line in self.file.readlines():
             if ('.' in line  and (line.split('.')[1].startswith("add") or 
@@ -51,6 +54,8 @@ class GenCode:
                         
                         self.lineMappings.append([l, self.lineNum])
                         insess = 0
+
+                        current = self.getSession()
         if insess:
             self.endAtLine(self.lineNum, current)
                         
@@ -59,7 +64,7 @@ class GenCode:
             
     def removeMappings(self):
         for pair in self.lineMappings:
-            if(pair[1] - pair[0] < 3):
+            if(pair[1] - pair[0] < 4):
 
                 print("removing")
                 try:
@@ -82,12 +87,11 @@ class GenCode:
                 outfile.write(self.addAt[i] +" = Session()\n")
             if i in self.endAt.keys():
                 outfile.write(self.endAt[i] + ".compute()\n" )
-            outfile.write(line)
-            outfile.write("\n")
+            outfile.write(line )
             i+=1
 
         if i in self.endAt.keys():
-            outfile.write(self.endAt[i]+ ".compute()\n")
+            outfile.write( self.endAt[i]+ ".compute()\n")
         outfile.close() 
 
     def generateGPUSessions(self):
