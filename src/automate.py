@@ -1,3 +1,5 @@
+import sys
+
 class GenCode:
     def __init__(self, inpFile):
         self.file = open(inpFile, 'r')
@@ -16,12 +18,12 @@ class GenCode:
     
     def addAtLine(self, lineNum):
         x = self.currentSession
-        print(lineNum)
+        ##print(lineNum)
         self.addAt.update({lineNum: x})
         return x
     
     def endAtLine(self, lineNum, session):
-        print(lineNum)
+        #print(lineNum)
         self.endAt.update({lineNum: session})
 
     def parse(self):
@@ -39,7 +41,7 @@ class GenCode:
                 line.split('.')[1].startswith("sub") or
                 line.split('.')[1].startswith("transform"))):
                     self.lineNum += 1
-                    print("found soemthing, ", insess)
+                    #print("found soemthing, ", insess)
                     if not insess:
                         current = self.addAtLine(self.lineNum - 1) 
                         l = self.lineNum - 1
@@ -66,7 +68,7 @@ class GenCode:
         for pair in self.lineMappings:
             if(pair[1] - pair[0] < 4):
 
-                print("removing")
+                #print("removing")
                 try:
                     del self.addAt[pair[0]]
                 except:
@@ -81,7 +83,7 @@ class GenCode:
     def genCode(self):
         outfile = open("out.py", "w")
         i =0
-        print(self.addAt, self.endAt)
+        #print(self.addAt, self.endAt)
         for line in open(self.inpFile).readlines():
             if i in self.addAt.keys():
                 outfile.write(self.addAt[i] +" = Session()\n")
@@ -100,5 +102,5 @@ class GenCode:
         self.genCode()
 
 if __name__ == '__main__':
-    example = GenCode("input.py")
+    example = GenCode(sys.argv[1])
     example.generateGPUSessions()

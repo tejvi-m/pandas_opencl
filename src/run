@@ -1,0 +1,3 @@
+python automate.py $1
+python out.py
+rm out.py
